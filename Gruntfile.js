@@ -125,6 +125,7 @@ module.exports = function(grunt) {
         },
         clean: {
             dist: ['.tmp', '<%= yeoman.dist %>/*'],
+			afterCopy: '<%= yeoman.dist %>/application.html.erb',
             server: '.tmp'
         },
         jshint: {
@@ -186,13 +187,6 @@ module.exports = function(grunt) {
                 }
             }
         },
-        // not enabled since usemin task does concat and uglify
-        // check index.html to edit your build targets
-        // enable this task if you prefer defining your build targets here
-        /*uglify: {
-            dist: {}
-        },*/
-
 
         replace: {
             useapp: {
@@ -248,15 +242,6 @@ module.exports = function(grunt) {
         htmlmin: {
             dist: {
                 options: {
-                    /*removeCommentsFromCDATA: true,
-                    // https://github.com/yeoman/grunt-usemin/issues/44
-                    //collapseWhitespace: true,
-                    collapseBooleanAttributes: true,
-                    removeAttributeQuotes: true,
-                    removeRedundantAttributes: true,
-                    useShortDoctype: true,
-                    removeEmptyAttributes: true,
-                    removeOptionalTags: true*/
                 },
                 files: [{
                     expand: true,
@@ -387,8 +372,7 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('build', [
-        'coffee',
+    grunt.registerTask('build', [        
         'clean',
         'createDefaultTemplate',
         'jst',
@@ -403,26 +387,25 @@ module.exports = function(grunt) {
         'rev',
         'usemin',
         'replace',
-        'copy:view'
+        'copy:view',
+        'clean:afterCopy'		
     ]);
 
-    grunt.registerTask('debug', [
-        //'coffee',// ??
-        'clean', // чистит наш public/app
-        'createDefaultTemplate', // создает будущую заготовку для наших JST вставок
-        'jst', // вставляет в templates.js все наши .ejs темплейты, которые в будущем будет добавлены в наш main.js
-        //'compass:dist', // ничего не делает, т.к. :dist пустой
-        'useminPrepare', // SCRIPTS/***.js
-        'imagemin', // немного сжимает картикни + копирует папку на сервер
-        'htmlmin', // сжимает applictation.html.erb (убирает пробелы и тому подобное)  + копирует на сервер
-        'concat', // таска вообще не описана - без нее папка /scripts не создается
-        'cssmin', // cжимает CSS (делает из файла 1 строку убирает лишнии пробелы) + копирует на сервер
-        'copy', //копирует папку с шрифтами для бутстрапа \bower_components\sass-bootstrap\fonts
-        'rev',  // делает: main.js -> 02as22as.main.js
-        'usemin', // редактирует application.html.erb (изменяет ссылки скриптов на новосгенерированные и объеденные)
-        'replace', // редактирует application.html.erb (корректирует путь к нашим script-ам, а кокнертно дописывает в пути папку app/)
-        'copy:view' // копирует application.html.erb из public/app/.. в app/views/layouts
-
+    grunt.registerTask('debug', [        
+        'clean', 
+        'createDefaultTemplate', 
+        'jst', 
+        'useminPrepare', 
+        'imagemin', 
+        'htmlmin', 
+        'concat', 
+        'cssmin', 
+        'copy', 
+        'rev',  
+        'usemin', 
+        'replace', 
+        'copy:view', 
+        'clean:afterCopy'
     ]);
 
     grunt.registerTask('default', [
