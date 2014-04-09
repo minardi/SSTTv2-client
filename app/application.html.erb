@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SSTaskTracking</title>
+
+    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+
+    <script>
+        <% if user_signed_in? %>
+            var current_user_content = {
+                id: <%= current_user.id %>,
+                first_name: "<%= current_user.first_name %>",
+                last_name: "<%= current_user.last_name%>"
+            };
+        <% end %>
+    </script>
+
+    <% if user_signed_in? %>
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- endbuild -->
+        
+        <!-- build:js scripts/vendor.js -->
+        <script src="bower_components/modernizr/modernizr.js"></script>		
+        <script src="bower_components/jquery/jquery.js"></script>
+
+        <script src="lib/jq-ajax-setup.js"></script>
+
+        <script src="bower_components/underscore/underscore.js"></script>
+        <script src="bower_components/backbone/backbone.js"></script>
+        <script src="lib/backbone-mediator.js"></script>
+        <!-- endbuild -->
+    
+        <!-- build:js({.tmp,app}) scripts/main.js -->
+
+        <script src="scripts/main.js"></script>
+        <script src="scripts/templates.js"></script>
+
+        <!-- module User -->
+        <script src="scripts/User/UserModel.js"></script>
+        <script src="scripts/User/UserModelView.js"></script>
+
+        <!-- module Projects-->
+        <script src="scripts/Projects/ProjectsModel.js"></script>
+        <script src="scripts/Projects/ProjectsCollection.js"></script>
+        <script src="scripts/Projects/ProjectsModelView.js"></script>
+        <script src="scripts/Projects/ProjectsCollectionView.js"></script>
+
+        <!-- module ProductBacklogStories-->
+        <script src="scripts/ProductBacklogStories/ProductBacklogStoriesModel.js"></script>
+        <script src="scripts/ProductBacklogStories/ProductBacklogStoriesCollection.js"></script>
+        <script src="scripts/ProductBacklogStories/ProductBacklogStoriesModelView.js"></script>
+        <script src="scripts/ProductBacklogStories/ProductBacklogStoriesCollectionView.js"></script>
+         
+        <!-- module SprintBacklogStories -->
+        <script src="scripts/SprintBacklogStories/SprintBacklogStoriesModel.js"></script>
+        <script src="scripts/SprintBacklogStories/SprintBacklogStoriesCollection.js"></script>
+        <script src="scripts/SprintBacklogStories/SprintBacklogStoriesModelView.js"></script>
+        <script src="scripts/SprintBacklogStories/SprintBacklogStoriesCollectionView.js"></script>
+
+        <!-- module ScrumPage-->
+        <script src="scripts/ScrumPage/ScrumPageModel.js"></script>
+        <script src="scripts/ScrumPage/ScrumPageModelView.js"></script>
+
+        <!-- module Projectinfo-->
+        <script src="scripts/Projectinfo/ProjectinfoModel.js"></script>
+        <script src="scripts/Projectinfo/ProjectinfoModelView.js"></script>
+
+         <!-- module ScrumBoard-->
+        <script src="scripts/ScrumBoard/ScrumBoardModel.js"></script>
+        <script src="scripts/ScrumBoard/ScrumBoardCollection.js"></script>
+        <script src="scripts/ScrumBoard/ScrumBoardModelView.js"></script>
+        <script src="scripts/ScrumBoard/ScrumBoardCollectionView.js"></script>
+         
+        <!-- module DashBoard-->
+        <script src="scripts/DashBoard/DashBoardModel.js"></script>
+        <script src="scripts/DashBoard/DashBoardCollection.js"></script>
+        <script src="scripts/DashBoard/DashBoardModelView.js"></script>
+        <script src="scripts/DashBoard/DashBoardCollectionView.js"></script>
+         
+        <!-- module TeamEditPage-->
+        <script src="scripts/TeamEditPage/TeamEditPageModel.js"></script>
+        <script src="scripts/TeamEditPage/TeamEditPageModelView.js"></script>
+         
+        <!-- module TeamMember-->
+        <script src="scripts/TeamMember/TeamMemberModel.js"></script>
+        <script src="scripts/TeamMember/TeamMemberCollection.js"></script>
+        <script src="scripts/TeamMember/TeamMemberModelView.js"></script>
+        <script src="scripts/TeamMember/TeamMemberCollectionView.js"></script>
+        <script src="scripts/TeamEditPage/TeamEditPageModelView.js"></script>        
+
+        <!-- module TeamMembers-->
+        <script src="scripts/TeamMembers/TeamMembersModel.js"></script>
+        <script src="scripts/TeamMembers/TeamMembersCollection.js"></script>
+        <script src="scripts/TeamMembers/TeamMembersModelView.js"></script>
+        <script src="scripts/TeamMembers/TeamMembersCollectionView.js"></script>
+
+        <!-- module Teams-->
+        <script src="scripts/Teams/TeamsModel.js"></script>
+        <script src="scripts/Teams/TeamsCollection.js"></script>
+        <script src="scripts/Teams/TeamsModelView.js"></script>
+        <script src="scripts/Teams/TeamsCollectionView.js"></script>
+
+        <!-- module DashboardBtns-->
+        <script src="scripts/DashboardBtns/DashboardBtnsModel.js"></script>
+        <script src="scripts/DashboardBtns/DashboardBtnsCollection.js"></script>
+        <script src="scripts/DashboardBtns/DashboardBtnsModelView.js"></script>
+        <script src="scripts/DashboardBtns/DashboardBtnsCollectionView.js"></script>
+         
+        <!-- module UserCandidates-->
+        <script src="scripts/UserCandidates/UserCandidatesModel.js"></script>
+        <script src="scripts/UserCandidates/UserCandidatesCollection.js"></script>
+        <script src="scripts/UserCandidates/UserCandidatesModelView.js"></script>
+        <script src="scripts/UserCandidates/UserCandidatesCollectionView.js"></script>
+
+        <!-- module Routing-->
+        <script src="scripts/Routing/Router.js"></script>
+
+        <!-- endbuild -->
+    <% end %>
+
+</head>
+<body>
+
+<%= yield %>
+
+</body>
+</html>
