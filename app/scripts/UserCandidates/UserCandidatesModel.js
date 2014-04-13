@@ -1,4 +1,4 @@
-/* UserCandidates */
+/* UserCandidates - rename to Candidates*/ 
 
 (function(module) {
 
@@ -10,8 +10,8 @@
            role: ''
         },
 
-        toTeamMemberAttributes: function() {
-            return {
+        toTeamMemberAttributes: function() {      /*WE DON'T NEED THIS! change this long caption to setAsMember  */
+            return { /*returns attributes hash of 'this' into TeamMemColView.addToCol(), why don't to return the model with 'return this' */
                 first_name: this.get("first_name"), 
                 last_name: this.get("last_name"),
                 role: this.get("role"),
