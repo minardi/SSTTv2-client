@@ -1,6 +1,6 @@
 /* SprintBacklogStories */
 
-;(function(module) {
+(function(module) {
 
     module.ModelView = Backbone.View.extend({
 

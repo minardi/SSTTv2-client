@@ -6,13 +6,13 @@
 
         template: JST['app/scripts/SprintBacklogStories/SprintBacklogStoriesCollectionTpl.ejs'],  
 
-        initialize: function() {
-            this.collection = new module.Collection();
-            mediator.sub("ScrumPage:PlanningBoardSelected", this.initSprintBacklog, this);
+        subscriptions: {
+            "ScrumPage:PlanningBoardSelected": "initSprintBacklog",
+            "ProductBacklogStories:MoveStory": "addStory"
         },
 
-        subscriptions: {
-            "Story:moveToSprint": "addStory",
+        initialize: function() {
+            this.collection = new module.Collection();
         },
         
         initSprintBacklog: function(el_content) {
@@ -20,10 +20,9 @@
             this.render();
         },
 
-
-        addStory: function(product_story_model) {
-            this.collection.add(product_story_model.toJSON());
-            this.renderOne(product_story_model);
+        addStory: function(story) {
+            this.collection.add(story.toJSON());
+            this.renderOne(story);
         },
 
         render: function() {
@@ -33,7 +32,6 @@
 
         renderOne: function(story_model) {
             var story = new module.ModelView({model: story_model});
-
             this.$el.find(".sprint .story-list").append(story.render().el);
             return this;
         }
@@ -41,4 +39,3 @@
     });
 
 })(app.SprintBacklogStories);
-

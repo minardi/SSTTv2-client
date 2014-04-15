@@ -13,16 +13,16 @@
         template: JST['app/scripts/ProductBacklogStories/ProductBacklogStoriesTpl.ejs'],
 
         events: {
-           "dblclick" : "moveToSprintstory"
+           "dblclick" : "moveToSprint"
         },
 
-        moveToSprintstory: function() {
-            mediator.pub("Story:moveToSprint", this.model);
+        moveToSprint: function() {
+            mediator.pub("ProductBacklogStories:MoveStory", this.model);
             this.$el.remove();
         },
 
         render: function() {
-            this.$el.html(this.template({name:this.model.get("title")}));
+            this.$el.html(this.template(this.model.toJSON()));
             return this;
         }
 
