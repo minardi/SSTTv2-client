@@ -4,7 +4,8 @@
     "coffee": false,
     "testFramework": "mocha",
     "templateFramework": "lodash",
-    "compassBootstrap": true,
-    "includeRequireJS": false
+    "compassBootstrap": false,
+    "includeRequireJS": false,
+    "appName": "SSTTv2"
   }
 }
