@@ -2,7 +2,7 @@
 
 (function(module) {
 
-    module.Model = Backbone.Model.extend({       
+    module.Model = Backbone.Model.extend({
 
         defaults: {
             title: "",
