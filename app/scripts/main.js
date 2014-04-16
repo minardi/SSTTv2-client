@@ -10,11 +10,10 @@ var sstt = {},
         DashBoard: {},
         ScrumBoard: {},
         TeamEditPage: {},
-        UserCandidates: {},
+        TeamCandidates: {},
         TeamMembers: {},
         Teams: {},        
-        empty: {},
-        Routing: {}
+        empty: {}
     };
 
 $(function() {
@@ -59,9 +58,5 @@ $(function() {
         el: $(".b-main")
     });
 
-    sstt.user_candidates = new app.UserCandidates.CollectionView();
-
-    sstt.router = new app.Routing.Router();
-    Backbone.history.start({pushState: true});
-
+    sstt.team_candidates = new app.TeamCandidates.CollectionView();
 });

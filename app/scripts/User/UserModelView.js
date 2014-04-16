@@ -6,8 +6,8 @@
   
         template: JST['app/scripts/User/UserTpl.ejs'],
          
-        initialize: function(init_val) {
-            this.model = new module.Model(init_val.user_content);                 
+        initialize: function(init_user) {
+            this.model = new module.Model(init_user.user_content);  /*changed to 'init_user'*/               
             this.render();           
         },
 
