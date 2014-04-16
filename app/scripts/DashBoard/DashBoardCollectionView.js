@@ -46,8 +46,11 @@
         },
 
         render: function(project) {
-            this.$el.find(".dashboard").remove();
-            this.$el.append(this.template);
+            if(this.$dashboard) {
+                this.$dashboard.remove();
+            }
+            this.$el.append(this.template());
+            this.$dashboard = this.$(".dashboard");
             
             this.current_right = (this.project.get("pm").user_id == sstt.user.getId())? "pm": "not_pm";
             this.collection.each(this.renderOne, this);
@@ -55,13 +58,13 @@
         },
 
         renderOne: function (btn_model) {
+            var btn;
             btn_model.set("project_id", this.project.id);
             if (this.canRender(btn_model.get("permition"))) {
-                var btn = new module.ModelView({
-                        model: btn_model,
-                        className: btn_model.get("glyph")
+                btn = new module.ModelView({
+                        model: btn_model
                 });
-                this.$el.find(".dashboard").append(btn.render().el);
+                this.$dashboard.append(btn.render().el);
             };
         },
 

@@ -2,11 +2,6 @@
 
 (function(module) {
         
-	module.Model = Backbone.Model.extend({	     
-		 
-		defaults: {
-			id_of_project: ""
-        }		 
-	});
+	module.Model = Backbone.Model.extend({});
 
 })(app.ScrumPage);

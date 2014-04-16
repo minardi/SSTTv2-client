@@ -17,7 +17,7 @@
             "TeamPage:TeamSelected": "render",
             "DashBoard:ActiveBack": "removeTeamPage",
             "DashBoard:ActiveBackFromTeamEditPage": "removeTeamPage",
-             "TeamMembers:Saved": "showSaveMsg"
+            "TeamMembers:Saved": "showSaveMsg"
         },     
 
         showWatchers: function () {            

@@ -18,13 +18,14 @@
             
         setElementAndRender: function(content_el) {           
             this.setElement(content_el);
-            this.collection.fetch();   
-            this.collection.on('sync', this.renderEach, this);                           
+            this.collection.on('sync', this.renderEach, this); 
+            this.collection.fetch();                        
         },
 
-        renderEach: function () {
+        render: function () {
             this.$el.html(this.template());
             this.collection.each(this.renderOne,this);
+
             return this;
         },
 
@@ -32,6 +33,7 @@
             var task = new module.ModelView({
                     model: task_model
                 });
+
             this.$el.find('.' + task_model.get('status')).append(task.render().el);            
         }
 
