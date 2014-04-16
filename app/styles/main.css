@@ -430,3 +430,13 @@ ____________________________________________*/
 a:visited {
     color: white;
 }
+
+.btn-info {
+    background-color: #0063E2;
+    border-color: #122F5A;
+}
+
+.app-wrapper .b-sidebar .dashboard {
+    background-color: rgba(180,220,180,.6);
+    box-shadow: 0 0 10px rgba(0,0,0,.8);
+}
