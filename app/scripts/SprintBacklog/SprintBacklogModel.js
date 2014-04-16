@@ -1,4 +1,4 @@
-/* SprintBacklogStories */
+/* SprintBacklog */
 
 (function(module) {
 
@@ -12,4 +12,4 @@
 
     });
 
-})(app.SprintBacklogStories);
+})(app.SprintBacklog);
