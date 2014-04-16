@@ -4,21 +4,29 @@
 
     module.CollectionView = Backbone.View.extend({
       
-        template: JST['app/scripts/ProductBacklogStories/ProductBacklogStoriesCollectionTpl.ejs'],
+        template: JST["app/scripts/ProductBacklogStories/ProductBacklogStoriesCollectionTpl.ejs"],
 
-        initialize: function() {
-            mediator.sub("ScrumPage:PlanningBoardSelected", this.initProductBacklog, this);
+        subscriptions: {
+            "ProjectPage:ProjectSelected": "initCollection",
+            "ScrumPage:PlanningBoardSelected": "initProductBacklog"
+
         },
 
-        initProductBacklog: function(el_content, project_id) {
-            this.setElement(el_content);
-            this.$el.append(this.template());
+        initCollection: function (project_id) {  
             this.collection = new module.Collection(project_id);
-            this.collection.on('sync', this.render, this);
+            this.collection.on('sync', this.render, this);  
+            this.collection.fetch();                    
+        },   
+
+        initProductBacklog: function(el_content) {
+            this.setElement(el_content);
+            this.render();
         },
 
         render: function() {
+            this.$el.html(this.template());
             this.collection.each(this.renderOne, this);
+
             return this;
         },
 
