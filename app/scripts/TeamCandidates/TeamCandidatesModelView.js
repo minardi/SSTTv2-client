@@ -31,7 +31,7 @@
 
         setTeamMember: function() {
             this.model.set("role", this.role);
-            mediator.pub("TeamCandidates:setTeamMember", this.model.formTeamMember()); /* changed channel name from "UserCandidate:addToProject" ------- we can use default "toJSON" */
+            mediator.pub("TeamCandidates:setTeamMember", this.model.formTeamMember()); /* changed channel name from "UserCandidate:addToProject" */
         },
 
         setRole: function(current_role) { 
