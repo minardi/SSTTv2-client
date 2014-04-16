@@ -1,4 +1,4 @@
-/* ProductBacklogStories */
+/* ProductBacklog */
 
 (function(module) {
 
@@ -13,4 +13,4 @@
 
     });
 
-})(app.ProductBacklogStories);
+})(app.ProductBacklog);

@@ -1,4 +1,4 @@
-/* UserCandidates */
+/* TeamCandidates*/ 
 
 (function(module) {
 
@@ -9,9 +9,9 @@
            last_name: '',
            role: ''
         },
-
-        toTeamMemberAttributes: function() {
-            return {
+		
+        formTeamMember: function() {      
+            return { 
                 first_name: this.get("first_name"), 
                 last_name: this.get("last_name"),
                 role: this.get("role"),
@@ -21,4 +21,4 @@
 
     });
 
-})(app.UserCandidates);
+})(app.TeamCandidates);

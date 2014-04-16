@@ -1,4 +1,4 @@
-/* UserCandidates */
+/*TeamCandidates */
 
 (function(module) {
 
@@ -7,11 +7,10 @@
         model: module.Model,
 
         initialize: function(team_id) {
-            this.url = "/users-candidats/for-team/" + team_id;
-            this.fetch();
+            this.url = "/teams-candidates/for-team/" + team_id; /*routes.rb corrected and fetch() moved to View*/
         }
 
     });
 
-})(app.UserCandidates);
+})(app.TeamCandidates);
 
