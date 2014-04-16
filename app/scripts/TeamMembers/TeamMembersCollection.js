@@ -7,6 +7,7 @@
         model: module.Model,
 
         initialize: function(team_id) {
+        	
             this.url = "/users/for-team/" + team_id;
             this.fetch();
         }

@@ -14,7 +14,7 @@
         },
 
         subscriptions: {
-            "TeamEditPage:roleSetUp": "setMode"
+            "TeamEditPage:roleSetUp": "setRole"
         },
        
         show: function() {
@@ -23,11 +23,11 @@
         },
 
         canRender: function() {
-            return (this.model.get("role") === this.mode);  
+            return (this.model.get("role") === this.role);  
         },
 
-        setMode: function(new_mode) {
-            this.mode = new_mode;
+        setRole: function(new_role) {
+            this.role = new_role;
             this.show();
         },
 

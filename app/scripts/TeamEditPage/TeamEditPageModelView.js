@@ -18,7 +18,17 @@
             "DashBoard:ActiveBack": "removeTeamPage",
             "DashBoard:ActiveBackFromTeamEditPage": "removeTeamPage",
             "TeamMembers:Saved": "showSaveMsg"
-        },     
+        }, 
+
+        render: function(team_id) {     
+            this.$el.append(this.template());           
+            mediator.pub("TeamEditPage:Open", { element: this.$el, 
+                                                team_id: team_id 
+                                                });            
+            this.showWatchers();
+
+            return this;
+        },       
 
         showWatchers: function () {            
             mediator.pub("TeamEditPage:roleSetUp", "watcher");
@@ -39,16 +49,6 @@
         hideConfirm: function() {
             this.$el.find("#save_confirm").addClass("hidden");
         },
-        
-        render: function(team_id) {       
-            this.$el.append(this.template());           
-            mediator.pub("TeamEditPage:Open", { element: this.$el, 
-                                                team_id: team_id 
-                                                });            
-            this.showWatchers();
-//this.$el
-            return this;
-        },   
                
         removeTeamPage: function() {
             this.$el.removeClass("hiddenTeams");

@@ -15,8 +15,8 @@
         },
 
         selectTeam: function() {
-            mediator.pub("TeamPage:roleSetUp", this.model.id);
-        }
+            mediator.pub("TeamPage:TeamSelected", this.model.id);
+        },
 
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));

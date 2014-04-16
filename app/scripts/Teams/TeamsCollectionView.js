@@ -7,13 +7,13 @@
         template: JST['app/scripts/Teams/TeamsCollectionTpl.ejs'],
 
         subscriptions: {
-            "DashBoard:ActiveTeam": "init",
+            "DashBoard:ActiveTeam": "initTeam",
             "TeamPage:TeamSelected": "hide",
             "DashBoard:ActiveBack": "removeTeamPage",
             "DashBoard:ActiveBackFromTeamEditPage": "show"
         },
-//initTeam
-        init: function(project_id) {
+
+        initTeam: function(project_id) {
             this.teamsCollection = new module.Collection(project_id);
             this.listenTo(this.teamsCollection, "sync", this.render);
             this.teamsCollection.fetch(); 
