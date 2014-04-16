@@ -21,15 +21,15 @@
         },     
 
         showWatchers: function () {            
-            mediator.pub("TeamEditPage:TabSelected", "watcher");
+            mediator.pub("TeamEditPage:roleSetUp", "watcher");
         },
 
         showDevelopers: function () {
-            mediator.pub("TeamEditPage:TabSelected", "developer");
+            mediator.pub("TeamEditPage:roleSetUp", "developer");
         },
 
         showTeachLeads: function () {
-            mediator.pub("TeamEditPage:TabSelected", "techlead");
+            mediator.pub("TeamEditPage:roleSetUp", "techlead");
         },         
         
         showSaveMsg: function() {
@@ -40,10 +40,13 @@
             this.$el.find("#save_confirm").addClass("hidden");
         },
         
-        render: function(team_id) {            
+        render: function(team_id) {       
             this.$el.append(this.template());           
-            mediator.pub("TeamEditPage:Open", { element: this.$el, team_id: team_id });            
+            mediator.pub("TeamEditPage:Open", { element: this.$el, 
+                                                team_id: team_id 
+                                                });            
             this.showWatchers();
+//this.$el
             return this;
         },   
                
@@ -51,6 +54,7 @@
             this.$el.removeClass("hiddenTeams");
             this.$el.find(".team-edit-page").remove();
         }
+        
     });
 
 })(app.TeamEditPage);

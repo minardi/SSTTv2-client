@@ -13,7 +13,8 @@ var sstt = {},
         UserCandidates: {},
         TeamMembers: {},
         Teams: {},
-        empty: {}
+        empty: {},
+        Routing: {}
     };
 
 $(function() {
@@ -59,5 +60,8 @@ $(function() {
     });
 
     sstt.user_candidates = new app.UserCandidates.CollectionView();
+
+    sstt.router = new app.Routing.Router();
+    Backbone.history.start({pushState: true});
 
 });

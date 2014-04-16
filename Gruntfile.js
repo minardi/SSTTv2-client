@@ -125,7 +125,7 @@ module.exports = function(grunt) {
         },
         clean: {
             dist: ['.tmp', '<%= yeoman.dist %>/*'],
-            afterCopy: '<%= yeoman.dist %>/application.html.erb',
+			afterCopy: '<%= yeoman.dist %>/application.html.erb',
             server: '.tmp'
         },
         jshint: {
@@ -199,19 +199,6 @@ module.exports = function(grunt) {
                 }, {
                     from: 'styles/',
                     to: 'app/styles/'
-                }]
-            },
-
-            debug: {
-                src: ['<%= yeoman.dist %>/application.html.erb'],
-                overwrite: true,
-                replacements: [{
-                    from: 'bower_components/',
-                    to: 'app/bower_components/'
-                    /*CHANGE CSS PATH*/
-                }, {
-                    from: 'lib/',
-                    to: 'app/lib/'
                 }]
             }
         },
@@ -295,33 +282,6 @@ module.exports = function(grunt) {
                     src: 'application.html.erb'
                 }]
 
-            },
-            debug: {
-                files: [{
-                    expand: true,
-                    dot: true,
-                    cwd: '<%= yeoman.app %>/scripts',
-                    dest: '<%= yeoman.dist %>/scripts',
-                    src: '**'
-                }, {
-                    expand: true,
-                    dot: true,
-                    cwd: '<%= yeoman.app %>/lib',
-                    dest: '<%= yeoman.dist %>/lib',
-                    src: '**'
-                }, {
-                    expand: true,
-                    dot: true,
-                    cwd: '<%= yeoman.app %>/bower_components',
-                    dest: '<%= yeoman.dist %>/bower_components',
-                    src: '**'
-                },  {
-                    expand: true,
-                    dot: true,
-                    cwd: ".tmp/scripts/",
-                    dest: '<%= yeoman.dist %>/scripts/',
-                    src: 'templates.js'
-                }]
             }
 
         },
@@ -423,26 +383,26 @@ module.exports = function(grunt) {
         'concat',
         'cssmin',
         'uglify',
-        'copy:dist',
+        'copy',
         'rev',
         'usemin',
-        'replace:useapp',
+        'replace',
         'copy:view',
-        'clean:afterCopy'       
+        'clean:afterCopy'		
     ]);
 
     grunt.registerTask('debug', [        
         'clean', 
         'createDefaultTemplate', 
         'jst', 
-        //'useminPrepare', 
+        'useminPrepare', 
         'imagemin', 
         'htmlmin', 
-        //'concat', 
+        'concat', 
         'cssmin', 
         'copy', 
-        //'rev',  
-        //'usemin', 
+        'rev',  
+        'usemin', 
         'replace', 
         'copy:view', 
         'clean:afterCopy'

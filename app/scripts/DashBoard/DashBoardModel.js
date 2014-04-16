@@ -7,7 +7,7 @@
         defaults: {
             project_id: "",
             content: "",
-            type: "",
+            glyph: "",
             permition: []
         }
     });

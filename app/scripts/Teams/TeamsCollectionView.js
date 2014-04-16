@@ -12,24 +12,24 @@
             "DashBoard:ActiveBack": "removeTeamPage",
             "DashBoard:ActiveBackFromTeamEditPage": "show"
         },
-
+//initTeam
         init: function(project_id) {
-            this.TeamsCollection = new module.Collection(project_id);
-            this.TeamsCollection.fetch();
-            this.listenTo(this.TeamsCollection, "sync", this.render);
+            this.teamsCollection = new module.Collection(project_id);
+            this.listenTo(this.teamsCollection, "sync", this.render);
+            this.teamsCollection.fetch(); 
         },
 
         render: function() {
-            mediator.pub("ScrumPage:remove")
             this.$el.append(this.template());
-            this.TeamsCollection.each(this.renderOne, this);
+            this.teamsCollection.each(this.renderOne, this);
             return this;
         },
 
         renderOne: function(projectModel) {
             var project = new module.ModelView({
-                model: projectModel
-            });
+                    model: projectModel
+                });
+
             this.$el.find(".content.team-page").append(project.render().el);
         },
 
@@ -43,8 +43,8 @@
 
         show: function() {
             this.$el.removeClass("hiddenTeams");
-        }
-        
+        } 
+
     });
 
 })(app.Teams);

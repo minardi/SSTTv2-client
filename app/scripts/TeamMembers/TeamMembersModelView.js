@@ -14,13 +14,14 @@
         },
 
         subscriptions: {
-            "TeamEditPage:TabSelected": "setMode"
+            "TeamEditPage:roleSetUp": "setMode"
         },
        
         show: function() {
-            return (this.canRender()) ? this.$el.removeClass('hide') : this.$el.addClass('hide');
+            this.canRender() ? this.$el.removeClass('hide'): 
+                                this.$el.addClass('hide');
         },
-        
+
         canRender: function() {
             return (this.model.get("role") === this.mode);  
         },
@@ -33,9 +34,10 @@
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
             this.show();
+
             return this;
         }
 
     });
-
+    
 })(app.TeamMembers);
