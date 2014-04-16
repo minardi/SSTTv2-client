@@ -16,8 +16,8 @@
             };
         <% end %>
     </script>
-
-    <% if user_signed_in? %>
+    
+    <% if user_signed_in? && request.path == '/' %>
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     
@@ -51,17 +51,17 @@
         <script src="scripts/Projects/ProjectsModelView.js"></script>
         <script src="scripts/Projects/ProjectsCollectionView.js"></script>
 
-        <!-- module ProductBacklogStories-->
-        <script src="scripts/ProductBacklogStories/ProductBacklogStoriesModel.js"></script>
-        <script src="scripts/ProductBacklogStories/ProductBacklogStoriesCollection.js"></script>
-        <script src="scripts/ProductBacklogStories/ProductBacklogStoriesModelView.js"></script>
-        <script src="scripts/ProductBacklogStories/ProductBacklogStoriesCollectionView.js"></script>
+        <!-- module ProductBacklog-->
+        <script src="scripts/ProductBacklog/ProductBacklogModel.js"></script>
+        <script src="scripts/ProductBacklog/ProductBacklogCollection.js"></script>
+        <script src="scripts/ProductBacklog/ProductBacklogModelView.js"></script>
+        <script src="scripts/ProductBacklog/ProductBacklogCollectionView.js"></script>
          
-        <!-- module SprintBacklogStories -->
-        <script src="scripts/SprintBacklogStories/SprintBacklogStoriesModel.js"></script>
-        <script src="scripts/SprintBacklogStories/SprintBacklogStoriesCollection.js"></script>
-        <script src="scripts/SprintBacklogStories/SprintBacklogStoriesModelView.js"></script>
-        <script src="scripts/SprintBacklogStories/SprintBacklogStoriesCollectionView.js"></script>
+        <!-- module SprintBacklog -->
+        <script src="scripts/SprintBacklog/SprintBacklogModel.js"></script>
+        <script src="scripts/SprintBacklog/SprintBacklogCollection.js"></script>
+        <script src="scripts/SprintBacklog/SprintBacklogModelView.js"></script>
+        <script src="scripts/SprintBacklog/SprintBacklogCollectionView.js"></script>
 
         <!-- module ScrumPage-->
         <script src="scripts/ScrumPage/ScrumPageModel.js"></script>

@@ -1,6 +1,6 @@
-/* SprintBacklogStories */
+/* SprintBacklog */
 
-;(function(module) {
+(function(module) {
 
     module.ModelView = Backbone.View.extend({
 
@@ -8,7 +8,7 @@
 
         className: "story-box",
 
-        template: JST['app/scripts/SprintBacklogStories/SprintBacklogStoriesTpl.ejs'],
+        template: JST['app/scripts/SprintBacklog/SprintBacklogTpl.ejs'],
 
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
@@ -17,4 +17,4 @@
 
     })
 
-})(app.SprintBacklogStories);
+})(app.SprintBacklog);

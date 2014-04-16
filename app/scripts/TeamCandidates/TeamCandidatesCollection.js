@@ -1,4 +1,5 @@
-/* TeamCandidates*/
+/*TeamCandidates */
+
 
 (function(module) {
 
