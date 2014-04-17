@@ -7,21 +7,22 @@
         template: JST['app/scripts/ProductBacklog/ProductBacklogCollectionTpl.ejs'],
 
         subscriptions: {
-            "ProjectPage:ProjectSelected": "initCollection",
+            /*"ProjectPage:ProjectSelected": "initCollection",*/
             "ScrumPage:PlanningBoardSelected": "initProductBacklog"
         },
 
-        initCollection: function (project_id) {  
+        /*initCollection: function (project_id) {  
             this.collection = new module.Collection(project_id);
             this.collection.fetch();
             this.collection.on('sync', this.render, this);
-        },
+        },*/
 
-        initProductBacklog: function(el_content) {
+        initProductBacklog: function(el_content, project_id) {
             this.setElement(el_content);
             this.$el.append(this.template());
             this.collection = new module.Collection(project_id);
             this.collection.on('sync', this.render, this);
+			this.collection.fetch();
         },
 
         render: function() {
