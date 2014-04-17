@@ -16,7 +16,7 @@
         },*/
 		
 		initTeamCandidates: function(data) {             
-            this.setElement(data["element"].find('.candidates')); 
+            this.$el = data["element"].find('.candidates'); 
             this.collection = new module.Collection(data["team_id"]);
             this.collection.on('sync', this.render, this);
 			this.collection.fetch(); /*fetch() from collection added here to boost performance*/

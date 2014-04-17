@@ -58,6 +58,6 @@ $(function() {
         el: $(".b-main")
     });
 
-    //sstt.team_candidates = new app.TeamCandidates.CollectionView();
+    sstt.team_candidates = new app.TeamCandidates.CollectionView();
 
 });
