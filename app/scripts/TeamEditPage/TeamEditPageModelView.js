@@ -24,7 +24,10 @@
             this.$el.append(this.template());           
             mediator.pub("TeamEditPage:Open", { element: this.$el, 
                                                 team_id: team_id 
-                                                });            
+                                                }); 
+            var col = new app.TeamCandidates.CollectionView({ element: this.$el, 
+                                                team_id: team_id 
+                                                });    
             this.showWatchers();
 
             return this;
