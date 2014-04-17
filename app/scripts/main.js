@@ -13,6 +13,7 @@ var sstt = {},
         TeamCandidates: {},
         TeamMembers: {},
         Teams: {},        
+        BacklogItem: {},
         empty: {}
     };
 
