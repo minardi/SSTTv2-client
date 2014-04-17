@@ -14,24 +14,32 @@
         initCollection: function (project_id) {  
             this.collection = new module.Collection(project_id);
             this.collection.fetch();
-            this.collection.on('sync', this.render, this);
+            this.collection.on('sync', this.syncCollection, this);
         },
 
         initProductBacklog: function(el_content) {
-            this.setElement(el_content);
+            this.$el = el_content;
             this.$el.append(this.template());
-            this.collection = new module.Collection(project_id);
-            this.collection.on('sync', this.render, this);
+            this.$list = this.$(".product .story-list");
+            this.render();
+        },
+
+        syncCollection: function(){
+            this.isSync = true;
+            this.render();
         },
 
         render: function() {
-            this.collection.each(this.renderOne, this);
+            if(this.isSync){
+                this.collection.each(this.renderOne, this);
+            }
+            
             return this;
         },
 
         renderOne: function(story_model) {
             var story = new module.ModelView({model: story_model});
-            this.$el.find(".product .story-list").append(story.render().el);
+            this.$list.append(story.render().el);
         }
 
     });
