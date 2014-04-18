@@ -39,12 +39,9 @@
 													
 				return parent_id;
 			}
-<<<<<<< HEAD
-=======
 			
 			model.set("type",  this.type);
 			model.set("parent_id", types[this.type]);
->>>>>>> 998d725860c664c4245b3f0f210ee01dbb423154
 		}
 
     });
