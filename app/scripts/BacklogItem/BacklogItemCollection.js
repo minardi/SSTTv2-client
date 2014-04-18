@@ -12,7 +12,6 @@
 			this.url = type + '/for-project/' + project_id;
 			this.type = type;
 			this.on("sync", this.defineTypeAll, this);
-			this.fetch();
         },
 		
 		// this is tmp kostyl for giving the model type like if it was given by server
@@ -22,15 +21,27 @@
 		},
 		
 		defineTypeOne: function(model) {
-			model.set("type",  this.type);
-			if (this.type === "stories") {
-				model.set("parent_id", model.get("sprint_id"));
-			} else if (this.type === "tasks") {
-				model.set("parent_id", model.get("story_id"));
-			} else if (this.type === "sprints") {
-				model.set("parent_id", model.get("project_id"));
+			var types = {
+				"stories" : getParent(),
+				"tasks" : model.get("story_id"),
+				"sprints" : model.get("project_id")
+			};
+			
+			// if story is in ProdBckLog it's parent is project, but Sprint was started - parent is Sprint
+			function getParent() {
+				var parent_id;
+													
+				if (model.get("status") === "Product") {
+					parent_id = model.get("project_id");
+				} else {
+					parent_id = model.get("sprint_id");
+				}
+													
+				return parent_id;
 			}
-			console.log(model);
+			
+			model.set("type",  this.type);
+			model.set("parent_id", types[this.type]);
 		}
 
     });
