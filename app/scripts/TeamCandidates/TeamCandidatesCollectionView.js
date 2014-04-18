@@ -5,11 +5,11 @@
     module.CollectionView = Backbone.View.extend({
 
         template: JST['app/scripts/TeamCandidates/TeamCandidatesCollectionTpl.ejs'],
-
-        initialize: function() {
-            mediator.sub("TeamEditPage:Open", this.initTeamCandidates, this); 
-        }, 
 		
+		subscriptions: {
+			"TeamEditPage:Open": "initTeamCandidates",
+		},
+
 		initTeamCandidates: function(data) {             
             this.$el = data["element"].find('.candidates'); 
             this.collection = new module.Collection(data["team_id"]);

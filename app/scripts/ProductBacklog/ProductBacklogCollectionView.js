@@ -20,6 +20,7 @@
         initProductBacklog: function(el_content) {
             this.$el = el_content;
             this.$el.append(this.template());
+            this.$("#add_new_story").on("click", this.addNewStory);
             this.$list = this.$(".product .story-list");
             this.render();
         },
@@ -40,6 +41,11 @@
         renderOne: function(story_model) {
             var story = new module.ModelView({model: story_model});
             this.$list.append(story.render().el);
+        },
+
+        addNewStory: function() {
+            var story = new module.Model();
+            mediator.pub("ProductBacklog:ClickAddNewStory", this.story);
         }
 
     });
