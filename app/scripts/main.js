@@ -13,6 +13,8 @@ var sstt = {},
         TeamCandidates: {},
         TeamMembers: {},
         Teams: {},        
+        BacklogItem: {},
+        BacklogItemEdit: {},
         empty: {}
     };
 
@@ -59,5 +61,7 @@ $(function() {
     });
 
     sstt.team_candidates = new app.TeamCandidates.CollectionView();
+
+    sstt.backlog_item_edit = new app.BacklogItemEdit.ModelView();
 
 });
