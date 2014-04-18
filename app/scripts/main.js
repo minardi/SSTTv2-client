@@ -12,7 +12,7 @@ var sstt = {},
         TeamEditPage: {},
         TeamCandidates: {},
         TeamMembers: {},
-        Teams: {},        
+        Teams: {},
         empty: {}
     };
 
