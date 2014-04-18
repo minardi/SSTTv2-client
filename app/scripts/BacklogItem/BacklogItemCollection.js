@@ -29,7 +29,6 @@
 			} else if (this.type === "sprints") {
 				model.set("parent_id", model.get("project_id"));
 			}
-			console.log(model);
 		}
 
     });
