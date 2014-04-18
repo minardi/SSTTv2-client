@@ -11,15 +11,17 @@
             "ScrumPage:PlanningBoardSelected": "initProductBacklog"
         },
 
-        initCollection: function (project_id) {  
-            this.collection = new module.Collection(project_id);
-            this.collection.fetch();
+        initCollection: function (project_id) {
+            this.collection = new module.Collection('stories', project_id);
             this.collection.on('sync', this.syncCollection, this);
+            
+            this.collection.fetch();
         },
 
         initProductBacklog: function(el_content) {
             this.$el = el_content;
             this.$el.append(this.template());
+            this.$list = this.$(".story-list");
             this.$("#add_new_story").on("click", this.addNewStory);
             this.$list = this.$(".product .story-list");
             this.render();

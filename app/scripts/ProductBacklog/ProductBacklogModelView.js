@@ -12,14 +12,14 @@
 
         template: JST['app/scripts/ProductBacklog/ProductBacklogTpl.ejs'],
 
-        events: {
+        /*events: {
            "dblclick" : "moveToSprint"
-        },
+        },*/
 
-        moveToSprint: function() {
+        /*moveToSprint: function() {
             mediator.pub("ProductBacklog:MoveStory", this.model);
             this.$el.remove();
-        },
+        },*/
 
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));

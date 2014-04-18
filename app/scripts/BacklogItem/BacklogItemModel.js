@@ -12,7 +12,6 @@
 			"parent_id": "",
 			"status": "",
 			"type": ""
-			
         }		 
 
     });
