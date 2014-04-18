@@ -11,7 +11,7 @@
             this.add([
                 {
                     content: "Back",
-                    glyph: "btn btn-info glyphicon glyphicon-arrow-left",
+                    type: "back",
                     permition: {
                         "must_be": "",
                         "not": {
@@ -22,7 +22,7 @@
 
                 {
                     content: "BackFromTeamEditPage", 
-                    glyph: "btn btn-info glyphicon glyphicon-arrow-left",
+                    type: "back",
                     permition: {
                         "must_be": {
                             page: ["team_edit_page"]
@@ -33,7 +33,7 @@
 
                 {
                     content: "Team",
-                    glyph: "btn btn-info glyphicon icon-team",
+                    type: "team",
                     permition: {
                         "must_be": {
                             right: ["pm"]
@@ -46,7 +46,7 @@
 
                 {
                     content: "Configure",
-                    glyph: "btn btn-info glyphicon glyphicon-cog",
+                    type: "config",
                     permition: {
                         "must_be": {
                             right: ["pm"]
@@ -57,7 +57,7 @@
 
                 {
                     content: "Delete",
-                    glyph: "btn btn-info glyphicon glyphicon-remove",
+                    type: "delete",
                     permition: {
                         "must_be": {
                             right: ["pm"]

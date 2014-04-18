@@ -13,7 +13,7 @@
         template: JST['app/scripts/TeamCandidates/TeamCandidatesTpl.ejs'],   
 		
 		subscriptions: {
-            "TeamEditPage:RoleSetUp": "setRole" /*change channel name from "TeamEditPage:TabSelected"*/
+            "TeamEditPage:roleSetUp": "setRole" /*change channel name from "TeamEditPage:TabSelected"*/
         },
 		
 		 events: {

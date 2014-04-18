@@ -9,10 +9,10 @@
 		subscriptions: {
 			"TeamEditPage:Open": "initTeamCandidates",
 		},
-		
-		initTeamCandidates: function(team_info) {             
-            this.setElement(team_info["element"].find('.candidates')); 
-            this.collection = new module.Collection(team_info["team_id"]);
+
+		initTeamCandidates: function(data) {             
+            this.$el = data["element"].find('.candidates'); 
+            this.collection = new module.Collection(data["team_id"]);
             this.collection.on('sync', this.render, this);
 			this.collection.fetch(); /*fetch() from collection added here to boost performance*/
 			console.log(this.collection);

@@ -440,3 +440,21 @@ a:visited {
     background-color: rgba(180,220,180,.6);
     box-shadow: 0 0 10px rgba(0,0,0,.8);
 }
+
+/*=======dash board==============*/
+.back:before{
+    content: "\e091";
+}
+
+.team:before{
+    content: "T";
+}
+
+.config:before{
+    content: "\e136";
+}
+
+.delete:before{
+    content: "\e014";
+}
+/*======end dash board===========*/

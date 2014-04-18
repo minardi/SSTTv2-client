@@ -19,7 +19,7 @@
 
         initUsers: function(team_info) {
             this.team_id = team_info["team_id"];
-            this.setElement(team_info["element"].find('.team-members'));
+            this.$el = team_info["element"].find('.team-members');
 
             this.collection = new module.Collection(team_info["team_id"]);
             

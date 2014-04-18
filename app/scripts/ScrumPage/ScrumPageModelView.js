@@ -31,10 +31,14 @@
         },
 
         renderDefaultTab: function(project_id) {
+            var self = this;
             this.model.set({id_of_project: project_id});
             this.render();
-            this.element = this.$el.find("#ScrumPage"),
-            this.showPlanning();
+            this.element = this.$el.find("#ScrumPage");
+
+            setTimeout(function () {
+                self.showPlanning();
+            }, 0);
         },
         
          render: function() {

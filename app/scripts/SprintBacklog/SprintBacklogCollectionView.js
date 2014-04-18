@@ -16,7 +16,7 @@
         },
         
         initSprintBacklog: function(el_content) {
-            this.setElement(el_content);
+            this.$el = el_content;
             this.render();
         },
 
