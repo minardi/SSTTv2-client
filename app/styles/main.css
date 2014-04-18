@@ -189,6 +189,18 @@ ________________________________________________*/
     margin: 10px;
 }
 
+.btn-new-story{
+    height: 25px;
+    width: 25px;
+    background-color: rgba(255,255,255,0.7);
+    border-radius: 5px;
+}
+
+.btn-new-story:hover {
+    background-color: rgba(255,255,255,0.8);
+}
+
+
 /*Scrum page block
 ______________________________________*/
 a {
