@@ -1,20 +1,3 @@
 /* ProductBacklog */
 
-(function(module) {
-
-    module.Model = Backbone.Model.extend({
-
-        defaults: {
-        
-            "title": "",
-            "description": "",
-            "estimation": "",
-            "parent_id": "",
-            "status": "",
-            "type": "",
-            "project_id": ""   
-        }
-
-    });
-
-})(app.ProductBacklog);
+app.ProductBacklog.Model = app.BacklogItem.Model;
