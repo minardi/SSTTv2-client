@@ -12,7 +12,6 @@
 			this.url = type + '/for-project/' + project_id;
 			this.type = type;
 			this.on("sync", this.defineTypeAll, this);
-			this.fetch();
         },
 		
 		// this is tmp kostyl for giving the model type like if it was given by server

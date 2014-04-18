@@ -2,19 +2,6 @@
 
 (function(module) {
         
-    module.Model = Backbone.Model.extend({	     
-		 
-        defaults: {
-		
-			"title": "",
-			"description": "",
-			"estimation": "",
-			"parent_id": "",
-			"status": "",
-			"type": ""
-			
-        }		 
-
-    });
+    module.Model = Backbone.Model.extend({});
 
 })(app.BacklogItem);

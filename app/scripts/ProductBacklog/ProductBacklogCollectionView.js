@@ -12,47 +12,10 @@
         },
 
         initCollection: function (project_id) {
-            this.collection = new module.Collection(project_id);
-            this.collection.on('add', this.syncCollection, this);
-            this.collection.add([
-                {
-                    "title": "spr1",
-                    "description": "sprint",
-                    "estimation": "",
-                    "parent_id": "",
-                    "status": "active",
-                    "type": "stories",
-                    "project_id": project_id
-                },
-                {
-                    "title": "spr2",
-                    "description": "sprint",
-                    "estimation": "",
-                    "parent_id": "",
-                    "status": "active",
-                    "type": "stories",
-                    "project_id": project_id
-                },
-                {
-                    "title": "spr3",
-                    "description": "sprint",
-                    "estimation": "",
-                    "parent_id": "",
-                    "status": "active",
-                    "type": "stories",
-                    "project_id": project_id
-                },
-                {
-                    "title": "spr6",
-                    "description": "sprint",
-                    "estimation": "",
-                    "parent_id": "",
-                    "status": "active",
-                    "type": "stories",
-                    "project_id": project_id
-                }
-            ]);
-            //this.collection.fetch();
+            this.collection = new module.Collection('stories', project_id);
+            this.collection.on('sync', this.syncCollection, this);
+            
+            this.collection.fetch();
         },
 
         initProductBacklog: function(el_content) {
