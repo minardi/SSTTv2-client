@@ -11,16 +11,54 @@
             "ScrumPage:PlanningBoardSelected": "initProductBacklog"
         },
 
-        initCollection: function (project_id) {  
+        initCollection: function (project_id) {
             this.collection = new module.Collection(project_id);
-            this.collection.fetch();
-            this.collection.on('sync', this.syncCollection, this);
+            this.collection.on('add', this.syncCollection, this);
+            this.collection.add([
+                {
+                    "title": "spr1",
+                    "description": "sprint",
+                    "estimation": "",
+                    "parent_id": "",
+                    "status": "active",
+                    "type": "stories",
+                    "project_id": project_id
+                },
+                {
+                    "title": "spr2",
+                    "description": "sprint",
+                    "estimation": "",
+                    "parent_id": "",
+                    "status": "active",
+                    "type": "stories",
+                    "project_id": project_id
+                },
+                {
+                    "title": "spr3",
+                    "description": "sprint",
+                    "estimation": "",
+                    "parent_id": "",
+                    "status": "active",
+                    "type": "stories",
+                    "project_id": project_id
+                },
+                {
+                    "title": "spr6",
+                    "description": "sprint",
+                    "estimation": "",
+                    "parent_id": "",
+                    "status": "active",
+                    "type": "stories",
+                    "project_id": project_id
+                }
+            ]);
+            //this.collection.fetch();
         },
 
         initProductBacklog: function(el_content) {
             this.$el = el_content;
             this.$el.append(this.template());
-            this.$list = this.$(".product .story-list");
+            this.$list = this.$(".story-list");
             this.render();
         },
 
