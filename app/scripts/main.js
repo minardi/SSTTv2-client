@@ -21,8 +21,6 @@ var sstt = {},
 $(function() {
     "use strict";
 
-    app.ProductBacklog.Collection = app.BacklogItem.Collection;
-
     sstt.user = new app.User.ModelView({
         el: $(".user"),
         user_content: current_user_content
