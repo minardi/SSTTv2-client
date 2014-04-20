@@ -161,7 +161,7 @@ ________________________________________________*/
     float: right;
 
 }
-.backlog-box .story-list .story-box {
+.backlog-box .story-box {
     margin: 5px 20px;
     border: 1px solid rgba(0,0,0,0.5);
     box-shadow: 0px 0px 10px rgba(0,0,0, 0.3);
@@ -188,6 +188,20 @@ ________________________________________________*/
     vertical-align: middle;
     margin: 10px;
 }
+
+.btn-new-story{
+    height: 25px;
+    background-color: #39b3d7;
+    border-color: #269abc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    color: #FFF;
+}
+
+.btn-new-story:hover {
+    background-color: rgba(255,255,255,0.8);
+}
+
 
 /*Scrum page block
 ______________________________________*/
@@ -430,3 +444,63 @@ ____________________________________________*/
 a:visited {
     color: white;
 }
+
+.btn-info {
+    background-color: #0063E2;
+    border-color: #122F5A;
+}
+
+.app-wrapper .b-sidebar .dashboard {
+    background-color: rgba(180,220,180,.6);
+    box-shadow: 0 0 10px rgba(0,0,0,.8);
+}
+
+/*=======dash board==============*/
+.back:before{
+    content: "\e091";
+}
+
+.team:before{
+    content: "T";
+}
+
+.config:before{
+    content: "\e136";
+}
+
+.delete:before{
+    content: "\e014";
+}
+/*======end dash board===========*/
+
+/*BacklogItemEdit*/
+.edit-backlog-item {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    margin: -150px 0 0 -150px;
+    background-color: #ddeedd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,.8);
+    width: 300px;
+    height: 300px;
+    padding: 15px;
+
+}
+
+textarea {
+    resize: none;
+    min-height: 60px;
+    min-width: 250px;
+}
+
+.cancel_button, .save_button {
+    margin: 10px 0 0 30px;
+}
+
+p {
+    font-size: 16px;
+}
+
+/*BacklogItemEdit end*/

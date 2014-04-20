@@ -4,9 +4,13 @@
         
     module.Model = Backbone.Model.extend({       
         
-        defaults: {
-        	
-        },
+        defaults: { /*defaults filled */
+        	"first_name": "",
+		    "last_name": "",
+			"email": "",
+			"password": "",
+			"password_confirmation": ""
+        }
         
     });
 

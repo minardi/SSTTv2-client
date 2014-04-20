@@ -1,74 +1,77 @@
 /* TeamMembers */
 
 (function(module) {
-        
+
     module.CollectionView = Backbone.View.extend({
         
         template: JST['app/scripts/TeamMembers/TeamMembersCollectionTpl.ejs'],
 
-        initialize: function() {
-            mediator.sub("TeamEditPage:Open", this.initUsers, this);
+        subscriptions: {
+            "TeamEditPage:roleSetUp": "setRole",
+            "TeamCandidates:setTeamMember": "addToCollection",
+            "TeamEditPage:Open" : "initUsers"
         },
 
         events: {
             "click #save": "saveCollection",
         },
 
-        subscriptions: {
-            "TeamEditPage:TabSelected": "setMode",
-            "UserCandidate:addToProject": "addToCollection"            
-        },
 
-        initUsers: function(data) {
-            this.team_id = data["team_id"];
-            this.setElement(data["element"].find('.team-members'));
+        initUsers: function(team_info) {
+            this.team_id = team_info["team_id"];
+            this.$el = team_info["element"].find('.team-members');
 
-            this.collection = new module.Collection(data["team_id"]);
-            this.collection.fetch();
-
+            this.collection = new module.Collection(team_info["team_id"]);
+            
             this.collection.on("sync", this.render, this);
             this.collection.on("add", this.renderOne, this);
-        },     
 
-        setMode: function(new_mode) {
-            this.mode = new_mode;
+            this.collection.fetch();
         },
 
-        saveCollection: function() {
-            this.collection.each(function(model) {
-                model.save(null, {success: function() {mediator.pub("TeamMembers:Saved")},
-                                            error: function() {console.log("Save error")}});
-            });
-        },
-       
-        addToCollection: function(attributes) {
-            var exist_model = this.collection.findWhere({
-                                    first_name: attributes["first_name"],
-                                    last_name: attributes["last_name"]
-                              });
-
-            if (exist_model) {
-                exist_model.set("role", attributes["role"]); 
-            } else { 
-                attributes["role"] = this.mode;
-                attributes["team_id"] = this.team_id;
-                this.collection.add(attributes);
-            }
-        },
-
-        render: function() {
+         render: function() {
             this.$el.html(this.template());
-            this.collection.forEach(this.renderOne, this);
+            this.collection.each(this.renderOne, this);
+           
             return this;
         },
         
         renderOne: function(model) {
-            var team_members;
-            team_members = new module.ModelView({ model: model});
-            team_members.mode = this.mode;
-            this.$el.find(".team-members-list").append(team_members.render().el);    
-        }  
-        
+            var team_member;
+
+            team_member = new module.ModelView({ model: model});
+            team_member.role = this.role;
+            
+            this.$el.find(".team-members-list").append(team_member.render().el);
+        },     
+
+        saveCollection: function() {
+            this.collection.each(function(model) {
+                model.save(null, {success: function() {mediator.pub("TeamMembers:Saved")},
+                    error: function() {console.log("Save error")}});
+            });
+        },
+
+        setRole: function(new_role) {
+            this.role = new_role;
+        },
+      
+        addToCollection: function(candidate) {
+            
+            var exist_model = this.collection.findWhere({
+                                    first_name: candidate.first_name,
+                                    last_name: candidate.last_name
+                              });
+
+            if (exist_model) {
+                exist_model.set("role", candidate.role); 
+            } else { 
+                candidate.role = this.role;
+                candidate.team_id = this.team_id;
+                this.collection.add(candidate);
+            }
+        }
+
     });
 
 })(app.TeamMembers);

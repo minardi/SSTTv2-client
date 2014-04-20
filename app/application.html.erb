@@ -16,8 +16,8 @@
             };
         <% end %>
     </script>
-
-    <% if user_signed_in? %>
+    
+    <% if user_signed_in? && request.path == '/' %>
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     
@@ -51,17 +51,22 @@
         <script src="scripts/Projects/ProjectsModelView.js"></script>
         <script src="scripts/Projects/ProjectsCollectionView.js"></script>
 
-        <!-- module ProductBacklogStories-->
-        <script src="scripts/ProductBacklogStories/ProductBacklogStoriesModel.js"></script>
-        <script src="scripts/ProductBacklogStories/ProductBacklogStoriesCollection.js"></script>
-        <script src="scripts/ProductBacklogStories/ProductBacklogStoriesModelView.js"></script>
-        <script src="scripts/ProductBacklogStories/ProductBacklogStoriesCollectionView.js"></script>
+    
+        <!-- module BacklogItem-->
+        <script src="scripts/BacklogItem/BacklogItemModel.js"></script>
+        <script src="scripts/BacklogItem/BacklogItemCollection.js"></script>
+        
+        <!-- module ProductBacklog-->
+        <script src="scripts/ProductBacklog/ProductBacklogModel.js"></script>
+        <script src="scripts/ProductBacklog/ProductBacklogCollection.js"></script>
+        <script src="scripts/ProductBacklog/ProductBacklogModelView.js"></script>
+        <script src="scripts/ProductBacklog/ProductBacklogCollectionView.js"></script>
          
-        <!-- module SprintBacklogStories -->
-        <script src="scripts/SprintBacklogStories/SprintBacklogStoriesModel.js"></script>
-        <script src="scripts/SprintBacklogStories/SprintBacklogStoriesCollection.js"></script>
-        <script src="scripts/SprintBacklogStories/SprintBacklogStoriesModelView.js"></script>
-        <script src="scripts/SprintBacklogStories/SprintBacklogStoriesCollectionView.js"></script>
+        <!-- module SprintBacklog -->
+        <script src="scripts/SprintBacklog/SprintBacklogModel.js"></script>
+        <script src="scripts/SprintBacklog/SprintBacklogCollection.js"></script>
+        <script src="scripts/SprintBacklog/SprintBacklogModelView.js"></script>
+        <script src="scripts/SprintBacklog/SprintBacklogCollectionView.js"></script>
 
         <!-- module ScrumPage-->
         <script src="scripts/ScrumPage/ScrumPageModel.js"></script>
@@ -85,7 +90,7 @@
          
         <!-- module TeamEditPage-->
         <script src="scripts/TeamEditPage/TeamEditPageModel.js"></script>
-        <script src="scripts/TeamEditPage/TeamEditPageModelView.js"></script>      
+        <script src="scripts/TeamEditPage/TeamEditPageModelView.js"></script>   
 
         <!-- module TeamMembers-->
         <script src="scripts/TeamMembers/TeamMembersModel.js"></script>
@@ -98,15 +103,16 @@
         <script src="scripts/Teams/TeamsCollection.js"></script>
         <script src="scripts/Teams/TeamsModelView.js"></script>
         <script src="scripts/Teams/TeamsCollectionView.js"></script>
-         
-        <!-- module UserCandidates-->
-        <script src="scripts/UserCandidates/UserCandidatesModel.js"></script>
-        <script src="scripts/UserCandidates/UserCandidatesCollection.js"></script>
-        <script src="scripts/UserCandidates/UserCandidatesModelView.js"></script>
-        <script src="scripts/UserCandidates/UserCandidatesCollectionView.js"></script>
 
-        <!-- module Routing-->
-        <script src="scripts/Routing/Router.js"></script>
+        <!-- module TeamCandidates-->
+        <script src="scripts/TeamCandidates/TeamCandidatesModel.js"></script>
+        <script src="scripts/TeamCandidates/TeamCandidatesCollection.js"></script>
+        <script src="scripts/TeamCandidates/TeamCandidatesModelView.js"></script>
+        <script src="scripts/TeamCandidates/TeamCandidatesCollectionView.js"></script>
+         
+        <!-- module BacklogItemEdit-->
+        <script src="scripts/BacklogItemEdit/BacklogItemEditModel.js"></script>
+        <script src="scripts/BacklogItemEdit/BacklogItemEditModelView.js"></script>
          
         <!-- endbuild -->
     <% end %>

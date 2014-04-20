@@ -4,17 +4,18 @@ var sstt = {},
         User: {},
         Projects: {},
         ScrumPage: {},
-        ProductBacklogStories: {},
-        SprintBacklogStories: {},
+        ProductBacklog: {},
+        SprintBacklog: {},
         Projectinfo: {},
         DashBoard: {},
         ScrumBoard: {},
         TeamEditPage: {},
-        UserCandidates: {},
+        TeamCandidates: {},
         TeamMembers: {},
         Teams: {},        
-        empty: {},
-        Routing: {}
+        BacklogItem: {},
+        BacklogItemEdit: {},
+        empty: {}
     };
 
 $(function() {
@@ -38,9 +39,9 @@ $(function() {
         el: $(".b-sidebar")
     });
 
-    sstt.product_backlog = new app.ProductBacklogStories.CollectionView();
+    sstt.product_backlog = new app.ProductBacklog.CollectionView();
 
-    sstt.sprint_backlog = new app.SprintBacklogStories.CollectionView();
+    sstt.sprint_backlog = new app.SprintBacklog.CollectionView();
 
     sstt.scrum_board = new app.ScrumBoard.CollectionView();
 
@@ -59,9 +60,10 @@ $(function() {
         el: $(".b-main")
     });
 
-    sstt.user_candidates = new app.UserCandidates.CollectionView();
+    sstt.team_candidates = new app.TeamCandidates.CollectionView();
 
-    sstt.router = new app.Routing.Router();
-    Backbone.history.start({pushState: true});
+    sstt.backlog_item_edit = new app.BacklogItemEdit.ModelView({
+        el: $('.b-main')
+    });
 
 });

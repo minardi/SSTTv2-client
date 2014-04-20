@@ -14,28 +14,30 @@
         },
 
         subscriptions: {
-            "TeamEditPage:TabSelected": "setMode"
+            "TeamEditPage:roleSetUp": "setRole"
         },
        
         show: function() {
-            return (this.canRender()) ? this.$el.removeClass('hide') : this.$el.addClass('hide');
-        },
-        
-        canRender: function() {
-            return (this.model.get("role") === this.mode);  
+            this.canRender() ? this.$el.removeClass('hide'): 
+                                this.$el.addClass('hide');
         },
 
-        setMode: function(new_mode) {
-            this.mode = new_mode;
+        canRender: function() {
+            return (this.model.get("role") === this.role);  
+        },
+
+        setRole: function(new_role) {
+            this.role = new_role;
             this.show();
         },
 
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
             this.show();
+
             return this;
         }
 
     });
-
+    
 })(app.TeamMembers);

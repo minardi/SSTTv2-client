@@ -17,19 +17,29 @@
             "TeamPage:TeamSelected": "render",
             "DashBoard:ActiveBack": "removeTeamPage",
             "DashBoard:ActiveBackFromTeamEditPage": "removeTeamPage",
-             "TeamMembers:Saved": "showSaveMsg"
-        },     
+            "TeamMembers:Saved": "showSaveMsg"
+        }, 
+
+        render: function(team_id) {     
+            this.$el.append(this.template());           
+            mediator.pub("TeamEditPage:Open", { element: this.$el, 
+                                                team_id: team_id 
+                                                });            
+            this.showWatchers();
+
+            return this;
+        },       
 
         showWatchers: function () {            
-            mediator.pub("TeamEditPage:TabSelected", "watcher");
+            mediator.pub("TeamEditPage:roleSetUp", "watcher");
         },
 
         showDevelopers: function () {
-            mediator.pub("TeamEditPage:TabSelected", "developer");
+            mediator.pub("TeamEditPage:roleSetUp", "developer");
         },
 
         showTeachLeads: function () {
-            mediator.pub("TeamEditPage:TabSelected", "techlead");
+            mediator.pub("TeamEditPage:roleSetUp", "techlead");
         },         
         
         showSaveMsg: function() {
@@ -39,18 +49,12 @@
         hideConfirm: function() {
             this.$el.find("#save_confirm").addClass("hidden");
         },
-        
-        render: function(team_id) {            
-            this.$el.append(this.template());           
-            mediator.pub("TeamEditPage:Open", { element: this.$el, team_id: team_id });            
-            this.showWatchers();
-            return this;
-        },   
                
         removeTeamPage: function() {
             this.$el.removeClass("hiddenTeams");
             this.$el.find(".team-edit-page").remove();
         }
+        
     });
 
 })(app.TeamEditPage);

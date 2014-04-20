@@ -1,6 +1,6 @@
-/* SprintBacklogStories */
+/* SprintBacklog */
 
-(function(module) {
+/*(function(module) {
 
     module.Model = Backbone.Model.extend({
 
@@ -12,4 +12,6 @@
 
     });
 
-})(app.SprintBacklogStories);
+})(app.SprintBacklog);*/
+
+app.SprintBacklog.Model = app.BacklogItem.Model;
