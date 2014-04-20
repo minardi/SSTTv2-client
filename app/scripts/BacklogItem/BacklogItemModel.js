@@ -11,7 +11,7 @@
 			"estimation": "",
 			"parent_id": "",
 			"status": "",
-			"type": ""
+			"item_type": ""
         }		 
 
     });

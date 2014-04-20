@@ -14,9 +14,8 @@
 
         initCollection: function (project_id) {
             this.project_id = project_id;
-            this.collection = new module.Collection("stories", project_id);
+            this.collection = new module.Collection("story", "product", project_id);
             this.collection.on("sync", this.syncCollection, this);
-            
             this.collection.fetch();
         },
 
@@ -52,13 +51,13 @@
 
         addNewStory: function() {
             var story = new module.Model();
-            story.set({"type": "stories"});
+            story.set({"item_type": "story"});
             mediator.pub("ProductBacklog:CreateNewStory", story);
         },
 
         saveNewStory: function(story) { 
             var attributes = {
-                                "status": "Product",
+                                "status": "product",
                                 "parent_id": this.project_id
                             };
 
