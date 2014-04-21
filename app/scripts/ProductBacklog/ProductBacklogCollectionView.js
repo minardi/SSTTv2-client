@@ -14,9 +14,9 @@
 
         initCollection: function (project_id) {
             this.project_id = project_id;
-            this.collection = new module.Collection("stories", project_id);
-            this.collection.on("sync", this.syncCollection, this);
-            
+
+            this.collection = new module.Collection("story", "product", project_id);
+            this.collection.once("sync", this.render, this);
             this.collection.fetch();
         },
 
@@ -30,15 +30,9 @@
             this.render();
         },
 
-        syncCollection: function(){
-            this.isSync = true;
-            this.render();
-        },
-
         render: function() {
-            if(this.isSync){
-                this.collection.each(this.renderOne, this);
-            }
+		
+            this.collection.each(this.renderOne, this);
             
             return this;
         },
@@ -52,18 +46,21 @@
 
         addNewStory: function() {
             var story = new module.Model();
-            story.set({"type": "stories"});
+
+            story.set({"item_type": "story"});
             mediator.pub("ProductBacklog:CreateNewStory", story);
         },
 
         saveNewStory: function(story) { 
             var attributes = {
-                                "status": "Product",
+
+                                "status": "product",
                                 "parent_id": this.project_id
                             };
 
             story.set(attributes);
             this.collection.add(story);
+			story.save();
             this.renderOne(story);
         }
 

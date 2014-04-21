@@ -23,10 +23,7 @@
             var item_template;
 
             this.model = model;
-            //console.log(this.model);
-            item_template = JST['app/scripts/BacklogItemEdit/BacklogItemEdit' + this.model.get("type") + 'Tpl.ejs'];
-            //console.log(item_template);
-            //item_template = JST['app/scripts/BacklogItemEdit/BacklogItemEditstoriesTpl.ejs'];
+            item_template = JST['app/scripts/BacklogItemEdit/BacklogItemEdit' + this.model.get("item_type") + 'Tpl.ejs'];
             this.$el.find(".container").html(item_template());
             this.$el.find(".edit-backlog-item").removeClass("hidden");
             

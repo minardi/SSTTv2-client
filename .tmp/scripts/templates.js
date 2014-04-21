@@ -40,6 +40,16 @@ __p += '<span class = "title">Edit Story</span>\n<br /><br />\n<p>Title:</p>\n<i
 return __p
 };
 
+this["JST"]["app/scripts/BacklogItemEdit/BacklogItemEditstoryTpl.ejs"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __e = _.escape;
+with (obj) {
+__p += '<span class = "title">Edit Story</span>\r\n<br /><br />\r\n<p>Title:</p>\r\n<input class = "input" type = "text" id = "title"/>\r\n<p>Description:</p>\r\n<textarea class = "input" size = 300 id = "description"></textarea>\r\n';
+
+}
+return __p
+};
+
 this["JST"]["app/scripts/DashBoard/DashBoardCollectionTpl.ejs"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
