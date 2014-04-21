@@ -15,7 +15,7 @@
         initCollection: function (project_id) {
             this.project_id = project_id;
             this.collection = new module.Collection("story", "product", project_id);
-            this.collection.on("sync", this.syncCollection, this);
+            this.collection.once("sync", this.render, this);
             this.collection.fetch();
         },
 
@@ -29,15 +29,9 @@
             this.render();
         },
 
-        syncCollection: function(){
-            this.isSync = true;
-            this.render();
-        },
-
         render: function() {
-            if(this.isSync){
-                this.collection.each(this.renderOne, this);
-            }
+		
+            this.collection.each(this.renderOne, this);
             
             return this;
         },
@@ -63,6 +57,7 @@
 
             story.set(attributes);
             this.collection.add(story);
+			story.save();
             this.renderOne(story);
         }
 

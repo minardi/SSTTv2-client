@@ -3,6 +3,7 @@
 (function(module) {
         
     module.Model = Backbone.Model.extend({	     
+		urlRoot: '/backlog_items',
 		 
         defaults: {
 		
@@ -12,7 +13,7 @@
 			"parent_id": "",
 			"status": "",
 			"item_type": ""
-        }		 
+        }
 
     });
 
