@@ -30,6 +30,16 @@ __p += '<div class = "edit-backlog-item hidden">\n    <div class = "templates-co
 return __p
 };
 
+this["JST"]["app/scripts/BacklogItemEdit/BacklogItemEditstoriesTpl.ejs"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __e = _.escape;
+with (obj) {
+__p += '<span class = "title">Edit Story</span>\r\n<br /><br />\r\n<p>Title:</p>\r\n<input class = "input" type = "text" id = "title"/>\r\n<p>Description:</p>\r\n<textarea class = "input" size = 300 id = "description"></textarea>\r\n';
+
+}
+return __p
+};
+
 this["JST"]["app/scripts/DashBoard/DashBoardCollectionTpl.ejs"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
@@ -290,30 +300,6 @@ __p +=
 '\n' +
 ((__t = ( last_name )) == null ? '' : __t) +
 '\n';
-
-}
-return __p
-};
-
-this["JST"]["app/scripts/UserCandidates/UserCandidatesCollectionTpl.ejs"] = function(obj) {
-obj || (obj = {});
-var __t, __p = '', __e = _.escape;
-with (obj) {
-__p += '<div class="users-box-name">\n    All Users\n</div> \n<div class="users-list">\n</div>';
-
-}
-return __p
-};
-
-this["JST"]["app/scripts/UserCandidates/UserCandidatesTpl.ejs"] = function(obj) {
-obj || (obj = {});
-var __t, __p = '', __e = _.escape;
-with (obj) {
-__p +=
-((__t = ( first_name + " " + last_name + " " )) == null ? '' : __t) +
-'\n<em class="text-info"> ' +
-((__t = ( role )) == null ? '' : __t) +
-' </em>\n';
 
 }
 return __p

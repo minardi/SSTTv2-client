@@ -57,6 +57,7 @@
 
         saveStory: function(story) { 
             var attributes = {
+
                                 "status": "product",
                                 "parent_id": this.project_id
                             };
