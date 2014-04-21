@@ -13,7 +13,8 @@
         template: JST['app/scripts/ProductBacklog/ProductBacklogTpl.ejs'],
 
         events: {
-           "dblclick" : "moveToSprint"
+           "dblclick" : "moveToSprint",
+           "contextmenu" : "edit"
         },
 
         moveToSprint: function() {
@@ -24,6 +25,12 @@
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
             return this;
+        },
+
+        edit: function() {
+            event.preventDefault();
+            
+            mediator.pub("ProductBacklog:editStory", this.model);
         }
 
     });

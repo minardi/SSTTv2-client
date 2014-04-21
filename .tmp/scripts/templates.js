@@ -1,26 +1,6 @@
 this["JST"] = this["JST"] || {};
 
-this["JST"]["app/scripts/BacklogItemEdit/BacklogItemEditCollectionTpl.ejs"] = function(obj) {
-obj || (obj = {});
-var __t, __p = '', __e = _.escape;
-with (obj) {
-__p += '<p>Your content here.</p>\n\n';
-
-}
-return __p
-};
-
-this["JST"]["app/scripts/BacklogItemEdit/BacklogItemEditTpl.ejs"] = function(obj) {
-obj || (obj = {});
-var __t, __p = '', __e = _.escape;
-with (obj) {
-__p += '<div class = "edit-backlog-item hidden">\n    <div class = "container"></div>\n    <div class = "save_button btn btn-default">Save</div>\n    <div class = "cancel_button btn btn-default">Cancel</div>\n</div>';
-
-}
-return __p
-};
-
-this["JST"]["app/scripts/BacklogItemEdit/BacklogItemEditsprintTpl.ejs"] = function(obj) {
+this["JST"]["app/scripts/BacklogItemEdit/BacklogItemEditSprintTpl.ejs"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
@@ -30,11 +10,21 @@ __p += '<span class = "title">Edit Sprint</span>\n<br /><br />\n<p>Title:</p>\n<
 return __p
 };
 
-this["JST"]["app/scripts/BacklogItemEdit/BacklogItemEditstoryTpl.ejs"] = function(obj) {
+this["JST"]["app/scripts/BacklogItemEdit/BacklogItemEditStoryTpl.ejs"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
-__p += '<span class = "title">Edit Story</span>\n<br /><br />\n<p>Title:</p>\n<input class = "input" type = "text" id = "title"/>\n<p>Description:</p>\n<textarea class = "input" size = 300 id = "description"></textarea>\n';
+__p += '<span class = "title">Edit Story</span>\r\n<br /><br />\r\n<p>Title:</p>\r\n<input class = "input" type = "text" id = "title"/>\r\n<p>Description:</p>\r\n<textarea class = "input" size = 300 id = "description"></textarea>\r\n';
+
+}
+return __p
+};
+
+this["JST"]["app/scripts/BacklogItemEdit/BacklogItemEditTpl.ejs"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __e = _.escape;
+with (obj) {
+__p += '<div class = "edit-backlog-item hidden">\n    <div class = "templates-container"></div>\n    <div class = "save_button btn btn-default">Save</div>\n    <div class = "cancel_button btn btn-default">Cancel</div>\n</div>\n';
 
 }
 return __p
@@ -54,7 +44,7 @@ this["JST"]["app/scripts/ProductBacklog/ProductBacklogCollectionTpl.ejs"] = func
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
-__p += '<div class="backlog-box product">\n    <div class="backlog-box-name">   \n        ProductBacklog\n        <div class="backlog-box-actions">\n            <input class="add-new-story btn-new-story" type="button" value="+" />\n        </div>\n    </div> \n    <div class="backlogstory-list">\n    </div>\n</div>';
+__p += '<div class="backlog-box product">\n    <div class="backlog-box-name">   \n        ProductBacklog\n        <div class="backlog-box-actions">\n            <input class="add-new-story btn-new-story" type="button" value="+" />\n        </div>\n    </div> \n    <div class="backlogstory-list">\n    </div>\n</div>\n\n<div class="btn create-sprint">Create sprint</div>';
 
 }
 return __p
@@ -66,6 +56,27 @@ var __t, __p = '', __e = _.escape;
 with (obj) {
 __p +=
 ((__t = ( title )) == null ? '' : __t);
+
+}
+return __p
+};
+
+this["JST"]["app/scripts/ProductBacklogStories/ProductBacklogStoriesCollectionTpl.ejs"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __e = _.escape;
+with (obj) {
+__p += '<div class="backlog-box product">\n    <div class="backlog-box-name">   \n        ProductBacklog\n        <div class="backlog-box-actions">\n        </div>\n    </div> \n    <div class="story-list">\n    </div>\n</div>';
+
+}
+return __p
+};
+
+this["JST"]["app/scripts/ProductBacklogStories/ProductBacklogStoriesTpl.ejs"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __e = _.escape;
+with (obj) {
+__p +=
+((__t = ( name )) == null ? '' : __t);
 
 }
 return __p
@@ -168,6 +179,27 @@ __p +=
 return __p
 };
 
+this["JST"]["app/scripts/SprintBacklogStories/SprintBacklogStoriesCollectionTpl.ejs"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __e = _.escape;
+with (obj) {
+__p += '<div class="backlog-box sprint">\n    <div class="backlog-box-name"> \n        SprintBacklog\n        <div class="backlog-box-actions">\n        </div>\n    </div>\n    <div class="story-list">\n    </div>\n</div>';
+
+}
+return __p
+};
+
+this["JST"]["app/scripts/SprintBacklogStories/SprintBacklogStoriesTpl.ejs"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __e = _.escape;
+with (obj) {
+__p +=
+((__t = ( title )) == null ? '' : __t);
+
+}
+return __p
+};
+
 this["JST"]["app/scripts/TeamCandidates/TeamCandidatesCollectionTpl.ejs"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
@@ -258,6 +290,30 @@ __p +=
 '\n' +
 ((__t = ( last_name )) == null ? '' : __t) +
 '\n';
+
+}
+return __p
+};
+
+this["JST"]["app/scripts/UserCandidates/UserCandidatesCollectionTpl.ejs"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __e = _.escape;
+with (obj) {
+__p += '<div class="users-box-name">\n    All Users\n</div> \n<div class="users-list">\n</div>';
+
+}
+return __p
+};
+
+this["JST"]["app/scripts/UserCandidates/UserCandidatesTpl.ejs"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __e = _.escape;
+with (obj) {
+__p +=
+((__t = ( first_name + " " + last_name + " " )) == null ? '' : __t) +
+'\n<em class="text-info"> ' +
+((__t = ( role )) == null ? '' : __t) +
+' </em>\n';
 
 }
 return __p
