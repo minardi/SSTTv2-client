@@ -17,8 +17,10 @@
            "contextmenu" : "edit"
         },
 
+
         moveToSprint: function() {
             mediator.pub("ProductBacklog:MoveSprintBacklog", this.model);
+
             this.$el.remove();
         },
 
