@@ -43,7 +43,7 @@
 
         renderOne: function(story) {
             var story_view = new module.ModelView({model: story});
-
+            
             this.$list.append(story_view.render().el);
         },
 
@@ -58,13 +58,13 @@
         },
 
         saveStory: function(story) { 
-            if (story.model.get("item_type" === "story")) {
+            if (story.model.get("item_type") === "story") {
                 if(story["is_new"]) {
                     this.collection.add(story.model);
-                    story.model.save(); 
+                    story.model.save();
                     this.renderOne(story.model);
                 } else {
-                    story.model.save(); 
+                    story.model.save();
                 }
             }
         }

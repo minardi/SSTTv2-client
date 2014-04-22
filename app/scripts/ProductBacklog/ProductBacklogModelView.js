@@ -14,9 +14,12 @@
 
         events: {
            "dblclick" : "moveToSprint",
-           "contextmenu" : "edit"
+           "contextmenu" : "edit",
         },
 
+        initialize: function() {
+           this.model.on("change", this.render, this);
+        },
 
         moveToSprint: function() {
             mediator.pub("ProductBacklog:MoveSprintBacklog", this.model);
