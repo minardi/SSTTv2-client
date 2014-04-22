@@ -14,8 +14,12 @@
             "dblclick": "selectTeam",
         },
 
+        initialize: function (project_id) {
+
+        },
+
         selectTeam: function() {
-            mediator.pub("TeamPage:TeamSelected", this.model.id);
+            sstt.Router.navigate("/team-edit/" + this.model.get("id"), {trigger: true}); 
         },
 
         render: function() {

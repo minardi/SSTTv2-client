@@ -27,7 +27,8 @@
         },
 
         render: function() {
-            this.$el.append(this.template());
+            this.$el.html(this.template());
+            this.$list = this.$(".content");
             this.projectsCollection.each(this.renderOne, this);
             return this;
         },
@@ -36,7 +37,7 @@
             var project = new module.ModelView({
                 model: projectModel
             });
-            this.$el.find(".content").append(project.render().el);
+            this.$list.append(project.render().el);
         }
      
     });

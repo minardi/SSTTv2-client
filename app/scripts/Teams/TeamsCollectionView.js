@@ -7,43 +7,28 @@
         template: JST['app/scripts/Teams/TeamsCollectionTpl.ejs'],
 
         subscriptions: {
-            "DashBoard:ActiveTeam": "initTeam",
-            "TeamPage:TeamSelected": "hide",
-            "DashBoard:ActiveBack": "removeTeamPage",
-            "DashBoard:ActiveBackFromTeamEditPage": "show"
+            //"DashBoard:ActiveTeam": "initTeam"
         },
 
-        initTeam: function(project_id) {
-            this.teamsCollection = new module.Collection(project_id);
-            this.listenTo(this.teamsCollection, "sync", this.render);
-            this.teamsCollection.fetch(); 
+        initialize: function (options) {
+            this.collection = new module.Collection(options.project_id);
+            this.listenTo(this.collection, "sync", this.render);
+            this.collection.fetch();
         },
 
         render: function() {
-            this.$el.append(this.template());
-            this.teamsCollection.each(this.renderOne, this);
+            this.$el.html(this.template());
+            this.$teams = this.$(".teams");
+            this.collection.each(this.renderOne, this);
             return this;
         },
 
-        renderOne: function(projectModel) {
+        renderOne: function(model) {
             var project = new module.ModelView({
-                    model: projectModel
+                    model: model
                 });
-
-            this.$el.find(".content.team-page").append(project.render().el);
-        },
-
-        hide: function() {
-            this.$el.addClass("hiddenTeams");
-        },
-
-        removeTeamPage: function() {
-            this.$el.find(".team-page").remove();
-        },
-
-        show: function() {
-            this.$el.removeClass("hiddenTeams");
-        } 
+            this.$teams.append(project.render().el);
+        }
 
     });
 

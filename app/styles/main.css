@@ -504,3 +504,8 @@ p {
 }
 
 /*BacklogItemEdit end*/
+
+/*edit team page*/
+.active-role{
+    background-color: #FFF !important;
+}

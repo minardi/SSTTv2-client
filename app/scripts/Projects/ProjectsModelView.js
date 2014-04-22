@@ -17,6 +17,7 @@
 
         selectProject: function() {
             mediator.pub("ProjectPage:ProjectSelected", this.model.id);
+            //sstt.Router.navigate("project/"+ this.model.get("id") +"/teams", {trigger: true});
         },
         
         showProjectInfo: function() {
