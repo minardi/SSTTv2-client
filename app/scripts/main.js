@@ -21,6 +21,10 @@ var sstt = {},
 $(function() {
     "use strict";
 
+    app.ProductBacklog.Model = app.BacklogItem.Model;
+
+    app.ProductBacklog.Collection = app.BacklogItem.Collection;
+
     sstt.user = new app.User.ModelView({
         el: $(".user"),
         user_content: current_user_content
@@ -62,6 +66,8 @@ $(function() {
 
     sstt.team_candidates = new app.TeamCandidates.CollectionView();
 
-    sstt.backlog_item_edit = new app.BacklogItemEdit.ModelView();
+    sstt.backlog_item_edit = new app.BacklogItemEdit.ModelView({
+        el: $('.b-main')
+    });
 
 });
