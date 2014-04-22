@@ -15,6 +15,7 @@ var sstt = {},
         Teams: {},        
         BacklogItem: {},
         BacklogItemEdit: {},
+        Sprint: {},
         empty: {}
     };
 
@@ -30,7 +31,11 @@ $(function() {
         user_content: current_user_content
     });
 
-    sstt.project = new app.Projects.CollectionView({
+    sstt.project_info = new app.Projectinfo.ModelView({
+        el: $(".b-sidebar")
+    });
+
+    /*sstt.project = new app.Projects.CollectionView({
         el: $(".b-main")
     });
 
@@ -68,6 +73,6 @@ $(function() {
 
     sstt.backlog_item_edit = new app.BacklogItemEdit.ModelView({
         el: $('.b-main')
-    });
+    });*/
 
 });

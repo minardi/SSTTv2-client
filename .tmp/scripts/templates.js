@@ -141,7 +141,29 @@ this["JST"]["app/scripts/ScrumPage/ScrumPageTpl.ejs"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
-__p += '<div class="scrum-page-header nav scrum-page">\n    <div class="col-xs-4 tab" id="planning">\n        <span class = "glyphicon glyphicon-list-alt"></span>\n        Planning\n    </div>\n    \n    <div class="col-xs-4 tab" id="scrumboard">\n        <span class = "glyphicon glyphicon-tasks"></span>\n        Scrum Board\n    </div>\n    \n    <div class="col-xs-4 tab" id="stat" >\n        <span class = "glyphicon glyphicon-stats"></span>\n        Statistics\n    </div>\n</div>\n\n<div class="content scrum-page" id="ScrumPage"></div>\n';
+__p += '<div class="scrum-page-header nav scrum-page">\n    <div class="col-xs-4 tab" id="planning">\n        <span class = "glyphicon glyphicon-list-alt"></span>\n        Planning\n    </div>\n    \n    <div class="col-xs-4 tab" id="scrumboard">\n        <span class = "glyphicon glyphicon-tasks"></span>\n        Scrum Board\n    </div>\n    \n    <div class="col-xs-4 tab" id="stat" >\n        <span class = "glyphicon glyphicon-stats"></span>\n        Statistics\n    </div>\n</div>\n\n<div class="content scrum-page"></div>\n';
+
+}
+return __p
+};
+
+this["JST"]["app/scripts/Sprint/SprintCollectionTpl.ejs"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __e = _.escape;
+with (obj) {
+__p += '<select class="form-control list"></select>\n\n';
+
+}
+return __p
+};
+
+this["JST"]["app/scripts/Sprint/SprintTpl.ejs"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __e = _.escape;
+with (obj) {
+__p +=
+((__t = ( title)) == null ? '' : __t) +
+'\n\n';
 
 }
 return __p

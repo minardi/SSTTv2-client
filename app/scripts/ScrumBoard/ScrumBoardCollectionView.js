@@ -6,15 +6,14 @@
 
         template: JST['app/scripts/ScrumBoard/ScrumBoardCollectionTpl.ejs'],
         
-        subscriptions: {   
-            'ProjectPage:ProjectSelected': 'initCollection',      
+        subscriptions: {     
             'ScrumPage:ScrumBoardSelected': 'setElementAndRender',
             "ScrumBoard:MoveTask": "renderOne"
         },
-        
-        initCollection: function (project_id) {  
-            this.collection = new module.Collection(project_id);                            
-        },   
+
+        initialize: function (project_id) {
+            this.collection = new module.Collection(project_id);
+        },
             
         setElementAndRender: function(content_el) {           
             this.$el = content_el;
