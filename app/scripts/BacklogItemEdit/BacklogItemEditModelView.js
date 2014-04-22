@@ -15,8 +15,8 @@
         },
 
         subscriptions: {
-            "ProductBacklog:CreateNewItem" : "render",
-            "ProductBacklog:editStory" : "fillingFields"
+            "ProductBacklog:CreateNewItem" : "initItem",
+            "ProductBacklog:EditStory" : "fillingFields"
         },  
 
         events: {
@@ -24,31 +24,40 @@
             "click .cancel_button" : "cancelChanges"
         },
 
-        render: function(model) {
-            var item_template;
+        initItem: function(attributes) {
+            this.model = new module.Model();
+            this.model.set(attributes);      
+            this.is_new = true;
 
-            this.model = model;
-            item_template = this.innerTemplate[this.model.get("item_type")];
+            this.render();
+        },
 
-            this.$(".templates-container").html(item_template());
+        render: function() {
+            var type = this.model.get("item_type");
+                item_template = this.innerTemplate[type];
+
+            this.$(".edit-backlog-item").html(item_template());
             this.$(".edit-backlog-item").removeClass("hidden");
 
             return this;
         },
 
         fillingFields: function(model) {
-            var attribute = {};
+            this.model = model;
+            this.is_new = false;
 
-            this.render(model);
-            
-             this.$(".input").each(function(i, el) {
+            this.render();
+
+            this.$(".input").each(function(i, el) {
                 el.value = model.attributes[el.id];
             });
-
         },
 
         cancelChanges: function() {
-            mediator.pub("BacklogItemEdit:cancelChanges", this.model);
+            if((this.is_new) && (this.model.get("item_type") === "story")) {
+                this.model.destroy();
+            }
+
             this.hideView();
         },
 
@@ -61,13 +70,16 @@
 
             this.model.set(attribute);
             this.hideView();
-            mediator.pub("BacklogItemEdit:savedChanges", this.model);
+            mediator.pub("BacklogItemEdit:SavedChanges", {
+                                                            "model": this.model,
+                                                            "is_new": this.is_new
+                                                        });
         },
 
         hideView: function() {
             this.$(".edit-backlog-item").addClass("hidden");
         }
-
+        
     });
 
 })(app.BacklogItemEdit);
