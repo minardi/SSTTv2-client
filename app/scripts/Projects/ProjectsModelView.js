@@ -16,7 +16,9 @@
         },
 
         selectProject: function() {
-            mediator.pub("ProjectPage:ProjectSelected", this.model.id);
+            //mediator.pub("ProjectPage:ProjectSelected", this.model.id);
+
+            sstt.Router.navigate( "project/" + this.model.get("id") + "/scrum-page/planning", {trigger: true});
             //sstt.Router.navigate("project/"+ this.model.get("id") +"/teams", {trigger: true});
         },
         
