@@ -1,5 +1,15 @@
 this["JST"] = this["JST"] || {};
 
+this["JST"]["app/scripts/BacklogItemEdit/BacklogItemEditCollectionTpl.ejs"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __e = _.escape;
+with (obj) {
+__p += '<p>Your content here.</p>\r\n\r\n';
+
+}
+return __p
+};
+
 this["JST"]["app/scripts/BacklogItemEdit/BacklogItemEditSprintTpl.ejs"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
@@ -300,6 +310,30 @@ __p +=
 '\n' +
 ((__t = ( last_name )) == null ? '' : __t) +
 '\n';
+
+}
+return __p
+};
+
+this["JST"]["app/scripts/UserCandidates/UserCandidatesCollectionTpl.ejs"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __e = _.escape;
+with (obj) {
+__p += '<div class="users-box-name">\r\n    All Users\r\n</div> \r\n<div class="users-list">\r\n</div>';
+
+}
+return __p
+};
+
+this["JST"]["app/scripts/UserCandidates/UserCandidatesTpl.ejs"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __e = _.escape;
+with (obj) {
+__p +=
+((__t = ( first_name + " " + last_name + " " )) == null ? '' : __t) +
+'\r\n<em class="text-info"> ' +
+((__t = ( role )) == null ? '' : __t) +
+' </em>\r\n';
 
 }
 return __p
