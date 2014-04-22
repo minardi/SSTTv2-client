@@ -51,19 +51,21 @@
             var attributes = {
                                 "status": "product",
                                 "item_type": "story",
-                                "parent_id": this.parent_id
+                                "parent_id": this.project_id
                             };
 
             mediator.pub("ProductBacklog:CreateNewItem", attributes);
         },
 
-        saveStory: function(data) { 
-            if(data["is_new"]) {
-                this.collection.add(data.model);
-                this.renderOne(data.model);
-            } else {
-                //story.save(); 
-                console.log('saved');
+        saveStory: function(story) { 
+            if (story.model.get("item_type" === "story")) {
+                if(story["is_new"]) {
+                    this.collection.add(story.model);
+                    story.model.save(); 
+                    this.renderOne(story.model);
+                } else {
+                    story.model.save(); 
+                }
             }
         }
 
