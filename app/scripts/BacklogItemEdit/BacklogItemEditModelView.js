@@ -4,7 +4,10 @@
         
     module.ModelView = Backbone.View.extend({        
         
+        _modelBinder: undefined,
+
         template: JST['app/scripts/BacklogItemEdit/BacklogItemEditTpl.ejs'],
+
         innerTemplate: {
             "story" : JST['app/scripts/BacklogItemEdit/BacklogItemEditStoryTpl.ejs'],
             "sprint" : JST['app/scripts/BacklogItemEdit/BacklogItemEditSprintTpl.ejs']
@@ -15,8 +18,9 @@
         },
 
         subscriptions: {
-            "ProductBacklog:CreateNewItem" : "render",
-            "ProductBacklog:editStory" : "fillingFields"
+            "ProductBacklog:CreateNewItem" : "initItem",
+            "ProductBacklog:EditStory" : "fillingFields",
+            "ProductBacklog:SaveSprint" : "fillingFields"
         },  
 
         events: {
@@ -24,49 +28,67 @@
             "click .cancel_button" : "cancelChanges"
         },
 
-        render: function(model) {
-            var item_template;
+        initItem: function(attributes) {
+            this.model = new module.Model();
+            this.model.set(attributes);
+            this._modelBinder = new Backbone.ModelBinder();
 
-            this.model = model;
-            item_template = this.innerTemplate[this.model.get("item_type")];
-            this.$(".templates-container").html(item_template());
+            this.is_new = true;
+            
+            this.render();
+        },
+
+        render: function() {
+            var type = this.model.get("item_type");
+                item_template = this.innerTemplate[type];
+                
+
+            this.previous_model = this.model.clone();
+
+            this.$(".edit-backlog-item").html(item_template());
             this.$(".edit-backlog-item").removeClass("hidden");
+
+            this._modelBinder.bind(this.model, this.el);
 
             return this;
         },
 
         fillingFields: function(model) {
-            var attribute = {};
+            this.model = model;
+            this.is_new = false;
+            this._modelBinder = new Backbone.ModelBinder();
 
-            this.render(model);
-            
-             this.$(".input").each(function(i, el) {
-                el.value = model.attributes[el.id];
-            });
-
+            this.render();
         },
 
         cancelChanges: function() {
-            mediator.pub("BacklogItemEdit:cancelChanges", this.model);
+            if(this.is_new) {
+                this.model.destroy();
+            } else {
+                console.log(this.model);
+                this.model = this.previous_model;
+                console.log(this.model);
+            }
+
             this.hideView();
         },
 
         saveChanges: function() {
-            var attribute = {};
-
-            this.$(".input").each(function(i, el) {
-                attribute[el.id] = el.value;
-            });
-
-            this.model.set(attribute);
             this.hideView();
-            mediator.pub("BacklogItemEdit:savedChanges", this.model);
+            mediator.pub("BacklogItemEdit:SavedChanges", {
+                                                            "model": this.model,
+                                                            "is_new": this.is_new
+                                                        });
         },
 
         hideView: function() {
             this.$(".edit-backlog-item").addClass("hidden");
-        }
+        },
 
+        close: function(){
+            this._modelBinder.unbind();
+        },
+        
     });
 
 })(app.BacklogItemEdit);

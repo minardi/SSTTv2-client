@@ -7,12 +7,20 @@
         template: JST['app/scripts/SprintBacklog/SprintBacklogCollectionTpl.ejs'],  
 
         subscriptions: {
+            "ProjectPage:ProjectSelected": "initCollection",
             "ScrumPage:PlanningBoardSelected": "initSprintBacklog",
-            "ProductBacklog:MoveSprintBacklog": "addBacklogItem"
+            "ProductBacklog:MoveSprintBacklog": "addBacklogItem",
+            "BacklogItemEdit:SavedChanges": "startSprint"
         },
+/*
+        events: {
+            "click .start-sprint": "addSprint"
+        },
+*/
+        initCollection: function (project_id) {
+            this.parent_id = project_id;
 
-        initialize: function() {
-            this.collection = new module.Collection("stories");
+            this.collection = new module.Collection("stories", "sprint", project_id);
         },
         
         initSprintBacklog: function(el_content) {
@@ -28,6 +36,9 @@
         render: function() {
             this.$el.append(this.template());
             this.$list = this.$(".sprintstory-list");
+
+            this.$(".start-sprint").on("click", this.addSprint);
+
             return this;
         },
 
@@ -37,8 +48,23 @@
             });
 
             this.$list.append(backlogItemView.render().el);
-        }
+        },
 
+        addSprint: function() {
+            var attributes = {
+                "item_type": "sprint",
+                "parent_id": this.parent_id
+            };
+            
+            mediator.pub("ProductBacklog:CreateNewItem", attributes);
+        },
+
+        startSprint: function(sprint) {
+            if (sprint.model.get("item_type") === "sprint") {
+                //some unfinished actions
+            }
+        }
+        
     });
 
 })(app.SprintBacklog);

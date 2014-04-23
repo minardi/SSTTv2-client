@@ -3,7 +3,10 @@
 <head>
     <title>SSTaskTracking</title>
 
-    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+    <% if request.path == '/' %>
+        <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+    <% end %>
+
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
 
@@ -34,6 +37,7 @@
         <script src="bower_components/underscore/underscore.js"></script>
         <script src="bower_components/backbone/backbone.js"></script>
         <script src="lib/backbone-mediator.js"></script>
+        <script src="lib/backbone-modelBinder.js"></script>
         <!-- endbuild -->
     
         <!-- build:js({.tmp,app}) scripts/main.js -->

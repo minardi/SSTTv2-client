@@ -9,29 +9,31 @@
         subscriptions: {
             "ProjectPage:ProjectSelected": "initCollection",
             "ScrumPage:PlanningBoardSelected": "initProductBacklog",
-            "BacklogItemEdit:savedChanges": "saveStory",
-            "BacklogItemEdit:cancelChanges": "removeEmptyItem",
-            "ProductBacklog:RemoveStory": "removeStory"
+            "ProductBacklog:RemoveStory": "removeStory",
+            "BacklogItemEdit:SavedChanges": "saveStory"
         },
+
+        /*events: {
+            "click .add-new-story": "addStory",
+        },*/
 
         initCollection: function (project_id) {
             this.project_id = project_id;
 
             this.collection = new module.Collection("story", "product", project_id);
             this.collection.once("sync", this.render, this);
-            this.collection.on("add", this.render, this);
+            this.collection.on("destroy", this.removeStory, this);
 
             this.collection.fetch();
         },
 
         initProductBacklog: function(el_content) {
+            //this.setElement(el_content);
             this.$el = el_content;
+            //this.$(".backlog-box .product").remove();
             this.$el.append(this.template());
-
-            this.$(".add-new-story").on("click", this.addStory);
-            this.$(".create-sprint").on("click", this.addSprint);
-
-            this.$list = this.$(".product .backlogstory-list");
+            this.$('.add-new-story').on('click', jQuery.proxy(this.addStory, this));
+            this.$list = this.$(".backlogstory-list");
 
             this.render();
         },
@@ -43,52 +45,33 @@
             return this;
         },
 
-        renderOne: function(story_model) {
-            var story = new module.ModelView({model: story_model});
-
-            this.$list.append(story.render().el);
+        renderOne: function(story) {
+            var story_view = new module.ModelView({model: story});
+            
+            this.$list.append(story_view.render().el);
         },
 
         addStory: function() {
-            var story = new module.Model();
+            console.log(this.project_id);
+            var attributes = {
+                                "status": "product",
+                                "item_type": "story",
+                                "parent_id": this.project_id
+                            };
 
-            story.set({"item_type": "story"});
-            mediator.pub("ProductBacklog:CreateNewItem", story);
+            mediator.pub("ProductBacklog:CreateNewItem", attributes);
         },
 
         saveStory: function(story) { 
-            var attributes = {
-
-                                "status": "product",
-                                "parent_id": this.project_id
-                            };
-
-            story.set(attributes);
-            this.collection.add(story);
-            story.save();
-        },
-//what about sprint?????
-        removeEmptyItem: function(item) {
-           if (item.attributes["item_type"] === "story") {
-                this.collection.remove(item);
+            if (story.model.get("item_type") === "story") {
+                if(story["is_new"]) {
+                    this.collection.add(story.model);
+                    story.model.save();
+                    this.renderOne(story.model);
+                } else {
+                    story.model.save();
+                }
             }
-        },
-
-        addSprint: function() {
-            var new_sprint = new module.Model();
-
-            new_sprint.set({"item_type": "sprint"});
-            mediator.pub("ProductBacklog:CreateNewItem", new_sprint);
-        },
-
-        saveSprint: function(sprint) { 
-            var attributes = {
-                                "parent_id": this.project_id
-                            };
-
-            sprint.set(attributes);
-/*            this.collection.add(sprint);
-            sprint.save();*/
         },
 
         removeStory: function(model) {

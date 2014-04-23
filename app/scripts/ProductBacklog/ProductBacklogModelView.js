@@ -23,6 +23,10 @@
             "ProductBacklog:SelectedStory": "hideDeleteBtn"
         },
 
+        initialize: function() {
+            this.model.on("change", this.render, this);
+        },
+
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
             this.$story_delete_btn = this.$(".story-delete-btn");
@@ -37,7 +41,7 @@
 
         edit: function() {
             event.preventDefault();
-            
+
             mediator.pub("ProductBacklog:editStory", this.model);
         },
 
@@ -52,7 +56,6 @@
 
         removeStory: function(){
             this.model.destroy();
-            mediator.pub("ProductBacklog:RemoveStory", this.model);
             this.remove();
         }
 
