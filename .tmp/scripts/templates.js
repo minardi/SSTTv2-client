@@ -127,11 +127,11 @@ this["JST"]["app/scripts/ScrumBoard/ScrumBoardTpl.ejs"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
-__p +=
+__p += '<div class="task-info">\n\t<div class="arrow-left">  < </div>\n\t' +
 ((__t = ( title )) == null ? '' : __t) +
-'<br>\n' +
+'<br>' +
 ((__t = ( description )) == null ? '' : __t) +
-'\n\n';
+'\n\t<div class="arrow-right"> > </div>\n</div>\n\n';
 
 }
 return __p

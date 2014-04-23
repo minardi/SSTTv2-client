@@ -9,26 +9,35 @@
         subscriptions: {   
             'ProjectPage:ProjectSelected': 'initCollection',      
             'ScrumPage:ScrumBoardSelected': 'setElementAndRender',
-            "ScrumBoard:MoveTask": "renderOne"
+            "ScrumBoard:moveTask": "renderOne"
         },
+		
+		/*initialize: function()  {
+			this.model.on("change", this.renderOne, this);
+		},*/
         
-        initCollection: function (project_id) {  
-            this.collection = new module.Collection(project_id);                            
+        initCollection: function (sprint_id) {  
+            this.collection = new module.Collection("task", "todo", sprint_id);  
         },   
             
         setElementAndRender: function(content_el) {           
-            this.$el = content_el;
+            this.setElement(content_el);
+			this.collection.on('sync', this.renderEach, this);
             this.collection.fetch();   
-            this.collection.on('sync', this.render, this);                           
+			console.log(this.collection);
         },
 
-        render: function () {
+        renderEach: function () {
             this.$el.html(this.template());
             this.collection.each(this.renderOne,this);
             return this;
         },
 
-        renderOne: function (task_model) {           
+        renderOne: function (task_model) {
+            var task = new module.ModelView({
+                    model: task_model
+                });
+            this.$el.find(".todo").append(task.render().el);            
         }
 
     });
