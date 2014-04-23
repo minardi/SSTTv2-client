@@ -52,7 +52,6 @@
         },
 
         addStory: function() {
-            console.log(this.project_id);
             var attributes = {
                                 "status": "product",
                                 "item_type": "story",
