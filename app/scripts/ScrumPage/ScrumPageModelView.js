@@ -17,9 +17,9 @@
             "DashBoard:ActiveBack": "removeScrumPage"
         },
 
-        showPlanning: function() {
+        showPlanning: function(project_id) {
             this.element.html("");
-            mediator.pub("ScrumPage:PlanningBoardSelected", this.element, this.model.get("id_of_project"));
+            mediator.pub("ScrumPage:PlanningBoardSelected", this.element, project_id);
         },
 
         showScrum: function() {
@@ -31,14 +31,10 @@
         },
 
         renderDefaultTab: function(project_id) {
-            var self = this;
-            this.model.set({id_of_project: project_id});
             this.render();
             this.element = this.$el.find("#ScrumPage");
 
-            setTimeout(function () {
-                self.showPlanning();
-            }, 0);
+            this.showPlanning(project_id);
         },
         
          render: function() {

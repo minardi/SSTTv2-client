@@ -7,35 +7,31 @@
         template: JST['app/scripts/ProductBacklog/ProductBacklogCollectionTpl.ejs'],
 
         subscriptions: {
-            "ProjectPage:ProjectSelected": "initCollection",
-            "ScrumPage:PlanningBoardSelected": "initProductBacklog",
+            "PlanningBoard:InitProductBacklog": "initProductBacklog",
             "ProductBacklog:RemoveStory": "removeStory",
             "BacklogItemEdit:SavedChanges": "saveStory"
         },
 
-        /*events: {
+        events: {
             "click .add-new-story": "addStory",
-        },*/
+        },
 
-        initCollection: function (project_id) {
+        initProductBacklog: function(elem, project_id) {
+            this.setElement(elem);
             this.project_id = project_id;
 
-            this.collection = new module.Collection("story", "product", project_id);
+            this.$el.append(this.template());
+            this.$list = this.$(".backlogstory-list");
+
+            this.initCollection();
+        },
+
+        initCollection: function () {
+            this.collection = new module.Collection("story", "product", this.project_id);
             this.collection.once("sync", this.render, this);
             this.collection.on("destroy", this.removeStory, this);
 
             this.collection.fetch();
-        },
-
-        initProductBacklog: function(el_content) {
-            //this.setElement(el_content);
-            this.$el = el_content;
-            //this.$(".backlog-box .product").remove();
-            this.$el.append(this.template());
-            this.$('.add-new-story').on('click', jQuery.proxy(this.addStory, this));
-            this.$list = this.$(".backlogstory-list");
-
-            this.render();
         },
 
         render: function() {
@@ -52,7 +48,6 @@
         },
 
         addStory: function() {
-            console.log(this.project_id);
             var attributes = {
                                 "status": "product",
                                 "item_type": "story",

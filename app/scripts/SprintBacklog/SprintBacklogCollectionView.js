@@ -7,42 +7,35 @@
         template: JST['app/scripts/SprintBacklog/SprintBacklogCollectionTpl.ejs'],  
 
         subscriptions: {
-            "ProjectPage:ProjectSelected": "initCollection",
-            "ScrumPage:PlanningBoardSelected": "initSprintBacklog",
+            "PlanningBoard:InitSprintBacklog": "initSprintBacklog",
             "ProductBacklog:MoveSprintBacklog": "addBacklogItem",
             "BacklogItemEdit:SavedChanges": "startSprint"
         },
-/*
+
         events: {
             "click .start-sprint": "addSprint"
         },
-*/
-        initCollection: function (project_id) {
+
+        initSprintBacklog: function(elem, project_id) {
+            this.setElement(elem);
             this.parent_id = project_id;
 
-            this.collection = new module.Collection("stories", "sprint", project_id);
+            this.$el.append(this.template());
+            this.$list = this.$(".sprintstory-list");
+
+            this.initCollection(project_id);
         },
-        
-        initSprintBacklog: function(el_content) {
-            this.$el = el_content;
-            this.render();
+
+        initCollection: function (project_id) {
+            this.collection = new module.Collection("stories", "sprint", project_id);
         },
 
         addBacklogItem: function(backlogItem) {
             this.collection.addItem(backlogItem.toJSON());
-            this.renderSprintBacklogItem(backlogItem);
+            this.renderOne(backlogItem);
         },
 
-        render: function() {
-            this.$el.append(this.template());
-            this.$list = this.$(".sprintstory-list");
-
-            this.$(".start-sprint").on("click", this.addSprint);
-
-            return this;
-        },
-
-        renderSprintBacklogItem: function (backlogItem) {
+        renderOne: function (backlogItem) {
             var backlogItemView = new module.ModelView({
                 model: backlogItem
             });

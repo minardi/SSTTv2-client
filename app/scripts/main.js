@@ -15,6 +15,7 @@ var sstt = {},
         Teams: {},        
         BacklogItem: {},
         BacklogItemEdit: {},
+        PlanningBoard: {},
         empty: {}
     };
 
@@ -65,5 +66,7 @@ $(function() {
     sstt.backlog_item_edit = new app.BacklogItemEdit.ModelView({
         el: $('.b-main')
     });
+
+    sstt.planning_Board = new app.PlanningBoard.ModelView();
 
 });
