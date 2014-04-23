@@ -6,20 +6,15 @@
 
         template: JST['app/scripts/ScrumBoard/ScrumBoardCollectionTpl.ejs'],
         
-        subscriptions: {   
-            'ProjectPage:ProjectSelected': 'initCollection',      
-            'ScrumPage:ScrumBoardSelected': 'setElementAndRender',
+        subscriptions: {
             "ScrumBoard:TaskMoved": "renderOne"
         },
         
-        initCollection: function (project_id) {  
+        initialize: function (options) {  
             this.collection = new module.Collection();  
-			this.collection.url = "backlog_items/get_tasks/" + project_id;
-        },   
-            
-        setElementAndRender: function(content_el) {           
-            this.setElement(content_el);
-			this.collection.on('sync', this.renderEach, this);
+			this.collection.url = "backlog_items/get_tasks/" + options.project_id;
+
+            this.collection.on('sync', this.render, this);
             this.collection.fetch();
         },
 

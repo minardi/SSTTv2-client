@@ -4,7 +4,9 @@ this["JST"]["app/scripts/BacklogItemEdit/BacklogItemEditSprintTpl.ejs"] = functi
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
-__p += '    <span class = "title">Edit Sprint</span>\n    <br /><br />\n    <p>Title:</p>\n    <input class = "input" type = "text" name = "title"/>\n\n    <p>Description:</p>\n    <textarea class = "input" size = 300 name = "description"></textarea>\n\n    <p>Start:</p>\n    <input class = "input" type = "text" name = "title"/>\n\n    <p>End:</p>\n    <input class = "input" type = "text" name = "title"/>\n    <div class = "save_button btn btn-default">Start sprint</div>\n    <div class = "cancel_button btn btn-default">Cancel</div>\n\n';
+__p += '    <span class = "title">Edit Sprint</span>\n    <br /><br />\n    <p>Title:</p>\n    <input class = "input" type = "text" name = "title" value = "' +
+((__t = ( title )) == null ? '' : __t) +
+'"/>\n\n    <p>Description:</p>\n    <textarea class = "input" size = 300 name = "description"></textarea>\n\n    <p>Start:</p>\n    <input class = "input" type = "text" name = "title"/>\n\n    <p>End:</p>\n    <input class = "input" type = "text" name = "title"/>\n    <div class = "save_button btn btn-default">Start sprint</div>\n    <div class = "cancel_button btn btn-default">Cancel</div>\n\n';
 
 }
 return __p
@@ -14,7 +16,11 @@ this["JST"]["app/scripts/BacklogItemEdit/BacklogItemEditStoryTpl.ejs"] = functio
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
-__p += '    <span class = "title">Edit Story</span>\n    <br /><br />\n    <p>Title:</p>\n    <input class = "input" type = "text" name = "title"/>\n\n    <p>Description:</p>\n    <textarea class = "input" size = 300 name = "description"></textarea>\n\n    <div class = "save_button btn btn-default">Save</div>\n    <div class = "cancel_button btn btn-default">Cancel</div>\n\n';
+__p += '    <span class = "title">Edit Story</span>\n    <br /><br />\n    <p>Title:</p>\n    <input class = "input" type = "text" name = "title" value = "' +
+((__t = ( title )) == null ? '' : __t) +
+'" />\n\n    <p>Description:</p>\n    <textarea class = "input" size = 300 name = "description">' +
+((__t = ( description )) == null ? '' : __t) +
+'</textarea>\n\n    <div class = "save_button btn btn-default">Save</div>\n    <div class = "cancel_button btn btn-default">Cancel</div>\n\n';
 
 }
 return __p
@@ -55,7 +61,8 @@ obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
 __p +=
-((__t = ( title )) == null ? '' : __t);
+((__t = ( title )) == null ? '' : __t) +
+'<button class="btn btn-danger story-delete-btn hidden">x</button>';
 
 }
 return __p
@@ -107,7 +114,7 @@ this["JST"]["app/scripts/ScrumBoard/ScrumBoardCollectionTpl.ejs"] = function(obj
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
-__p += '<div class = "panel-body tasks-header">\n    <div class="header-todo">To Do</div>\n    <div class="header-in-progress">In progress</div>\n    <div class="header-to-verify">To verify</div>\n    <div class="header-done last">Done</div>\n</div>\n\n<div class = "panel-body tasks">\n    <div class="todo">\n    </div>\n\n    <div class="in-progress">\n    </div>\n\n    <div class="to-verify">\n    </div>\n\n    <div class="done last">\n    </div>\n</div>\n';
+__p += '<div class = "panel-body tasks-header">\n    <div class="header-todo">To Do</div>\n    <div class="header-in-progress">In progress</div>\n    <div class="header-to-verify">To verify</div>\n    <div class="header-done last">Done</div>\n</div>\n\n<div class = "panel-body tasks">\n    <div class="todo">\n    </div>\n\n    <div class="in-progress">\n    </div>\n\n    <div class="to-verify">\n    </div>\n\n    <div class="done">\n    </div>\n</div>\n';
 
 }
 return __p
@@ -163,7 +170,7 @@ this["JST"]["app/scripts/SprintBacklog/SprintBacklogCollectionTpl.ejs"] = functi
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
-__p += '<div class="backlog-box sprint">\n    <div class="backlog-box-name"> \n        SprintBacklog\n        <div class="backlog-box-actions">\n        </div>\n    </div>\n    <div class="sprintstory-list"></div>\n\n    \n</div>\n\n<div class="btn btn-info start-sprint">Start sprint</div>\n\n';
+__p += '<div class="backlog-box sprint">\n    <div class="backlog-box-name"> \n        SprintBacklog\n        <div class="backlog-box-actions"></div>\n    </div>\n\n    <div class="sprintstory-list"></div>\n</div>\n\n<div class="btn btn-info start-sprint">Start sprint</div>\n\n';
 
 }
 return __p

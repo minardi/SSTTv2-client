@@ -302,6 +302,14 @@ ________________________________________________*/
     box-shadow: 0 0 20px rgba(20,100,20,0.9);
 }
 
+.left .task .arrow-left{
+    display: none;
+}
+
+.right .task .arrow-right{
+    display: none;
+}
+
 
 .arrow-left, .arrow-right {
     opacity: 0.5;
@@ -535,3 +543,7 @@ p {
     border-radius: 0;
 }
 /*ProductBacklog end*/
+
+.start-sprint{
+    float: right;
+}
