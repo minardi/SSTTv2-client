@@ -19,6 +19,7 @@
             this.collection = new module.Collection("story", "product", options.project_id);
 
             this.collection.once("sync", this.render, this);
+            this.collection.on("destroy", this.removeStory, this);
 
             this.collection.fetch();
         },
@@ -41,6 +42,7 @@
         },
 
         addStory: function() {
+            console.log(this.project_id);
             var attributes = {
                                 "status": "product",
                                 "item_type": "story",
@@ -60,6 +62,10 @@
                     story.model.save();
                 }
             }
+        },
+
+        removeStory: function(model) {
+            this.collection.remove(model);
         }
 
     });

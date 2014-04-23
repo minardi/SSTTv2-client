@@ -515,3 +515,23 @@ p {
 .active-role{
     background-color: #FFF !important;
 }
+
+/*ProductBacklog*/
+
+.btn-new-story {
+    margin-bottom: 0;
+    line-height: normal;
+}
+
+.story-box {
+    overflow: hidden;
+}
+
+.story-delete-btn {
+    float: right;
+    height: 22px;
+    width: 22px;
+    padding: 0;
+    border-radius: 0;
+}
+/*ProductBacklog end*/

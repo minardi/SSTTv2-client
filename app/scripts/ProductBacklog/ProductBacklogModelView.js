@@ -15,10 +15,22 @@
         events: {
            "dblclick" : "moveToSprint",
            "contextmenu" : "edit",
+           "click": "storySelected",
+           "click .story-delete-btn": "removeStory"
+        },
+
+        subscriptions: {
+            "ProductBacklog:SelectedStory": "hideDeleteBtn"
         },
 
         initialize: function() {
             this.model.on("change", this.render, this);
+        },
+
+        render: function() {
+            this.$el.html(this.template(this.model.toJSON()));
+            this.$story_delete_btn = this.$(".story-delete-btn");
+            return this;
         },
 
         moveToSprint: function() {
@@ -27,15 +39,24 @@
             this.$el.remove();
         },
 
-        render: function() {
-            this.$el.html(this.template(this.model.toJSON()));
-            return this;
-        },
-
         edit: function() {
             event.preventDefault();
-            
-            mediator.pub("ProductBacklog:EditStory", this.model);
+
+            mediator.pub("ProductBacklog:editStory", this.model);
+        },
+
+        storySelected: function() {
+            mediator.pub("ProductBacklog:SelectedStory");
+            this.$story_delete_btn.removeClass('hidden');
+        },
+
+        hideDeleteBtn: function() {
+            this.$story_delete_btn.addClass("hidden");
+        },
+
+        removeStory: function(){
+            this.model.destroy();
+            this.remove();
         }
 
     });

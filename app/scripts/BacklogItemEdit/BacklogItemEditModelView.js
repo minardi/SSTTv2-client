@@ -41,15 +41,13 @@
         render: function() {
             var type = this.model.get("item_type");
                 item_template = this.innerTemplate[type];
-                
 
-            this.previous_model = this.model.clone();
-
-            this.$(".edit-backlog-item").html(item_template());
+            this.$(".edit-backlog-item").html(item_template(this.model.toJSON()));
             this.$(".edit-backlog-item").removeClass("hidden");
-
-            this._modelBinder.bind(this.model, this.el);
-
+            
+        //   this.model.on("change", function(model){console.log(model.toJSON())});
+         //   this._modelBinder.bind(this.model, this.el);
+            
             return this;
         },
 
@@ -57,23 +55,20 @@
             this.model = model;
             this.is_new = false;
             this._modelBinder = new Backbone.ModelBinder();
-
+            
             this.render();
         },
 
         cancelChanges: function() {
             if(this.is_new) {
                 this.model.destroy();
-            } else {
-                console.log(this.model);
-                this.model = this.previous_model;
-                console.log(this.model);
             }
 
             this.hideView();
         },
 
         saveChanges: function() {
+            this._modelBinder.bind(this.model, this.$el, null, {initialCopyDirection: Backbone.ModelBinder.Constants.ViewToModel});
             this.hideView();
             mediator.pub("BacklogItemEdit:SavedChanges", {
                                                             "model": this.model,
