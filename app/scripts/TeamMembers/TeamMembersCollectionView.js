@@ -7,32 +7,34 @@
         template: JST['app/scripts/TeamMembers/TeamMembersCollectionTpl.ejs'],
 
         subscriptions: {
-            "TeamEditPage:roleSetUp": "setRole",
+            "TeamEditPage:roleSetUp": "setRoles",
             "TeamCandidates:setTeamMember": "addToCollection",
-            "TeamEditPage:Open" : "initUsers"
+            "TeamEditPage:loadTeamMembers" : "showInPage"
         },
 
         events: {
             "click #save": "saveCollection",
         },
 
+        initialize: function (options) {
+            this.collection = new module.Collection(options.team_id);
+            this.listenTo(this.collection, "sync", this.render);
+        },
 
-        initUsers: function(team_info) {
-            this.team_id = team_info["team_id"];
-            this.$el = team_info["element"].find('.team-members');
-
-            this.collection = new module.Collection(team_info["team_id"]);
-            
-            this.collection.on("sync", this.render, this);
-            this.collection.on("add", this.renderOne, this);
-
+        showInPage: function ($el) {
+            this.setElement($el);
             this.collection.fetch();
         },
 
-         render: function() {
+        render: function() {
             this.$el.html(this.template());
+            this.$member_list = this.$(".team-members-list");
+            
+            this.collection.on("add", this.renderOne, this);
             this.collection.each(this.renderOne, this);
            
+
+            //this.listenToOnce(sstt.router, "route", this.removeMy);
             return this;
         },
         
@@ -42,7 +44,7 @@
             team_member = new module.ModelView({ model: model});
             team_member.role = this.role;
             
-            this.$el.find(".team-members-list").append(team_member.render().el);
+            this.$member_list.append(team_member.render().el);
         },     
 
         saveCollection: function() {
@@ -52,19 +54,24 @@
             });
         },
 
-        setRole: function(new_role) {
-            this.role = new_role;
+        setRoles: function(role) {
+            this.role = role;
+            this.collection.each(this.setOneRole, this);
+        },
+
+        setOneRole: function (model) {
+            model.trigger("visible", this.role);
         },
       
         addToCollection: function(candidate) {
-            
             var exist_model = this.collection.findWhere({
                                     first_name: candidate.first_name,
                                     last_name: candidate.last_name
                               });
 
             if (exist_model) {
-                exist_model.set("role", candidate.role); 
+                exist_model.set("role", this.role);
+                exist_model.trigger("visible", this.role);
             } else { 
                 candidate.role = this.role;
                 candidate.team_id = this.team_id;

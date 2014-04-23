@@ -5,43 +5,21 @@
     module.CollectionView = Backbone.View.extend({
 
         template: JST["app/scripts/DashBoard/DashBoardCollectionTpl.ejs"],
-        
-        initialize: function() {
-            this.collection = new module.Collection();
-        },
 
         subscriptions: {
-            "ProjectPage:ProjectChecked": "setProject",
-            "DashBoard:ActiveBack": "toProjectPage",
-            "ProjectPage:ProjectSelected": "toScrumPage",
-            "DashBoard:ActiveTeam": "toTeamPage",
-            "TeamPage:TeamSelected": "toTeamEditPage",
-            "DashBoard:ActiveBackFromTeamEditPage": "toTeamPage",
+            "Projectinfo:SetProjectInfo": "setProject",
+        },
+
+        initialize: function() {
+            this.collection = new module.Collection();
+            this.listenTo(sstt.router, "route", this.render);
+            this.render();
         },
 
         setProject: function(project) {
             this.project = project;
-            this.current_page = "project_page";
-            this.render();
-        },
+            this.current_right = (this.project.get("pm").user_id == sstt.user.getId())? "pm": "not_pm";
 
-        toProjectPage: function() {
-            this.current_page = "project_page";
-            this.render();
-        },
-
-        toScrumPage: function() {
-            this.current_page = "scrum_page";
-            this.render();
-        },
-
-        toTeamPage: function() {
-            this.current_page = "team_page";
-            this.render();
-        },
-
-        toTeamEditPage: function() {
-            this.current_page = "team_edit_page";
             this.render();
         },
 
@@ -52,17 +30,16 @@
             this.$el.append(this.template());
             this.$dashboard = this.$(".dashboard");
             
-            this.current_right = (this.project.get("pm").user_id == sstt.user.getId())? "pm": "not_pm";
             this.collection.each(this.renderOne, this);
             return this;
         },
 
         renderOne: function (btn_model) {
             var btn;
-            btn_model.set("project_id", this.project.id);
+            //btn_model.set("project_id", this.project.id);
             if (this.canRender(btn_model.get("permition"))) {
                 btn = new module.ModelView({
-                        model: btn_model
+                    model: btn_model
                 });
                 this.$dashboard.append(btn.render().el);
             };

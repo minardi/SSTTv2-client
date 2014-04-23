@@ -14,12 +14,25 @@
 		initialize: function() {
 			this.status = ["todo", "progress", "verify", "done"];
 			this.current_status = this.status.indexOf(this.model.get("status"));
-			console.log(this.current_status);
 		},
 		
 		render: function() {
 			this.$el.html(this.template(this.model.toJSON()));
+			this.$el.addClass(this.getClassName());
 			return this;
+		},
+
+		getClassName: function () {
+			var status = this.model.get("status"),
+				className;
+
+			if (status === "todo") {
+				className = "left";
+			} else if (status === "done") {
+				className = "right";
+			}
+
+			return className;
 		},
 		
 		moveLeft: function() {
@@ -34,7 +47,6 @@
 		
 		updateStatus: function() {
 			this.model.set("status", this.status[this.current_status]);
-			console.log(this.status[this.current_status]);
 			mediator.pub("ScrumBoard:TaskMoved", this.model);
 			this.remove();
 		}

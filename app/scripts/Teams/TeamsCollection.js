@@ -8,8 +8,8 @@
 
         initialize: function(project_id) {
             this.url = "/teams/for-project/" + project_id;
+            this.project_id = project_id;
         }
-
     });
     
 })(app.Teams);

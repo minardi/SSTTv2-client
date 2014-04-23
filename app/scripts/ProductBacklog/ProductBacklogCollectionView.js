@@ -7,48 +7,38 @@
         template: JST['app/scripts/ProductBacklog/ProductBacklogCollectionTpl.ejs'],
 
         subscriptions: {
-            "ProjectPage:ProjectSelected": "initCollection",
-            "ScrumPage:PlanningBoardSelected": "initProductBacklog",
-            "ProductBacklog:RemoveStory": "removeStory",
-            "BacklogItemEdit:SavedChanges": "saveStory"
+            "BacklogItemEdit:SavedChanges": "saveStory",
+            "SprintBacklog:RestoreStory": "renderOne"
         },
 
-        /*events: {
-            "click .add-new-story": "addStory",
-        },*/
+        events: {
+            "click .add-new-story": "addStory"
+        },
 
-        initCollection: function (project_id) {
-            this.project_id = project_id;
+        initialize: function (options) {
+            this.collection = new module.Collection("story", "product", options.project_id);
 
-            this.collection = new module.Collection("story", "product", project_id);
             this.collection.once("sync", this.render, this);
             this.collection.on("destroy", this.removeStory, this);
 
             this.collection.fetch();
         },
 
-        initProductBacklog: function(el_content) {
-            //this.setElement(el_content);
-            this.$el = el_content;
-            //this.$(".backlog-box .product").remove();
-            this.$el.append(this.template());
-            this.$('.add-new-story').on('click', jQuery.proxy(this.addStory, this));
-            this.$list = this.$(".backlogstory-list");
-
-            this.render();
-        },
-
         render: function() {
-            this.$list.html("");
+            this.$el.append(this.template());
+            this.$list = this.$(".product .backlogstory-list");
+
             this.collection.each(this.renderOne, this);
-            
+
             return this;
         },
 
-        renderOne: function(story) {
-            var story_view = new module.ModelView({model: story});
-            
-            this.$list.append(story_view.render().el);
+        renderOne: function(story_model) {
+            var story = new module.ModelView({
+                model: story_model
+            });
+
+            this.$list.append(story.render().el);
         },
 
         addStory: function() {

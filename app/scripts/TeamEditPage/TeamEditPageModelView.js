@@ -7,28 +7,41 @@
         template: JST['app/scripts/TeamEditPage/TeamEditPageTpl.ejs'],        
         
         events: {
-            "click #watchers": "showWatchers",
-            "click #developers": "showDevelopers",
-            "click #techleads": "showTeachLeads",
+            "click .watchers": "showWatchers",
+            "click .developers": "showDevelopers",
+            "click .techleads": "showTeachLeads",
+            "click .tab": "setRoleTabActive",
             "click #ok_btn": "hideConfirm"
         },
 
-        subscriptions: {         
-            "TeamPage:TeamSelected": "render",
-            "DashBoard:ActiveBack": "removeTeamPage",
-            "DashBoard:ActiveBackFromTeamEditPage": "removeTeamPage",
-            "TeamMembers:Saved": "showSaveMsg"
+        subscriptions: {
+            "TeamMembers:saved": "showSaveMsg"
         }, 
 
-        render: function(team_id) {     
-            this.$el.append(this.template());           
-            mediator.pub("TeamEditPage:Open", { element: this.$el, 
-                                                team_id: team_id 
-                                                });            
+        initialize: function () {
+            this.render();
+        },
+
+        render: function() {     
+            this.$el.html(this.template()); 
+            
+            this.$candidates = this.$(".candidates");
+            this.$team_members = this.$(".team-members");
+
+            mediator.pub("TeamEditPage:loadCandidates", this.$candidates);
+            mediator.pub("TeamEditPage:loadTeamMembers", this.$team_members);
+
             this.showWatchers();
 
+            //this.listenTo(sstt.router, "route", this.remove);
+
             return this;
-        },       
+        },
+
+        setRoleTabActive: function (event) {
+            this.$(".tab").removeClass("active-role");
+            $(event.target).addClass("active-role");
+        },
 
         showWatchers: function () {            
             mediator.pub("TeamEditPage:roleSetUp", "watcher");
@@ -48,11 +61,6 @@
                 
         hideConfirm: function() {
             this.$el.find("#save_confirm").addClass("hidden");
-        },
-               
-        removeTeamPage: function() {
-            this.$el.removeClass("hiddenTeams");
-            this.$el.find(".team-edit-page").remove();
         }
         
     });

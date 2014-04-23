@@ -15,6 +15,8 @@ var sstt = {},
         Teams: {},        
         BacklogItem: {},
         BacklogItemEdit: {},
+        Router: {},
+        Sprint: {},
         empty: {}
     };
 
@@ -26,7 +28,20 @@ $(function() {
         user_content: current_user_content
     });
 
-    sstt.project = new app.Projects.CollectionView({
+    
+    sstt.project_info = new app.Projectinfo.ModelView({
+        el: $(".project_info")
+    });
+
+    sstt.router = new app.Router();
+    Backbone.history.start();
+
+    sstt.dashboard = new app.DashBoard.CollectionView({
+        el: $(".dushboard")
+    });
+
+/*    sstt.project = new app.Projects.CollectionView({
+
         el: $(".b-main")
     });
 
@@ -35,9 +50,7 @@ $(function() {
         model: new app.ScrumPage.Model()
     });
 
-    sstt.project_info = new app.Projectinfo.ModelView({
-        el: $(".b-sidebar")
-    });
+    
 
     sstt.product_backlog = new app.ProductBacklog.CollectionView();
 
@@ -48,9 +61,7 @@ $(function() {
     sstt.team_edit_page = new app.TeamEditPage.ModelView({
         el: $(".b-main")
     });
-    sstt.dashboard = new app.DashBoard.CollectionView({
-        el: $(".b-sidebar")
-    });
+    
 
     sstt.teams = new app.Teams.CollectionView({
         el: $(".b-main")
@@ -65,5 +76,5 @@ $(function() {
     sstt.backlog_item_edit = new app.BacklogItemEdit.ModelView({
         el: $('.b-main')
     });
-
+*/
 });
