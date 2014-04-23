@@ -45,17 +45,15 @@
             this.$(".edit-backlog-item").html(item_template(this.model.toJSON()));
             this.$(".edit-backlog-item").removeClass("hidden");
             
-        //   this.model.on("change", function(model){console.log(model.toJSON())});
-         //   this._modelBinder.bind(this.model, this.el);
-            
             return this;
         },
 
         fillingFields: function(model) {
             this.model = model;
-            this.is_new = false;
             this._modelBinder = new Backbone.ModelBinder();
             
+            this.is_new = false;
+
             this.render();
         },
 
@@ -64,26 +62,26 @@
                 this.model.destroy();
             }
 
+            this._modelBinder.unbind();
             this.hideView();
         },
 
         saveChanges: function() {
-            this._modelBinder.bind(this.model, this.$el, null, {initialCopyDirection: Backbone.ModelBinder.Constants.ViewToModel});
-            this.hideView();
+            this._modelBinder.bind(this.model, this.$el, null, {
+                                    initialCopyDirection: Backbone.ModelBinder.Constants.ViewToModel
+                                    });
+
             mediator.pub("BacklogItemEdit:SavedChanges", {
                                                             "model": this.model,
                                                             "is_new": this.is_new
                                                         });
+            this._modelBinder.unbind();
+            this.hideView();
         },
 
         hideView: function() {
             this.$(".edit-backlog-item").addClass("hidden");
-        },
-
-        close: function(){
-            this._modelBinder.unbind();
-        },
-        
+        }
     });
 
 })(app.BacklogItemEdit);

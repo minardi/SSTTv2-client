@@ -42,7 +42,7 @@
         edit: function() {
             event.preventDefault();
 
-            mediator.pub("ProductBacklog:editStory", this.model);
+            mediator.pub("ProductBacklog:EditStory", this.model);
         },
 
         storySelected: function() {
