@@ -11,7 +11,7 @@
         template: JST['app/scripts/Teams/TeamsTpl.ejs'],
         
         events: {
-            "dblclick": "selectTeam",
+            "dblclick": "selectTeam"
         },
 
         initialize: function (project_id) {
@@ -19,7 +19,7 @@
         },
 
         selectTeam: function() {
-            sstt.Router.navigate("/team-edit/" + this.model.get("id"), {trigger: true}); 
+            sstt.router.navigate("/team-edit/" + this.model.get("id"), {trigger: true}); 
         },
 
         render: function() {

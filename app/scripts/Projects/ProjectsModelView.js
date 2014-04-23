@@ -12,18 +12,16 @@
         
         events: {
             "dblclick": "selectProject",
-            "click": "showProjectInfo",
+            "click": "checkProject",
         },
 
         selectProject: function() {
-            //mediator.pub("ProjectPage:ProjectSelected", this.model.id);
-
-            sstt.Router.navigate( "project/" + this.model.get("id") + "/scrum-page/planning", {trigger: true});
-            //sstt.Router.navigate("project/"+ this.model.get("id") +"/teams", {trigger: true});
+            sstt.router.navigate( "project/" + this.model.get("id") + "/scrum-page/planning", {trigger: true});
         },
         
-        showProjectInfo: function() {
-            mediator.pub("ProjectPage:ProjectChecked", this.model);
+        checkProject: function() {
+            mediator.pub("Projects:OneProjectChecked", this.model);
+            mediator.pub("SetProjectId", this.model.get("id"));
             this.$el.siblings().removeClass("active-tab"); 
             this.$el.addClass("active-tab"); 
         },

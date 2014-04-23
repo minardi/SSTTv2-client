@@ -6,20 +6,14 @@
 
         template: JST['app/scripts/ScrumBoard/ScrumBoardCollectionTpl.ejs'],
         
-        subscriptions: {   
-            'ProjectPage:ProjectSelected': 'initCollection',      
-            'ScrumPage:ScrumBoardSelected': 'setElementAndRender',
+        subscriptions: {
             "ScrumBoard:MoveTask": "renderOne"
         },
-        
-        initCollection: function (project_id) {  
-            this.collection = new module.Collection(project_id);                            
-        },   
-            
-        setElementAndRender: function(content_el) {           
-            this.$el = content_el;
-            this.collection.fetch();   
-            this.collection.on('sync', this.render, this);                           
+
+        initialize: function (project_id) {
+            this.collection = new module.Collection(project_id);
+            this.listenTo(this.collection, 'sync', this.render);
+            this.render();
         },
 
         render: function () {
@@ -28,7 +22,7 @@
             return this;
         },
 
-        renderOne: function (task_model) {           
+        renderOne: function (task_model) {       
         }
 
     });

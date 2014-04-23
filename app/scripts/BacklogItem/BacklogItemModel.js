@@ -3,6 +3,7 @@
 (function(module) {
         
     module.Model = Backbone.Model.extend({	     
+		urlRoot: '/backlog_items',
 		 
         defaults: {
 		
@@ -11,8 +12,8 @@
 			"estimation": "",
 			"parent_id": "",
 			"status": "",
-			"type": ""
-        }		 
+			"item_type": ""
+        }
 
     });
 

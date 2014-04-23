@@ -16,30 +16,32 @@ var sstt = {},
         BacklogItem: {},
         BacklogItemEdit: {},
         Router: {},
+        Sprint: {},
         empty: {}
     };
 
 $(function() {
     "use strict";
 
-    app.ProductBacklog.Model = app.BacklogItem.Model;
-
-    app.ProductBacklog.Collection = app.BacklogItem.Collection;
-
     sstt.user = new app.User.ModelView({
         el: $(".user"),
         user_content: current_user_content
     });
 
-    sstt.dashboard = new app.DashBoard.CollectionView({
-        el: $(".b-sidebar")
+    
+    sstt.project_info = new app.Projectinfo.ModelView({
+        el: $(".project_info")
     });
 
-    sstt.project_info = new app.Projectinfo.ModelView({
-        el: $(".b-sidebar")
+    sstt.router = new app.Router();
+    Backbone.history.start();
+
+    sstt.dashboard = new app.DashBoard.CollectionView({
+        el: $(".dushboard")
     });
 
 /*    sstt.project = new app.Projects.CollectionView({
+
         el: $(".b-main")
     });
 
@@ -75,7 +77,4 @@ $(function() {
         el: $('.b-main')
     });
 */
-
-    sstt.Router = new app.Router();
-    Backbone.history.start();
 });

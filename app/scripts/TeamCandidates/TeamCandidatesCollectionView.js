@@ -13,6 +13,7 @@
 		initialize: function(options) {
             this.collection = new module.Collection(options.team_id);
             this.collection.on('sync', this.render, this);
+            this.listenTo(sstt.router, "route", this.unbind);
         },
 
         showInPage: function ($el) {

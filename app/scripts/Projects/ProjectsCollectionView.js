@@ -13,17 +13,8 @@
         },
 
         subscriptions: {
-            "ProjectPage:ProjectSelected": "hide",
-            "DashBoard:ActiveTeam": "hide",
-            "DashBoard:ActiveBack": "show"
-        },
-
-        hide: function() {
-            this.$el.addClass("hiddenProjects");
-        },
-
-        show: function() {
-            this.$el.removeClass("hiddenProjects");
+            "Projects:OneProjectChecked": "checkProject",
+            "DashBoard:ActiveTeam": "navigateTeams"
         },
 
         render: function() {
@@ -37,7 +28,18 @@
             var project = new module.ModelView({
                 model: projectModel
             });
+            
             this.$list.append(project.render().el);
+        },
+
+        checkProject: function (project_model) {
+            this.checked_project = project_model;
+        },
+
+        navigateTeams: function () {
+            var project_id = this.checked_project.get("id");
+
+            sstt.router.navigate("project/" + project_id + "/teams", {trigger: true});
         }
      
     });

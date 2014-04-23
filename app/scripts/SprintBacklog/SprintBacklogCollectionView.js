@@ -7,22 +7,45 @@
         template: JST['app/scripts/SprintBacklog/SprintBacklogCollectionTpl.ejs'],  
 
         subscriptions: {
-            "ScrumPage:PlanningBoardSelected": "initSprintBacklog",
-            "ProductBacklog:MoveSprintBacklog": "addBacklogItem"
+            "ProductBacklog:MoveSprintBacklog": "addBacklogItem",
+            "Spirnt:SprintWasSaved": "saveAllStory"
         },
 
-        initialize: function() {
-            this.collection = new module.Collection("stories");
+        events: {
+            "click .start-sprint": "startSprint"
         },
-        
-        initSprintBacklog: function(el_content) {
-            this.$el = el_content;
+
+        initialize: function (options) {
+            _.bindAll(this, "storyBindToSprint");
+            this.collection = new module.Collection("story", "sprint", options.project_id);
             this.render();
         },
 
-        addBacklogItem: function(backlogItem) {
-            this.collection.addItem(backlogItem.toJSON());
-            this.renderSprintBacklogItem(backlogItem);
+        startSprint: function () {
+            var sprint = new module.Model();
+
+            sprint.set("parent_id", this.collection.getParentId());
+            mediator.pub("SprintBacklog:SaveSprint", sprint);
+        },
+
+        saveAllStory: function (story) {
+            var story_parent_id = story.get("id");
+
+            this.collection.each(function (model) {
+                model.set("parent_id", story_parent_id);
+                model.save({
+                    success: this.storyBindToSprint
+                });
+            }, this);
+        },
+
+        storyBindToSprint: function (model) {
+            this.collection.remove(model);
+        },
+
+        addBacklogItem: function(story) {
+            this.collection.add(story);
+            this.renderOne(story);
         },
 
         render: function() {
@@ -31,7 +54,7 @@
             return this;
         },
 
-        renderSprintBacklogItem: function (backlogItem) {
+        renderOne: function (backlogItem) {
             var backlogItemView = new module.ModelView({
                 model: backlogItem
             });

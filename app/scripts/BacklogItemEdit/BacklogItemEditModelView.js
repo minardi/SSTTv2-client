@@ -24,7 +24,7 @@
 
             this.model = model;
             //console.log(this.model);
-            item_template = JST['app/scripts/BacklogItemEdit/BacklogItemEdit' + this.model.get("type") + 'Tpl.ejs'];
+            item_template = JST['app/scripts/BacklogItemEdit/BacklogItemEdit' + this.model.get("item_type") + 'Tpl.ejs'];
             //console.log(item_template);
             //item_template = JST['app/scripts/BacklogItemEdit/BacklogItemEditstoriesTpl.ejs'];
             this.$el.find(".container").html(item_template());

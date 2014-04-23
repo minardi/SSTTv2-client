@@ -14,10 +14,7 @@
             "click #ok_btn": "hideConfirm"
         },
 
-        subscriptions: {         
-            "TeamPage:teamSelected": "render",
-            "DashBoard:activeBack": "removeTeamPage",
-            "DashBoard:activeBackFromTeamEditPage": "removeTeamPage",
+        subscriptions: {
             "TeamMembers:saved": "showSaveMsg"
         }, 
 
@@ -35,6 +32,8 @@
             mediator.pub("TeamEditPage:loadTeamMembers", this.$team_members);
 
             this.showWatchers();
+
+            this.listenTo(sstt.router, "route", this.remove);
 
             return this;
         },
