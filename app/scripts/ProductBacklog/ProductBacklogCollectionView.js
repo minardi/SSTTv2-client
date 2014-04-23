@@ -10,7 +10,8 @@
             "ProjectPage:ProjectSelected": "initCollection",
             "ScrumPage:PlanningBoardSelected": "initProductBacklog",
             "BacklogItemEdit:savedChanges": "saveStory",
-            "BacklogItemEdit:cancelChanges": "removeEmptyItem"
+            "BacklogItemEdit:cancelChanges": "removeEmptyItem",
+            "ProductBacklog:RemoveStory": "removeStory"
         },
 
         initCollection: function (project_id) {
@@ -88,6 +89,10 @@
             sprint.set(attributes);
 /*            this.collection.add(sprint);
             sprint.save();*/
+        },
+
+        removeStory: function(model) {
+            this.collection.remove(model);
         }
 
     });

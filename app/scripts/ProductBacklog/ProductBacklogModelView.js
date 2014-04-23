@@ -14,9 +14,20 @@
 
         events: {
            "dblclick" : "moveToSprint",
-           "contextmenu" : "edit"
+           "contextmenu" : "edit",
+           "click": "storySelected",
+           "click .story-delete-btn": "removeStory"
         },
 
+        subscriptions: {
+            "ProductBacklog:SelectedStory": "hideDeleteBtn"
+        },
+
+        render: function() {
+            this.$el.html(this.template(this.model.toJSON()));
+            this.$story_delete_btn = this.$(".story-delete-btn");
+            return this;
+        },
 
         moveToSprint: function() {
             mediator.pub("ProductBacklog:MoveSprintBacklog", this.model);
@@ -24,15 +35,25 @@
             this.$el.remove();
         },
 
-        render: function() {
-            this.$el.html(this.template(this.model.toJSON()));
-            return this;
-        },
-
         edit: function() {
             event.preventDefault();
             
             mediator.pub("ProductBacklog:editStory", this.model);
+        },
+
+        storySelected: function() {
+            mediator.pub("ProductBacklog:SelectedStory");
+            this.$story_delete_btn.removeClass('hidden');
+        },
+
+        hideDeleteBtn: function() {
+            this.$story_delete_btn.addClass("hidden");
+        },
+
+        removeStory: function(){
+            this.model.destroy();
+            mediator.pub("ProductBacklog:RemoveStory", this.model);
+            this.remove();
         }
 
     });

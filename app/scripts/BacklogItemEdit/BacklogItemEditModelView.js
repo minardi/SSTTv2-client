@@ -29,7 +29,6 @@
 
             this.model = model;
             item_template = this.innerTemplate[this.model.get("item_type")];
-
             this.$(".templates-container").html(item_template());
             this.$(".edit-backlog-item").removeClass("hidden");
 
