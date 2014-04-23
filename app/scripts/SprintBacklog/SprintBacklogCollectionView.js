@@ -51,6 +51,9 @@
         render: function() {
             this.$el.append(this.template());
             this.$list = this.$(".sprintstory-list");
+
+            this.$(".start-sprint").on("click", this.addSprint);
+
             return this;
         },
 
@@ -61,7 +64,6 @@
 
             this.$list.append(backlogItemView.render().el);
         }
-
     });
 
 })(app.SprintBacklog);

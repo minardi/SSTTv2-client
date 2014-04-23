@@ -1,10 +1,20 @@
 this["JST"] = this["JST"] || {};
 
-this["JST"]["app/scripts/BacklogItemEdit/BacklogItemEditCollectionTpl.ejs"] = function(obj) {
+this["JST"]["app/scripts/BacklogItemEdit/BacklogItemEditSprintTpl.ejs"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
-__p += '<p>Your content here.</p>\n\n';
+__p += '    <span class = "title">Edit Sprint</span>\n    <br /><br />\n    <p>Title:</p>\n    <input class = "input" type = "text" name = "title"/>\n\n    <p>Description:</p>\n    <textarea class = "input" size = 300 name = "description"></textarea>\n\n    <p>Start:</p>\n    <input class = "input" type = "text" name = "title"/>\n\n    <p>End:</p>\n    <input class = "input" type = "text" name = "title"/>\n    <div class = "save_button btn btn-default">Start sprint</div>\n    <div class = "cancel_button btn btn-default">Cancel</div>\n\n';
+
+}
+return __p
+};
+
+this["JST"]["app/scripts/BacklogItemEdit/BacklogItemEditStoryTpl.ejs"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __e = _.escape;
+with (obj) {
+__p += '    <span class = "title">Edit Story</span>\n    <br /><br />\n    <p>Title:</p>\n    <input class = "input" type = "text" name = "title"/>\n\n    <p>Description:</p>\n    <textarea class = "input" size = 300 name = "description"></textarea>\n\n    <div class = "save_button btn btn-default">Save</div>\n    <div class = "cancel_button btn btn-default">Cancel</div>\n\n';
 
 }
 return __p
@@ -14,27 +24,7 @@ this["JST"]["app/scripts/BacklogItemEdit/BacklogItemEditTpl.ejs"] = function(obj
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
-__p += '<div class = "edit-backlog-item hidden">\n    <div class = "container"></div>\n    <div class = "save_button btn btn-default">Save</div>\n    <div class = "cancel_button btn btn-default">Cancel</div>\n</div>';
-
-}
-return __p
-};
-
-this["JST"]["app/scripts/BacklogItemEdit/BacklogItemEditsprintTpl.ejs"] = function(obj) {
-obj || (obj = {});
-var __t, __p = '', __e = _.escape;
-with (obj) {
-__p += '<span class = "title">Edit Sprint</span>\n<br /><br />\n<p>Title:</p>\n<input class = "input" type = "text" id = "title"/>\n<p>Description:</p>\n<textarea class = "input" size = 300 id = "description"></textarea>\n<p>Start:</p>\n<input class = "input" type = "text" id = "title"/>\n<p>End:</p>\n<input class = "input" type = "text" id = "title"/>';
-
-}
-return __p
-};
-
-this["JST"]["app/scripts/BacklogItemEdit/BacklogItemEditstoryTpl.ejs"] = function(obj) {
-obj || (obj = {});
-var __t, __p = '', __e = _.escape;
-with (obj) {
-__p += '<span class = "title">Edit Story</span>\n<br /><br />\n<p>Title:</p>\n<input class = "input" type = "text" id = "title"/>\n<p>Description:</p>\n<textarea class = "input" size = 300 id = "description"></textarea>\n';
+__p += '<div class = "edit-backlog-item hidden"></div>\n';
 
 }
 return __p
@@ -127,11 +117,11 @@ this["JST"]["app/scripts/ScrumBoard/ScrumBoardTpl.ejs"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
-__p +=
+__p += '<div class="task">\n\t<div class="arrow-left">  < </div>\n\t' +
 ((__t = ( title )) == null ? '' : __t) +
-'<br>\n' +
+'<br>' +
 ((__t = ( description )) == null ? '' : __t) +
-'\n\n';
+'\n\t<div class="arrow-right"> > </div>\n</div>\n\n';
 
 }
 return __p
@@ -173,7 +163,7 @@ this["JST"]["app/scripts/SprintBacklog/SprintBacklogCollectionTpl.ejs"] = functi
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
-__p += '<div class="backlog-box sprint">\n    <div class="backlog-box-name"> \n        SprintBacklog\n        <div class="backlog-box-actions">\n        </div>\n    </div>\n    <div class="sprintstory-list"></div>\n\n    \n</div>\n<div class="btn btn-info start-sprint">Start sprint</div>';
+__p += '<div class="backlog-box sprint">\n    <div class="backlog-box-name"> \n        SprintBacklog\n        <div class="backlog-box-actions">\n        </div>\n    </div>\n    <div class="sprintstory-list"></div>\n\n    \n</div>\n\n<div class="btn btn-info start-sprint">Start sprint</div>\n\n';
 
 }
 return __p
@@ -183,8 +173,9 @@ this["JST"]["app/scripts/SprintBacklog/SprintBacklogTpl.ejs"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
-__p +=
-((__t = ( title )) == null ? '' : __t);
+__p += '<span class="story-title">' +
+((__t = ( title )) == null ? '' : __t) +
+'</span>\n<span class="glyphicon delete"></span>';
 
 }
 return __p

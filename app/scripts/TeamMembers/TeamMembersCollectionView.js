@@ -19,7 +19,6 @@
         initialize: function (options) {
             this.collection = new module.Collection(options.team_id);
             this.listenTo(this.collection, "sync", this.render);
-            this.collection.fetch();
         },
 
         showInPage: function ($el) {
@@ -35,7 +34,7 @@
             this.collection.each(this.renderOne, this);
            
 
-            this.listenToOnce(sstt.router, "route", this.removeMy);
+            //this.listenToOnce(sstt.router, "route", this.removeMy);
             return this;
         },
         

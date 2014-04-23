@@ -1,16 +1,10 @@
 /* ScrumBoard */
 
-(function (module) {
-
-    module.Collection = Backbone.Collection.extend({
-
-        model: module.Model,     
-           
-        initialize: function (project_id) { 
-            this.url = 'tasks/for-project/' + project_id;
-                                         
-        }       
-
+/*(function (module) {
+    module.Collection = Backbone.Collection.extend({  
     });
+})(app.ScrumBoard);*/
 
-})(app.ScrumBoard);
+app.ScrumBoard.Collection = app.BacklogItem.Collection.extend({
+	model: app.ScrumBoard.Model
+});

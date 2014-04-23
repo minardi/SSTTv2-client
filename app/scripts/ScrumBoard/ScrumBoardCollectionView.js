@@ -22,7 +22,11 @@
             return this;
         },
 
-        renderOne: function (task_model) {       
+        renderOne: function (task_model) {
+            var task = new module.ModelView({
+                    model: task_model
+                });
+            this.$el.find(".todo").append(task.render().el);
         }
 
     });

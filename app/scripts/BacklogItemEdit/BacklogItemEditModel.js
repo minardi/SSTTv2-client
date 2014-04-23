@@ -2,6 +2,6 @@
 
 (function(module) {
         
-    module.Model = Backbone.Model.extend({});
+    module.Model = app.BacklogItem.Model;
 
 })(app.BacklogItemEdit);

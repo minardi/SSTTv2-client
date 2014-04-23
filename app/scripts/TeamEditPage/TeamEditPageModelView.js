@@ -33,7 +33,7 @@
 
             this.showWatchers();
 
-            this.listenTo(sstt.router, "route", this.remove);
+            //this.listenTo(sstt.router, "route", this.remove);
 
             return this;
         },
@@ -61,11 +61,6 @@
                 
         hideConfirm: function() {
             this.$el.find("#save_confirm").addClass("hidden");
-        },
-               
-        removeTeamPage: function() {
-            this.$el.removeClass("hiddenTeams");
-            this.$(".team-edit-page").remove();
         }
         
     });
