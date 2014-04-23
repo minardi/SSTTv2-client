@@ -14,7 +14,7 @@ app.SprintBacklog.Collection = app.BacklogItem.Collection.extend({
 
 	addItem: function (model) {
     	var model_without_parent = this.last();
-    //	this.defineTypeOne(model_without_parent);
+        //this.defineTypeOne(model_without_parent);
     }
 		
 });
