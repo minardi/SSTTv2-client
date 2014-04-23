@@ -4,7 +4,7 @@
         
     module.ModelView = Backbone.View.extend({        
         
-        _modelBinder: new Backbone.ModelBinder(),
+        _modelBinder: undefined,
 
         template: JST['app/scripts/BacklogItemEdit/BacklogItemEditTpl.ejs'],
 
@@ -30,6 +30,8 @@
         initItem: function(attributes) {
             this.model = new module.Model();
             this.model.set(attributes);
+            this._modelBinder = new Backbone.ModelBinder();
+
             this.is_new = true;
             
             this.render();
@@ -50,6 +52,7 @@
         fillingFields: function(model) {
             this.model = model;
             this.is_new = false;
+            this._modelBinder = new Backbone.ModelBinder();
 
             this.render();
         },
