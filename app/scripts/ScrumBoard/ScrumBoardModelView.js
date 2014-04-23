@@ -4,10 +4,6 @@
 
     module.ModelView = Backbone.View.extend({
 
-        /*tagName: "div",
-
-        className: "task",*/
-
         template: JST["app/scripts/ScrumBoard/ScrumBoardTpl.ejs"],
 
         events: {
@@ -17,7 +13,8 @@
 		
 		initialize: function() {
 			this.status = ["todo", "progress", "verify", "done"];
-			this.current_status = status.indexOf(this.model.get("status"));
+			this.current_status = this.status.indexOf(this.model.get("status"));
+			console.log(this.current_status);
 		},
 		
 		render: function() {
@@ -36,27 +33,11 @@
 		},
 		
 		updateStatus: function() {
-			this.model.set("status", status[this.current_status]);
+			this.model.set("status", this.status[this.current_status]);
+			console.log(this.status[this.current_status]);
+			mediator.pub("ScrumBoard:TaskMoved", this.model);
 			this.remove();
 		}
-		
-		/* ORIGINAL LEGACY PERFECT DECISION! - I'm lovin it! :)
-		moveTask: function(event) {
-
-		var state = ["todo", "in-progress", "to-verify", "done"],
-			status_index = state.indexOf(this.model.get("status"));
-			
-		if($(event.target).hasClass("arrow-right")) {
-			status_index++;
-		} else if ($(event.target).hasClass("arrow-left")) {
-			status_index--;
-		};
-		
-		this.model.set("status", state[new_status_index]);
-		mediator.pub("ScrumBoard:moveTask", this.model);
-		this.remove();
-		}
-		*/
 		
     });
 
