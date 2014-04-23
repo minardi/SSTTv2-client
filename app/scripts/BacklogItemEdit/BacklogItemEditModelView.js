@@ -19,7 +19,8 @@
 
         subscriptions: {
             "ProductBacklog:CreateNewItem" : "initItem",
-            "ProductBacklog:EditStory" : "fillingFields"
+            "ProductBacklog:EditStory" : "fillingFields",
+            "ProductBacklog:SaveSprint" : "fillingFields"
         },  
 
         events: {
@@ -40,6 +41,9 @@
         render: function() {
             var type = this.model.get("item_type");
                 item_template = this.innerTemplate[type];
+                
+
+            this.previous_model = this.model.clone();
 
             this.$(".edit-backlog-item").html(item_template());
             this.$(".edit-backlog-item").removeClass("hidden");
@@ -58,9 +62,14 @@
         },
 
         cancelChanges: function() {
-            if((this.is_new) && (this.model.get("item_type") === "story")) {
+            if(this.is_new) {
                 this.model.destroy();
+            } else {
+                console.log(this.model);
+                this.model = this.previous_model;
+                console.log(this.model);
             }
+
             this.hideView();
         },
 
