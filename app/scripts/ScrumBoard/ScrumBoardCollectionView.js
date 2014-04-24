@@ -21,15 +21,14 @@
             this.setElement(content_el);
 			this.collection.on('sync', this.renderEach, this);
             this.collection.fetch();   
-			console.log(this.collection);
         },
 
         renderEach: function () {
             this.$el.html(this.template());
 			this.status = {
 				"todo": this.$(".todo"),
-				"progress": this.$(".progress"),
-				"verify": this.$(".verify"),
+				"progress": this.$(".in-progress"),
+				"verify": this.$(".to-verify"),
 				"done": this.$(".done"),
 			};
             this.collection.each(this.renderOne,this);

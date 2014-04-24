@@ -14,7 +14,6 @@
 		initialize: function() {
 			this.status = ["todo", "progress", "verify", "done"];
 			this.current_status = this.status.indexOf(this.model.get("status"));
-			console.log(this.current_status);
 		},
 		
 		render: function() {
@@ -34,7 +33,6 @@
 		
 		updateStatus: function() {
 			this.model.set("status", this.status[this.current_status]);
-			console.log(this.status[this.current_status]);
 			mediator.pub("ScrumBoard:TaskMoved", this.model);
 			this.remove();
 		}
