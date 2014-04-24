@@ -17,6 +17,7 @@ var sstt = {},
         BacklogItemEdit: {},
         Router: {},
         Sprint: {},
+        PlanningBoard: {},
         empty: {}
     };
 
@@ -33,14 +34,14 @@ $(function() {
         el: $(".project_info")
     });
 
-    sstt.router = new app.Router();
-    Backbone.history.start();
+   /* sstt.router = new app.Router();
+    Backbone.history.start();*/
 
     sstt.dashboard = new app.DashBoard.CollectionView({
         el: $(".dushboard")
     });
 
-/*    sstt.project = new app.Projects.CollectionView({
+    sstt.project = new app.Projects.CollectionView({
 
         el: $(".b-main")
     });
@@ -76,5 +77,7 @@ $(function() {
     sstt.backlog_item_edit = new app.BacklogItemEdit.ModelView({
         el: $('.b-main')
     });
-*/
+
+    sstt.planning_Board = new app.PlanningBoard.ModelView();
+
 });

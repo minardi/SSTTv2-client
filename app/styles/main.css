@@ -151,6 +151,11 @@ ________________________________________________*/
     border-radius: 5px;
     background-color: rgba(180,220,180,0.7);
     box-shadow: 0px 0px 10px rgba(160, 220, 160, 0.6);
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
 }
 
 .app-wrapper .b-main .content .product {

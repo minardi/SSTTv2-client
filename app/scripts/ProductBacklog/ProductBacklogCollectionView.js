@@ -7,6 +7,7 @@
         template: JST['app/scripts/ProductBacklog/ProductBacklogCollectionTpl.ejs'],
 
         subscriptions: {
+<<<<<<< HEAD
             "BacklogItemEdit:SavedChanges": "saveStory",
             "SprintBacklog:RestoreStory": "renderOne"
         },
@@ -20,13 +21,40 @@
 
             this.collection.once("sync", this.render, this);
             this.collection.on("destroy", this.removeStory, this);
-
-            this.collection.fetch();
+=======
+            "PlanningBoard:InitProductBacklog": "initProductBacklog",
+            "ProductBacklog:RemoveStory": "removeStory",
+            "BacklogItemEdit:SavedChanges": "saveStory"
         },
 
+        events: {
+            "click .add-new-story": "addStory",
+        },
+
+        initProductBacklog: function(elem, project_id) {
+            this.setElement(elem);
+            this.project_id = project_id;
+
+            this.$el.append(this.template());
+            this.$list = this.$(".backlogstory-list");
+>>>>>>> f14ef8fde6fb6ab9a5a5d0f261aed9a9dd26aad5
+
+            this.initCollection();
+        },
+
+<<<<<<< HEAD
         render: function() {
             this.$el.append(this.template());
             this.$list = this.$(".product .backlogstory-list");
+=======
+        initCollection: function () {
+            this.collection = new module.Collection("story", "product", this.project_id);
+            this.collection.on("sync", this.render, this);
+            this.collection.on("destroy", this.removeStory, this);
+
+            this.collection.fetch();
+        },
+>>>>>>> f14ef8fde6fb6ab9a5a5d0f261aed9a9dd26aad5
 
             this.collection.each(this.renderOne, this);
 

@@ -3,7 +3,7 @@
 <head>
     <title>SSTaskTracking</title>
 
-    <% if request.path == '/' %>
+    <% if request.path == '/' || request.path == '/users/sign_in' %>
         <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
     <% end %>
 
@@ -125,6 +125,9 @@
         <script src="scripts/Sprint/SprintCollection.js"></script>
         <script src="scripts/Sprint/SprintModelView.js"></script>
         <script src="scripts/Sprint/SprintCollectionView.js"></script>
+         
+        <!-- module PlanningBoard-->
+        <script src="scripts/PlanningBoard/PlanningBoardModelView.js"></script>
          
         <!-- endbuild -->
     <% end %>
