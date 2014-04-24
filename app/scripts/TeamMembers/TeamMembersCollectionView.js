@@ -7,8 +7,8 @@
         template: JST['app/scripts/TeamMembers/TeamMembersCollectionTpl.ejs'],
 
         subscriptions: {
-            "TeamEditPage:roleSetUp": "setRole",
-            "TeamCandidates:setTeamMember": "addToCollection",
+            "TeamEditPage:RoleSetUp": "setRole",
+            "TeamCandidates:SetTeamMember": "addToCollection",
             "TeamEditPage:Open" : "initUsers"
         },
 

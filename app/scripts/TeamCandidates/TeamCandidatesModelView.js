@@ -13,7 +13,7 @@
         template: JST['app/scripts/TeamCandidates/TeamCandidatesTpl.ejs'],   
 		
 		subscriptions: {
-            "TeamEditPage:roleSetUp": "setRole" /*change channel name from "TeamEditPage:TabSelected"*/
+            "TeamEditPage:RoleSetUp": "setRole" /*change channel name from "TeamEditPage:TabSelected"*/
         },
 		
 		 events: {
@@ -31,7 +31,7 @@
 
         setTeamMember: function() {
             this.model.set("role", this.role);
-            mediator.pub("TeamCandidates:setTeamMember", this.model.formTeamMember()); /* changed channel name from "UserCandidate:addToProject" */
+            mediator.pub("TeamCandidates:SetTeamMember", this.model.formTeamMember()); /* changed channel name from "UserCandidate:addToProject" */
         },
 
         setRole: function(current_role) { 

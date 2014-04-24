@@ -31,15 +31,15 @@
         },       
 
         showWatchers: function () {            
-            mediator.pub("TeamEditPage:roleSetUp", "watcher");
+            mediator.pub("TeamEditPage:RoleSetUp", "watcher");
         },
 
         showDevelopers: function () {
-            mediator.pub("TeamEditPage:roleSetUp", "developer");
+            mediator.pub("TeamEditPage:RoleSetUp", "developer");
         },
 
         showTeachLeads: function () {
-            mediator.pub("TeamEditPage:roleSetUp", "techlead");
+            mediator.pub("TeamEditPage:RoleSetUp", "techlead");
         },         
         
         showSaveMsg: function() {
