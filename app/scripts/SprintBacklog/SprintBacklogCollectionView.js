@@ -12,10 +12,6 @@
             "BacklogItemEdit:SavedChanges": "startSprint"
         },
 
-        events: {
-            "click .start-sprint": "addSprint"
-        },
-
         initSprintBacklog: function(elem, project_id) {
             this.setElement(elem);
             this.parent_id = project_id;
@@ -41,15 +37,6 @@
             });
 
             this.$list.append(backlogItemView.render().el);
-        },
-
-        addSprint: function() {
-            var attributes = {
-                "item_type": "sprint",
-                "parent_id": this.parent_id
-            };
-            
-            mediator.pub("ProductBacklog:CreateNewItem", attributes);
         },
 
         startSprint: function(sprint) {
