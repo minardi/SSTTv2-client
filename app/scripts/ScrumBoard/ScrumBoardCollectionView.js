@@ -6,19 +6,24 @@
 
         template: JST['app/scripts/ScrumBoard/ScrumBoardCollectionTpl.ejs'],
         
-        subscriptions: {
+        subscriptions: {   
+            'ProjectPage:ProjectSelected': 'initCollection',      
+            'ScrumPage:ScrumBoardSelected': 'setElementAndRender',
             "ScrumBoard:TaskMoved": "renderOne"
         },
         
-        initialize: function (options) {  
+        initCollection: function (project_id) {  
             this.collection = new module.Collection();  
-			this.collection.url = "backlog_items/get_tasks/" + options.project_id;
-
-            this.collection.on('sync', this.render, this);
-            this.collection.fetch();
+			this.collection.url = "backlog_items/get_tasks/" + project_id;
+        },   
+            
+        setElementAndRender: function(content_el) {           
+            this.setElement(content_el);
+			this.collection.on('sync', this.renderEach, this);
+            this.collection.fetch();   
         },
 
-        render: function () {
+        renderEach: function () {
             this.$el.html(this.template());
 			this.status = {
 				"todo": this.$(".todo"),
@@ -34,7 +39,6 @@
             var task = new module.ModelView({
                     model: task_model
                 });
-
             this.status[task_model.get("status")].append(task.render().el);            
         }
 

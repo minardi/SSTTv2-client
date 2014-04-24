@@ -7,24 +7,16 @@
         template: JST['app/scripts/Projectinfo/ProjectinfoTpl.ejs'],        
         
         subscriptions: {
-            "SetProjectId": "showProjectInfo"          
+            "ProjectPage:ProjectChecked": "showProjectInfo"          
         },
 
-        showProjectInfo: function(project_id) {      
-            this.model = new module.Model({
-                project_id: project_id
-            });   
-            this.listenTo(this.model, "sync", this.render);
-            this.listenTo(this.model, "sync", this.pubProjectInfo);
-            this.model.fetch();
-        },
-
-        pubProjectInfo: function () {
-            mediator.pub("Projectinfo:SetProjectInfo", this.model);
+        showProjectInfo: function(project_model) {      
+            this.project = project_model;          
+            this.render();
         },
 
         render: function() {
-            this.$el.html(this.template(this.model.toJSON()));
+            this.$el.html(this.template(this.project.toJSON()));
             return this;
         }
   });

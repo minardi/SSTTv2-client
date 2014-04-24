@@ -10,15 +10,6 @@
 
         template: JST['app/scripts/SprintBacklog/SprintBacklogTpl.ejs'],
 
-        events: {
-        	"click .delete": "restoreToProduct"
-        },
-
-        restoreToProduct: function () {
-        	this.remove();
-        	mediator.pub("SprintBacklog:RestoreStory", this.model);
-        },
-
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
             return this;

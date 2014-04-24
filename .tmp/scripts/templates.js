@@ -46,11 +46,21 @@ __p += '<div class="dashboard">\n</div>';
 return __p
 };
 
+this["JST"]["app/scripts/PlanningBoard/PlanningBoardTpl.ejs"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __e = _.escape;
+with (obj) {
+__p += '<div class="backlog-box product">    \n</div>\n<div class="backlog-box sprint">\n</div>';
+
+}
+return __p
+};
+
 this["JST"]["app/scripts/ProductBacklog/ProductBacklogCollectionTpl.ejs"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
-__p += '<div class="backlog-box product">\n    <div class="backlog-box-name">   \n        ProductBacklog\n        <div class="backlog-box-actions">\n            <input class="add-new-story btn-new-story" type="button" value="+" />\n        </div>\n    </div> \n    <div class="backlogstory-list">\n    </div>\n</div>';
+__p += '<div class="backlog-box-name">   \n    ProductBacklog\n    <div class="backlog-box-actions">\n        <input class="add-new-story btn-new-story" type="button" value="+" />\n    </div>\n</div> \n<div class="backlogstory-list">\n</div>';
 
 }
 return __p
@@ -138,7 +148,7 @@ this["JST"]["app/scripts/ScrumPage/ScrumPageTpl.ejs"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
-__p += '<div class="scrum-page-header nav scrum-page">\n    <div class="col-xs-4 tab" id="planning">\n        <span class = "glyphicon glyphicon-list-alt"></span>\n        Planning\n    </div>\n    \n    <div class="col-xs-4 tab" id="scrumboard">\n        <span class = "glyphicon glyphicon-tasks"></span>\n        Scrum Board\n    </div>\n    \n    <div class="col-xs-4 tab" id="stat" >\n        <span class = "glyphicon glyphicon-stats"></span>\n        Statistics\n    </div>\n</div>\n\n<div class="content scrum-page"></div>\n';
+__p += '<div class="scrum-page-header nav scrum-page">\n    <div class="col-xs-4 tab" id="planning">\n        <span class = "glyphicon glyphicon-list-alt"></span>\n        Planning\n    </div>\n    \n    <div class="col-xs-4 tab" id="scrumboard">\n        <span class = "glyphicon glyphicon-tasks"></span>\n        Scrum Board\n    </div>\n    \n    <div class="col-xs-4 tab" id="stat" >\n        <span class = "glyphicon glyphicon-stats"></span>\n        Statistics\n    </div>\n</div>\n\n<div class="content scrum-page" id="ScrumPage"></div>\n';
 
 }
 return __p
@@ -170,7 +180,7 @@ this["JST"]["app/scripts/SprintBacklog/SprintBacklogCollectionTpl.ejs"] = functi
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
-__p += '<div class="backlog-box sprint">\n    <div class="backlog-box-name"> \n        SprintBacklog\n        <div class="backlog-box-actions"></div>\n    </div>\n\n    <div class="sprintstory-list"></div>\n</div>\n\n<div class="btn btn-info start-sprint">Start sprint</div>\n\n';
+__p += '<div class="backlog-box-name"> \n    SprintBacklog\n    <div class="backlog-box-actions">\n    </div>\n</div>\n<div class="sprintstory-list"></div>\n<div class="btn start-sprint">Start sprint</div>';
 
 }
 return __p
@@ -180,9 +190,8 @@ this["JST"]["app/scripts/SprintBacklog/SprintBacklogTpl.ejs"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
-__p += '<span class="story-title">' +
-((__t = ( title )) == null ? '' : __t) +
-'</span>\n<span class="glyphicon delete"></span>';
+__p +=
+((__t = ( title )) == null ? '' : __t);
 
 }
 return __p
@@ -216,7 +225,7 @@ this["JST"]["app/scripts/TeamEditPage/TeamEditPageTpl.ejs"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
-__p += '<div class="team-edit-page-header nav team-edit-page">\n    <div class="col-xs-4 tab watchers active-role">Watchers</div>\n    <div class="col-xs-4 tab developers">Developers</div>\n    <div class="col-xs-4 tab techleads">TechLeads</div>\n</div>\n\n<div class="content team-edit-page">\n    <div class="candidates"></div>\n    <div class="team-members"></div>\n    <div id = "save_confirm" class = "hidden">\n        <p><strong>Team members saved</strong></p>\n        <div class = "btn btn-default" id = "ok_btn">Ok</div>\n    </div>\n</div>\n\n';
+__p += '<div class="team-edit-page-header nav team-edit-page">\n    <div class="col-xs-4 tab" id="watchers">Watchers</div>\n    <div class="col-xs-4 tab" id="developers">Developers</div>\n    <div class="col-xs-4 tab" id="techleads">TechLeads</div>\n</div>\n\n<div class="content team-edit-page">\n    <div class="candidates"></div>\n    <div class="team-members"></div>\n    <div id = "save_confirm" class = "hidden">\n        <p><strong>Team members saved</strong></p>\n        <div class = "btn btn-default" id = "ok_btn">Ok</div>\n    </div>\n</div>\n\n';
 
 }
 return __p
@@ -249,7 +258,7 @@ this["JST"]["app/scripts/Teams/TeamsCollectionTpl.ejs"] = function(obj) {
 obj || (obj = {});
 var __t, __p = '', __e = _.escape;
 with (obj) {
-__p += '<div class="title" >\n    My teams\n    <div class="actions">\n        <span class="hide btn btn-default glyphicon glyphicon-plus">\n        </span>\n    </div>\n</div>\n\n<div class="content teams">\n</div>';
+__p += '<div class="title team-page" >\n    My teams\n    <div class="actions">\n        <span class="hide btn btn-default glyphicon glyphicon-plus">\n        </span>\n    </div>\n</div>\n\n<div class="content team-page">\n</div>';
 
 }
 return __p

@@ -7,57 +7,44 @@
 		
         events: {
             "click #planning": "showPlanning",
-            "click #scrumboard": "showScrumBoard",
+            "click #scrumboard": "showScrum",
             "click #stat": "showStat"
         },
 
         subscriptions: {
-            "DashBoard:ActiveTeam": "navigateTeams"
-        },
-
-        initialize: function (options) {
-            this.model = new module.Model();
-            this.model.set("project_id", options.project_id);
+            "ProjectPage:ProjectSelected": "renderDefaultTab",
+            "DashBoard:ActiveTeam": "removeScrumPage",
+            "DashBoard:ActiveBack": "removeScrumPage"
         },
 
         showPlanning: function() {
-<<<<<<< HEAD
-            sstt.router.navigate(this.generateRout("planning"), {trigger: true});
-=======
             this.element.html("");
             mediator.pub("ScrumPage:PlanningBoardSelected", this.element, this.model.get('project_id'));
->>>>>>> f14ef8fde6fb6ab9a5a5d0f261aed9a9dd26aad5
         },
 
-        showScrumBoard: function() {
-            sstt.router.navigate(this.generateRout("scrum-board"), {trigger: true});
+        showScrum: function() {
+            mediator.pub("ScrumPage:ScrumBoardSelected", this.element);
         },
 
         showStat: function() {
-            //
+            mediator.pub("ScrumPage:StatBoardSelected", this.element);
         },
 
-<<<<<<< HEAD
-        generateRout: function (page_name) {
-            return "project/" + this.model.get("project_id") + "/scrum-page/" + page_name;
-=======
         renderDefaultTab: function(project_id) {
             this.model.set('project_id', project_id);
             this.render();
             this.element = this.$el.find("#ScrumPage");
 
             this.showPlanning();
->>>>>>> f14ef8fde6fb6ab9a5a5d0f261aed9a9dd26aad5
         },
         
-        render: function() {
-            this.$el.html(this.template());
-            this.$content = this.$(".content");
+         render: function() {
+            this.$el.append(this.template());
             return this;
         },
-
-        navigateTeams: function () {
-            sstt.router.navigate("project/" + this.model.get("project_id") + "/teams", {trigger:true});
+        
+        removeScrumPage: function() {
+            this.$el.find(".scrum-page").remove();
         }
         
     });

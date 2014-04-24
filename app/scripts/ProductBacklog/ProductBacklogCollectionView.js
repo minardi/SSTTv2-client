@@ -7,21 +7,6 @@
         template: JST['app/scripts/ProductBacklog/ProductBacklogCollectionTpl.ejs'],
 
         subscriptions: {
-<<<<<<< HEAD
-            "BacklogItemEdit:SavedChanges": "saveStory",
-            "SprintBacklog:RestoreStory": "renderOne"
-        },
-
-        events: {
-            "click .add-new-story": "addStory"
-        },
-
-        initialize: function (options) {
-            this.collection = new module.Collection("story", "product", options.project_id);
-
-            this.collection.once("sync", this.render, this);
-            this.collection.on("destroy", this.removeStory, this);
-=======
             "PlanningBoard:InitProductBacklog": "initProductBacklog",
             "ProductBacklog:RemoveStory": "removeStory",
             "BacklogItemEdit:SavedChanges": "saveStory"
@@ -37,16 +22,10 @@
 
             this.$el.append(this.template());
             this.$list = this.$(".backlogstory-list");
->>>>>>> f14ef8fde6fb6ab9a5a5d0f261aed9a9dd26aad5
 
             this.initCollection();
         },
 
-<<<<<<< HEAD
-        render: function() {
-            this.$el.append(this.template());
-            this.$list = this.$(".product .backlogstory-list");
-=======
         initCollection: function () {
             this.collection = new module.Collection("story", "product", this.project_id);
             this.collection.on("sync", this.render, this);
@@ -54,19 +33,18 @@
 
             this.collection.fetch();
         },
->>>>>>> f14ef8fde6fb6ab9a5a5d0f261aed9a9dd26aad5
 
+        render: function() {
+            this.$list.html("");
             this.collection.each(this.renderOne, this);
-
+            
             return this;
         },
 
-        renderOne: function(story_model) {
-            var story = new module.ModelView({
-                model: story_model
-            });
-
-            this.$list.append(story.render().el);
+        renderOne: function(story) {
+            var story_view = new module.ModelView({model: story});
+            
+            this.$list.append(story_view.render().el);
         },
 
         addStory: function() {

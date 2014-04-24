@@ -9,22 +9,35 @@
         template: JST['app/scripts/TeamMembers/TeamMembersTpl.ejs'],
         
         initialize: function() {
-            this.listenTo(this.model, "visible", this.toggleVisible);
+            this.model.on('change', this.show, this);
+            this.show();
         },
 
-        toggleVisible: function (role) {
-            this.$el.toggleClass("hidden", this.isHidden(role));
+        subscriptions: {
+            "TeamEditPage:roleSetUp": "setRole"
+        },
+       
+        show: function() {
+            this.canRender() ? this.$el.removeClass('hide'): 
+                                this.$el.addClass('hide');
         },
 
-        isHidden: function (role) {
-            return this.model.get("role") !== role;
+        canRender: function() {
+            return (this.model.get("role") === this.role);  
+        },
+
+        setRole: function(new_role) {
+            this.role = new_role;
+            this.show();
         },
 
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
+            this.show();
 
             return this;
         }
+
     });
     
 })(app.TeamMembers);

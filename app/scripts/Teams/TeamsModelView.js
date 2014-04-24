@@ -11,15 +11,11 @@
         template: JST['app/scripts/Teams/TeamsTpl.ejs'],
         
         events: {
-            "dblclick": "selectTeam"
-        },
-
-        initialize: function (project_id) {
-
+            "dblclick": "selectTeam",
         },
 
         selectTeam: function() {
-            sstt.router.navigate("/team-edit/" + this.model.get("id"), {trigger: true}); 
+            mediator.pub("TeamPage:TeamSelected", this.model.id);
         },
 
         render: function() {

@@ -7,22 +7,18 @@
         template: JST['app/scripts/TeamCandidates/TeamCandidatesCollectionTpl.ejs'],
 		
 		subscriptions: {
-			"TeamEditPage:loadCandidates": "showInPage",
+			"TeamEditPage:Open": "initTeamCandidates",
 		},
 
-		initialize: function(options) {
-            this.collection = new module.Collection(options.team_id);
+		initTeamCandidates: function(data) {             
+            this.$el = data["element"].find('.candidates'); 
+            this.collection = new module.Collection(data["team_id"]);
             this.collection.on('sync', this.render, this);
-            this.listenTo(sstt.router, "route", this.unbind);
-        },
-
-        showInPage: function ($el) {
-            this.setElement($el);
-            this.collection.fetch();
+			this.collection.fetch(); /*fetch() from collection added here to boost performance*/
         },
 
         render: function() {
-            this.$el.html(this.template());
+            this.$el.append(this.template());
             this.$users_list = this.$(".users-list"); /* 'this.$el.find()' deleted*/
             this.collection.each(this.renderOne, this);
             return this;

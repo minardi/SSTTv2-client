@@ -12,16 +12,15 @@
         
         events: {
             "dblclick": "selectProject",
-            "click": "checkProject",
+            "click": "showProjectInfo",
         },
 
         selectProject: function() {
-            sstt.router.navigate( "project/" + this.model.get("id") + "/scrum-page/planning", {trigger: true});
+            mediator.pub("ProjectPage:ProjectSelected", this.model.id);
         },
         
-        checkProject: function() {
-            mediator.pub("Projects:OneProjectChecked", this.model);
-            mediator.pub("SetProjectId", this.model.get("id"));
+        showProjectInfo: function() {
+            mediator.pub("ProjectPage:ProjectChecked", this.model);
             this.$el.siblings().removeClass("active-tab"); 
             this.$el.addClass("active-tab"); 
         },

@@ -10,6 +10,28 @@
 
             this.add([
                 {
+                    content: "Back",
+                    type: "back",
+                    permition: {
+                        "must_be": "",
+                        "not": {
+                            page: ["project_page", "team_edit_page"]
+                        }
+                    }
+                },
+
+                {
+                    content: "BackFromTeamEditPage", 
+                    type: "back",
+                    permition: {
+                        "must_be": {
+                            page: ["team_edit_page"]
+                        },
+                        "not": ""
+                    }
+                },
+
+                {
                     content: "Team",
                     type: "team",
                     permition: {

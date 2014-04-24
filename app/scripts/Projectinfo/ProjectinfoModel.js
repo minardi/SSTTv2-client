@@ -4,10 +4,6 @@
 
     module.Model = Backbone.Model.extend({       
 
-        initialize: function (options) {
-            this.urlRoot = "projects/info/" + options.project_id;
-        },
-
         defaults: {
             title: "",
             description: "",

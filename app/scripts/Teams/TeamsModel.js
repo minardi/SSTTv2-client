@@ -7,7 +7,6 @@
         defaults: {
             name: "",
             description: "",
-            project_id: ""
         }
 
     });
