@@ -8,29 +8,28 @@
         
         subscriptions: {   
             'ProjectPage:ProjectSelected': 'initCollection',      
-            'ScrumPage:ScrumBoardSelected': 'setElementAndRender',
+            'ScrumPage:ScrumBoardSelected': 'render',
             "ScrumBoard:TaskMoved": "renderOne"
         },
         
         initCollection: function (project_id) {  
             this.collection = new module.Collection();  
 			this.collection.url = "backlog_items/get_tasks/" + project_id;
+			this.collection.on('sync', this.render, this);
+            this.collection.fetch();
         },   
-            
-        setElementAndRender: function(content_el) {           
-            this.setElement(content_el);
-			this.collection.on('sync', this.renderEach, this);
-            this.collection.fetch();   
-        },
 
-        renderEach: function () {
+        render: function (content_el) {
+			this.setElement(content_el);
             this.$el.html(this.template());
+			
 			this.status = {
 				"todo": this.$(".todo"),
 				"progress": this.$(".in-progress"),
 				"verify": this.$(".to-verify"),
 				"done": this.$(".done"),
 			};
+			
             this.collection.each(this.renderOne,this);
             return this;
         },
