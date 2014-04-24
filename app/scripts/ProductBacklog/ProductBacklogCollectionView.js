@@ -28,7 +28,7 @@
 
         initCollection: function () {
             this.collection = new module.Collection("story", "product", this.project_id);
-            this.collection.once("sync", this.render, this);
+            this.collection.on("sync", this.render, this);
             this.collection.on("destroy", this.removeStory, this);
 
             this.collection.fetch();
