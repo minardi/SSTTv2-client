@@ -5,7 +5,7 @@
     module.ModelView = Backbone.View.extend({
 
         template: JST["app/scripts/ScrumBoard/ScrumBoardTpl.ejs"],
-
+		
         events: {
             "click .arrow-left": "moveLeft",
 			"click .arrow-right": "moveRight"
