@@ -151,6 +151,11 @@ ________________________________________________*/
     border-radius: 5px;
     background-color: rgba(180,220,180,0.7);
     box-shadow: 0px 0px 10px rgba(160, 220, 160, 0.6);
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
 }
 
 .app-wrapper .b-main .content .product {
@@ -161,7 +166,7 @@ ________________________________________________*/
     float: right;
 
 }
-.backlog-box .story-list .story-box {
+.backlog-box .story-box {
     margin: 5px 20px;
     border: 1px solid rgba(0,0,0,0.5);
     box-shadow: 0px 0px 10px rgba(0,0,0, 0.3);
@@ -169,6 +174,12 @@ ________________________________________________*/
     font-size: 16px;
     cursor: pointer;
     border-radius: 10px;
+}
+
+.story-box .delete{
+    float: right;
+    padding-right: 22px;
+    padding-top: 3px;
 }
 
 .app-wrapper .b-main .content .backlog-box-name{ 
@@ -188,6 +199,23 @@ ________________________________________________*/
     vertical-align: middle;
     margin: 10px;
 }
+
+.btn-new-story{
+    height: 25px;
+    /*background-color: #39b3d7;
+    border-color: #269abc;*/
+    border-radius: 3px 0 0 3px;
+    background-color: #0063E2;
+    border: 1px solid #122F5A;
+    color: #FFF;
+}
+
+.btn-new-story:hover {
+    color: #fff;
+    background-color: #39b3d7;
+    border-color: #269abc;
+}
+
 
 /*Scrum page block
 ______________________________________*/
@@ -211,6 +239,7 @@ a {
     background-color: rgba(255,255,255,0.8);
 }
 
+.start
 /*SCRUM-board block
 ________________________________________________*/
 
@@ -279,6 +308,14 @@ ________________________________________________*/
 
 .task:hover {
     box-shadow: 0 0 20px rgba(20,100,20,0.9);
+}
+
+.left .task .arrow-left{
+    display: none;
+}
+
+.right .task .arrow-right{
+    display: none;
 }
 
 
@@ -429,4 +466,97 @@ ____________________________________________*/
 
 a:visited {
     color: white;
+}
+
+.btn-info {
+    background-color: #0063E2;
+    border-color: #122F5A;
+}
+
+.app-wrapper .b-sidebar .dashboard {
+    background-color: rgba(180,220,180,.6);
+    box-shadow: 0 0 10px rgba(0,0,0,.8);
+}
+
+/*=======dash board==============*/
+.back:before{
+    content: "\e091";
+}
+
+.team:before{
+    content: "T";
+}
+
+.config:before{
+    content: "\e136";
+}
+
+.delete:before{
+    content: "\e014";
+}
+/*======end dash board===========*/
+
+/*BacklogItemEdit*/
+.edit-backlog-item {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    margin: -200px 0 0 -150px;
+    background-color: #ddeedd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,.8);
+    width: 300px;
+    padding: 15px;
+
+}
+
+textarea {
+    resize: none;
+    min-height: 60px;
+    min-width: 250px;
+}
+
+.cancel_button, .save_button {
+    margin: 10px 0 0 30px;
+}
+
+p {
+    font-size: 16px;
+}
+
+/*BacklogItemEdit end*/
+
+/*edit team page*/
+.active-role{
+    background-color: #FFF !important;
+}
+
+/*ProductBacklog*/
+
+.btn-new-story {
+    margin-bottom: 0;
+    line-height: normal;
+}
+
+.story-box {
+    overflow: hidden;
+}
+
+.story-delete-btn {
+    float: right;
+    height: 22px;
+    width: 22px;
+    padding: 0;
+    border-radius: 0;
+}
+/*ProductBacklog end*/
+
+.start-sprint{
+    float: right;
+    clear: both;
+}
+
+.story-box:hover{
+    box-shadow: 0 0 10px rgba(20,100,20,.9);
 }
