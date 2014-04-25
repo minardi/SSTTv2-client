@@ -5,12 +5,12 @@
         
         template: JST["app/scripts/PlanningBoard/PlanningBoardTpl.ejs"],
 
-        subscriptions: {
-            "ScrumPage:PlanningBoardSelected": "backlogsInit"
-        },
-
         events: {
             "click .start-sprint": "addSprint"
+        },
+
+        subscriptions: {
+            "ScrumPage:PlanningBoardSelected": "backlogsInit"
         },
 
         backlogsInit: function(elem, project_id) {
@@ -18,14 +18,11 @@
             this.setElement(elem);
             this.render();
 
-            mediator.pub("PlanningBoard:InitProductBacklog", this.$(".product"), project_id);
-            mediator.pub("PlanningBoard:InitSprintBacklog", this.$(".sprint"), project_id);
+            mediator.pub("PlanningBoard:InitProductBacklog", this.$(".product-backlog"), project_id);
+            mediator.pub("PlanningBoard:InitSprintBacklog", this.$(".sprint-backlog"), project_id);
         },
 
         render: function() {
-            this.$(".product").remove();
-            this.$(".sprint").remove();
-
             this.$el.append(this.template());
 
             return this;
@@ -37,8 +34,8 @@
                 "parent_id": this.project_id
             };
             
-            mediator.pub("ProductBacklog:CreateNewItem", attributes);
-        },
+            mediator.pub("PlanningBoard:CreateNewItem", attributes);
+        }
 
     });
 

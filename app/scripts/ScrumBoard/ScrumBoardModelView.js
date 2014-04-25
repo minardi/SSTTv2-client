@@ -5,7 +5,7 @@
     module.ModelView = Backbone.View.extend({
 
         template: JST["app/scripts/ScrumBoard/ScrumBoardTpl.ejs"],
-
+		
         events: {
             "click .arrow-left": "moveLeft",
 			"click .arrow-right": "moveRight"
@@ -15,7 +15,6 @@
 			this.status = ["todo", "progress", "verify", "done"];
 			this.current_status = this.status.indexOf(this.model.get("status"));
 			this.role = init_data["role"];
-			console.log(this.role);
 		},
 		
 		render: function() {

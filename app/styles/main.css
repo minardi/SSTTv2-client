@@ -158,11 +158,11 @@ ________________________________________________*/
     -o-user-select: none;
 }
 
-.app-wrapper .b-main .content .product {
+.app-wrapper .b-main .content .product-backlog {
     float: left;
 }
 
-.app-wrapper .b-main .content .sprint {
+.app-wrapper .b-main .content .sprint-backlog {
     float: right;
 
 }
@@ -202,15 +202,18 @@ ________________________________________________*/
 
 .btn-new-story{
     height: 25px;
-    background-color: #39b3d7;
-    border-color: #269abc;
-    border-radius: 5px;
-    margin-bottom: 10px;
+    /*background-color: #39b3d7;
+    border-color: #269abc;*/
+    border-radius: 3px 0 0 3px;
+    background-color: #0063E2;
+    border: 1px solid #122F5A;
     color: #FFF;
 }
 
 .btn-new-story:hover {
-    background-color: rgba(255,255,255,0.8);
+    color: #fff;
+    background-color: #39b3d7;
+    border-color: #269abc;
 }
 
 
@@ -551,4 +554,10 @@ p {
 
 .start-sprint{
     float: right;
+    clear: both;
+    margin-top: 2px;
+}
+
+.story-box:hover{
+    box-shadow: 0 0 10px rgba(20,100,20,.9);
 }
