@@ -18,6 +18,7 @@
         },
 
         subscriptions: {
+            "ProductBacklog:CreateNewItem" : "initItem",
             "PlanningBoard:CreateNewItem" : "initItem",
             "ProductBacklog:EditStory" : "fillingFields",
             "ProductBacklog:SaveSprint" : "fillingFields"
@@ -34,7 +35,7 @@
             this._modelBinder = new Backbone.ModelBinder();
 
             this.is_new = true;
-            
+
             this.render();
         },
 
