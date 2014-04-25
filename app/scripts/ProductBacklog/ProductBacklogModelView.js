@@ -35,11 +35,9 @@
         },
 
         moveToSprint: function() {
-            event.preventDefault();
-
             mediator.pub("ProductBacklog:MoveSprintBacklog", this.model);
             this.model.set('moved', true);
-            this.$el.remove();
+            this.remove();
         },
 
         edit: function() {

@@ -18,7 +18,7 @@
         },
 
         subscriptions: {
-            "ProductBacklog:CreateNewItem" : "initItem",
+            "PlanningBoard:CreateNewItem" : "initItem",
             "ProductBacklog:EditStory" : "fillingFields",
             "ProductBacklog:SaveSprint" : "fillingFields"
         },  
