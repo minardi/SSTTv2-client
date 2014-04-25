@@ -158,11 +158,11 @@ ________________________________________________*/
     -o-user-select: none;
 }
 
-.app-wrapper .b-main .content .product {
+.app-wrapper .b-main .content .product-backlog {
     float: left;
 }
 
-.app-wrapper .b-main .content .sprint {
+.app-wrapper .b-main .content .sprint-backlog {
     float: right;
 
 }
@@ -555,6 +555,7 @@ p {
 .start-sprint{
     float: right;
     clear: both;
+    margin-top: 2px;
 }
 
 .story-box:hover{
