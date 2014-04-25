@@ -12,7 +12,8 @@
             "ScrumBoard:TaskMoved": "renderOne"
         },
 
-        initCollection: function (project_id) { 
+        initCollection: function (project_id, role) {
+            this.role = role;
             this.collection = new module.Collection();  
             this.collection.url = "backlog_items/get_tasks/" + project_id;
         },   
@@ -37,7 +38,8 @@
 
         renderOne: function (task_model) {
             var task = new module.ModelView({
-                    model: task_model
+                    model: task_model,
+                    role: this.role
                 });
             this.status[task_model.get("status")].append(task.render().el);            
         }
