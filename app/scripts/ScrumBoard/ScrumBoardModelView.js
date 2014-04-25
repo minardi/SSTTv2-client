@@ -48,6 +48,7 @@
 		updateStatus: function() {
 			this.model.set("status", this.status[this.current_status]);
 			mediator.pub("ScrumBoard:TaskMoved", this.model);
+			this.model.save(); 
 			this.remove();
 		}
 		
