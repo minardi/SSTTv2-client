@@ -27,7 +27,7 @@ $(function() {
         user_content: current_user_content
     });
 
-    sstt.project = new app.Projects.CollectionView({
+    sstt.projects = new app.Projects.CollectionView({
         el: $(".b-main")
     });
 

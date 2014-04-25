@@ -5,6 +5,7 @@
     "testFramework": "mocha",
     "templateFramework": "lodash",
     "compassBootstrap": true,
-    "includeRequireJS": false
+    "includeRequireJS": false,
+    "appName": "Sstt"
   }
 }

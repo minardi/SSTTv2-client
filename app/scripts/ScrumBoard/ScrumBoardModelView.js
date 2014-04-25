@@ -6,11 +6,15 @@
 
         template: JST["app/scripts/ScrumBoard/ScrumBoardTpl.ejs"],
 
+        subscriptions: {   
+            "ProjectPage:ProjectSelected": "setUserRole"
+        },
+
         events: {
             "click .arrow-left": "moveLeft",
 			"click .arrow-right": "moveRight"
         },
-		
+
 		initialize: function() {
 			this.status = ["todo", "progress", "verify", "done"];
 			this.current_status = this.status.indexOf(this.model.get("status"));
@@ -50,6 +54,10 @@
 			mediator.pub("ScrumBoard:TaskMoved", this.model);
 			this.model.save(); 
 			this.remove();
+		},
+
+		setUserRole: function(project_id, role) {
+			console.log("hhhhh");
 		}
 		
     });

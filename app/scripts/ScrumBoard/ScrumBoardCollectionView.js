@@ -12,7 +12,7 @@
             "ScrumBoard:TaskMoved": "renderOne"
         },
 
-        initCollection: function (project_id) {  
+        initCollection: function (project_id) { 
             this.collection = new module.Collection();  
             this.collection.url = "backlog_items/get_tasks/" + project_id;
         },   
