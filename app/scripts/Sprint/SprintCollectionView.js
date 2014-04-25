@@ -10,13 +10,11 @@
         },
 
         subscriptions: {
-            "SprintBacklog:SaveSprint": "saveSprint"
+            "PlanningBoard:CreateNewItem": "saveSprint"
         },
 
         initialize: function() {
             this.collection = new module.Collection();
-            //this.collection.on("sync", this.render, this);
-            //this.fetch();
         },
 
 
@@ -36,13 +34,10 @@
             this.$list.append(sprintView.render().el);
         },
 
-        saveSprint: function (sprint) {
-            sprint.set("item_type", "sprint");
-
-            this.collection.add(sprint);
-            sprint.save();
-
+        saveSprint: function (attributes) {
             this.listenToOnce(this.collection, "sync", this.sprintWasSaved);
+
+            this.collection.create(attributes);
         },
 
         sprintWasSaved: function () {

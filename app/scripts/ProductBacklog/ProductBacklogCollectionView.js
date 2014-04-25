@@ -9,7 +9,8 @@
         subscriptions: {
             "PlanningBoard:InitProductBacklog": "initProductBacklog",
             "ProductBacklog:RemoveStory": "removeStory",
-            "BacklogItemEdit:SavedChanges": "saveStory"
+            "BacklogItemEdit:SavedChanges": "saveStory",
+            "SprintBacklog:RestoreStory": "renderOne"
         },
 
         events: {

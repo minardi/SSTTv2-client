@@ -19,7 +19,6 @@
 
         subscriptions: {
             "ProductBacklog:CreateNewItem" : "initItem",
-            "PlanningBoard:CreateNewItem" : "initItem",
             "ProductBacklog:EditStory" : "fillingFields",
             "ProductBacklog:SaveSprint" : "fillingFields"
         },  
@@ -35,7 +34,7 @@
             this._modelBinder = new Backbone.ModelBinder();
 
             this.is_new = true;
-
+            
             this.render();
         },
 
@@ -45,6 +44,9 @@
 
             this.$(".edit-backlog-item").html(item_template(this.model.toJSON()));
             this.$(".edit-backlog-item").removeClass("hidden");
+            
+        //   this.model.on("change", function(model){console.log(model.toJSON())});
+         //   this._modelBinder.bind(this.model, this.el);
             
             return this;
         },
