@@ -30,7 +30,7 @@
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
             this.$story_delete_btn = this.$(".story-delete-btn");
-            
+
             return this;
         },
 
@@ -38,6 +38,7 @@
             event.preventDefault();
 
             mediator.pub("ProductBacklog:MoveSprintBacklog", this.model);
+            this.model.set('moved', true);
             this.$el.remove();
         },
 
@@ -53,7 +54,9 @@
         },
 
         hideDeleteBtn: function() {
-            this.$story_delete_btn.addClass("hidden");
+            if(!this.model.get('moved')) {
+                this.$story_delete_btn.addClass("hidden");
+            }
         },
 
         removeStory: function(){
