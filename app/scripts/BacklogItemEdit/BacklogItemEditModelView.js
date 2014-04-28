@@ -22,7 +22,7 @@
             "ProductBacklog:CreateNewItem" : "initItem",
             "ProductBacklog:EditStory" : "fillingFields",
             "ProductBacklog:SaveSprint" : "fillingFields"
-        },  
+        },
 
         events: {
             "click .save_button" : "saveChanges",
@@ -34,8 +34,6 @@
             this.model.set(attributes);
             this._modelBinder = new Backbone.ModelBinder();
 
-            this.is_new = true;
-            
             this.render();
         },
 
@@ -46,22 +44,18 @@
             this.$(".edit-backlog-item").html(item_template(this.model.toJSON()));
             this.$(".edit-backlog-item").removeClass("hidden");
             
-        //   this.model.on("change", function(model){console.log(model.toJSON())});
-         //   this._modelBinder.bind(this.model, this.el);
-            
             return this;
         },
 
         fillingFields: function(model) {
             this.model = model;
-            this.is_new = false;
             this._modelBinder = new Backbone.ModelBinder();
-            
+
             this.render();
         },
 
         cancelChanges: function() {
-            if(this.is_new) {
+            if(this.model.isNew()) {
                 this.model.destroy();
             }
 
@@ -71,10 +65,8 @@
         saveChanges: function() {
             this._modelBinder.bind(this.model, this.$el, null, {initialCopyDirection: Backbone.ModelBinder.Constants.ViewToModel});
             this.hideView();
-            mediator.pub("BacklogItemEdit:SavedChanges", {
-                                                            "model": this.model,
-                                                            "is_new": this.is_new
-                                                        });
+            
+            mediator.pub("BacklogItemEdit:SavedChanges", this.model);
         },
 
         hideView: function() {
@@ -83,7 +75,7 @@
 
         close: function(){
             this._modelBinder.unbind();
-        },
+        }
         
     });
 
