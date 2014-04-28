@@ -51,7 +51,6 @@
 
             this.$list.append(backlogItemView.render().el);
         }
-        
     });
 
 })(app.SprintBacklog);
