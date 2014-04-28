@@ -53,9 +53,7 @@
         },
 
         startSprint: function(sprint) {
-            if (sprint.model.get("item_type") === "sprint") {
-                //some unfinished actions
-            }
+            //some unfinished actions
         }
         
     });

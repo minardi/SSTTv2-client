@@ -39,7 +39,7 @@
         },
 
         render: function() {
-            var type = this.model.get("item_type");
+            var type = this.model.get("item_type"),
                 item_template = this.innerTemplate[type];
 
             this.$(".edit-backlog-item").html(item_template(this.model.toJSON()));
