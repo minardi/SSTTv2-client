@@ -34,8 +34,8 @@
             this.$list.append(sprintView.render().el);
         },
 
-        saveSprint: function (model) {
-                          
+        saveSprint: function (model) {         
+
             if (model.get("item_type") === 'sprint') {
                 this.listenToOnce(this.collection, "sync", this.sprintWasSaved);
                 this.collection.add(model);

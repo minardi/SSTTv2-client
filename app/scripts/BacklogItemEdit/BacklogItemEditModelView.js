@@ -6,15 +6,13 @@
         
         _modelBinder: undefined,
 
-        template: JST['app/scripts/BacklogItemEdit/BacklogItemEditTpl.ejs'],
-
         innerTemplate: {
             "story" : JST['app/scripts/BacklogItemEdit/BacklogItemEditStoryTpl.ejs'],
             "sprint" : JST['app/scripts/BacklogItemEdit/BacklogItemEditSprintTpl.ejs']
         },     
 
         initialize: function() {
-            this.$el.append(this.template());
+            this.$editView = this.$(".edit-backlog-item");
         },
 
         subscriptions: {
@@ -33,8 +31,13 @@
             this.model = new module.Model();
             this.model.set(attributes);
             this._modelBinder = new Backbone.ModelBinder();
+            
+            this.render();
+        },
 
-            this.is_new = true;
+        fillingFields: function(model) {
+            this.model = model;
+            this._modelBinder = new Backbone.ModelBinder();
             
             this.render();
         },
@@ -43,47 +46,59 @@
             var type = this.model.get("item_type");
                 item_template = this.innerTemplate[type];
 
-            this.$(".edit-backlog-item").html(item_template(this.model.toJSON()));
-            this.$(".edit-backlog-item").removeClass("hidden");
-            
-        //   this.model.on("change", function(model){console.log(model.toJSON())});
-         //   this._modelBinder.bind(this.model, this.el);
+            this.$editView.html(item_template(this.model.toJSON()));
+            this.showHideView();
             
             return this;
         },
 
-        fillingFields: function(model) {
-            this.model = model;
-            this.is_new = false;
-            this._modelBinder = new Backbone.ModelBinder();
-            
-            this.render();
-        },
-
         cancelChanges: function() {
-            if(this.is_new) {
+            if(this.model.isNew()) {
                 this.model.destroy();
             }
 
-            this.hideView();
+            this.showHideView();
         },
 
         saveChanges: function() {
             this._modelBinder.bind(this.model, this.$el, null, {initialCopyDirection: Backbone.ModelBinder.Constants.ViewToModel});
-            this.hideView();
-            mediator.pub("BacklogItemEdit:SavedChanges", {
-                                                            "model": this.model,
-                                                            "is_new": this.is_new
-                                                        });
+            //ForTesting/////////////////////////////////
+            if(this.model.get("item_type") === "sprint") {
+                this.model.set("start_at", "27.07.1992");
+                this.model.set("end_at", "18.12.2001");
+            }
+            console.log(this.model);
+            if(this.dataValidation()) {
+                this.showHideView();
+                mediator.pub("BacklogItemEdit:SavedChanges", this.model);
+
+                this._modelBinder.unbind(); 
+            } else {
+                console.log(':(');
+            }
         },
 
-        hideView: function() {
-            this.$(".edit-backlog-item").addClass("hidden");
+        dataValidation: function() {
+            var reg_empty = new RegExp('([^\\s*]+)','g'),
+                reg_date = new RegExp('([0-2]\d|3[01])\.(0\d|1[012])\.(\d{4})'),
+                valid = false;
+
+            if(this.model.get("item_type") === "story") {
+                valid = Boolean(this.model.get("title").replace(/\s+/g, '').length);
+            } else {
+                valid = Boolean(this.model.get("title").replace(/\s+/g, '').length) && 
+                Boolean(this.model.get("start_at").replace(/\s+/g, '').length) && 
+                Boolean(this.model.get("end_at").replace(/\s+/g, '').length);;
+
+                console.log(valid);
+            }
+            
+            return valid;
         },
 
-        close: function(){
-            this._modelBinder.unbind();
-        },
+        showHideView: function() {
+            this.$editView.toggleClass("hidden");
+        }
         
     });
 
