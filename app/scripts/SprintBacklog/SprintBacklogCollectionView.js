@@ -7,32 +7,41 @@
         template: JST['app/scripts/SprintBacklog/SprintBacklogCollectionTpl.ejs'],  
 
         subscriptions: {
-            "PlanningBoard:InitSprintBacklog": "initSprintBacklog",
             "ProductBacklog:MoveSprintBacklog": "addBacklogItem",
-            "BacklogItemEdit:SavedChanges": "startSprint"
+            "Spirnt:SprintWasSaved": "saveAllStory",
+            "PlanningBoard:InitSprintBacklog": "initializeSprintBacklog"
         },
 
-        events: {
-            "click .start-sprint": "addSprint"
-        },
-
-        initSprintBacklog: function(elem, project_id) {
-            this.setElement(elem);
-            this.parent_id = project_id;
-
+        initializeSprintBacklog: function (el, project_id) {
+            this.setElement(el);
             this.$el.append(this.template());
             this.$list = this.$(".sprintstory-list");
 
-            this.initCollection(project_id);
+            _.bindAll(this, "storyBindToSprint");
+            this.collection = new module.Collection("story", "sprint", project_id);
+            this.render();
         },
 
-        initCollection: function (project_id) {
-            this.collection = new module.Collection("stories", "sprint", project_id);
+        saveAllStory: function (story) {
+            var story_parent_id = story.get("id");
+
+            this.collection.each(function (model) {
+                model.set("parent_id", story_parent_id);
+                model.save(null,{
+                    success: this.storyBindToSprint
+                });
+            }, this);
+
+            this.$list.empty();
         },
 
-        addBacklogItem: function(backlogItem) {
-            this.collection.addItem(backlogItem.toJSON());
-            this.renderOne(backlogItem);
+        storyBindToSprint: function (model) {
+            this.collection.remove(model);
+        },
+
+        addBacklogItem: function(story) {
+            this.collection.add(story);
+            this.renderOne(story);
         },
 
         renderOne: function (backlogItem) {
@@ -41,19 +50,6 @@
             });
 
             this.$list.append(backlogItemView.render().el);
-        },
-
-        addSprint: function() {
-            var attributes = {
-                "item_type": "sprint",
-                "parent_id": this.parent_id
-            };
-            
-            mediator.pub("ProductBacklog:CreateNewItem", attributes);
-        },
-
-        startSprint: function(sprint) {
-            //some unfinished actions
         }
         
     });

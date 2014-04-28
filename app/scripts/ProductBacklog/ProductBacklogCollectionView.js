@@ -9,7 +9,8 @@
         subscriptions: {
             "PlanningBoard:InitProductBacklog": "initProductBacklog",
             "ProductBacklog:RemoveStory": "removeStory",
-            "BacklogItemEdit:SavedChanges": "saveStory"
+            "BacklogItemEdit:SavedChanges": "saveStory",
+            "SprintBacklog:RestoreStory": "renderOne"
         },
 
         events: {
@@ -44,7 +45,9 @@
         renderOne: function(story) {
             var story_view = new module.ModelView({model: story});
             
-            this.$list.append(story_view.render().el);
+            if(!story.get('moved')) {
+                this.$list.append(story_view.render().el);
+            }
         },
 
         addStory: function() {

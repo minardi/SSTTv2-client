@@ -8,8 +8,9 @@
             
         initialize: function() {
             this.projectsCollection = new module.Collection();
-            this.projectsCollection.fetch();
             this.listenTo(this.projectsCollection, "sync", this.render);
+            
+            this.projectsCollection.fetch();
         },
 
         subscriptions: {

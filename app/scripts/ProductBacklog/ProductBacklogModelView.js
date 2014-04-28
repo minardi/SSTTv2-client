@@ -30,15 +30,14 @@
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
             this.$story_delete_btn = this.$(".story-delete-btn");
-            
+
             return this;
         },
 
         moveToSprint: function() {
-            event.preventDefault();
-
             mediator.pub("ProductBacklog:MoveSprintBacklog", this.model);
-            this.$el.remove();
+            this.model.set('moved', true);
+            this.remove();
         },
 
         edit: function() {
@@ -53,7 +52,9 @@
         },
 
         hideDeleteBtn: function() {
-            this.$story_delete_btn.addClass("hidden");
+            if(!this.model.get('moved')) {
+                this.$story_delete_btn.addClass("hidden");
+            }
         },
 
         removeStory: function(){

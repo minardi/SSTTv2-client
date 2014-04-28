@@ -10,13 +10,11 @@
         },
 
         subscriptions: {
-            "SprintBacklog:SaveSprint": "saveSprint"
+            "BacklogItemEdit:SavedChanges": "saveSprint"
         },
 
         initialize: function() {
             this.collection = new module.Collection();
-            //this.collection.on("sync", this.render, this);
-            //this.fetch();
         },
 
 
@@ -36,13 +34,16 @@
             this.$list.append(sprintView.render().el);
         },
 
-        saveSprint: function (sprint) {
-            sprint.set("item_type", "sprint");
+        saveSprint: function (edit_model) {
+            var is_new = edit_model.is_new,
+                model = edit_model.model;
+                
+            if (model.get("item_type") === 'sprint') {
+                this.listenToOnce(this.collection, "sync", this.sprintWasSaved);
+                this.collection.add(model);
 
-            this.collection.add(sprint);
-            sprint.save();
-
-            this.listenToOnce(this.collection, "sync", this.sprintWasSaved);
+                model.save();
+            }
         },
 
         sprintWasSaved: function () {
