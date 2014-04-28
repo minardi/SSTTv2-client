@@ -60,14 +60,14 @@
             mediator.pub("ProductBacklog:CreateNewItem", attributes);
         },
 
-        saveStory: function(story) { 
-            if (story.model.get("item_type") === "story") {
-                if(story["is_new"]) {
-                    this.collection.add(story.model);
-                    story.model.save();
-                    this.renderOne(story.model);
+        saveStory: function(model) { 
+            if (model.get("item_type") === "story") {
+                if(model.isNew()) {
+                    this.collection.add(model);
+                    model.save();
+                    this.renderOne(model);
                 } else {
-                    story.model.save();
+                    model.save();
                 }
             }
         },
