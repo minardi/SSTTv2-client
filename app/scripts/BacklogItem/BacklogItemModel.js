@@ -12,7 +12,8 @@
 			"estimation": "",
 			"parent_id": "",
 			"status": "",
-			"item_type": ""
+			"item_type": "",
+			"info": ""
         }
 
     });
