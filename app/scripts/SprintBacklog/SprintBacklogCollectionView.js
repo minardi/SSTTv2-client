@@ -9,7 +9,8 @@
         subscriptions: {
             "ProductBacklog:MoveSprintBacklog": "addBacklogItem",
             "Spirnt:SprintWasSaved": "saveAllStory",
-            "PlanningBoard:InitSprintBacklog": "initializeSprintBacklog"
+            "PlanningBoard:InitSprintBacklog": "initializeSprintBacklog",
+            "SprintBacklog:RestoreStory": "removeStory"
         },
 
         initializeSprintBacklog: function (el, project_id) {
@@ -19,6 +20,10 @@
 
             _.bindAll(this, "storyBindToSprint");
             this.collection = new module.Collection("story", "sprint", project_id);
+
+            this.collection.on("add", this.isEmpty, this);
+            this.collection.on("remove", this.isEmpty, this);
+
             this.render();
         },
 
@@ -50,6 +55,18 @@
             });
 
             this.$list.append(backlogItemView.render().el);
+        },
+
+        removeStory: function(story) {
+            this.collection.remove(story);
+        },
+
+        isEmpty: function() {
+            if(this.collection.length == 2) {
+                mediator.pub("SprintBacklog:FilledSprintBacklog");
+            } else if(this.collection.length == 1){
+                mediator.pub("SprintBacklog:EmptySprintBacklog");
+            }
         }
     });
 

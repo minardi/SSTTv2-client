@@ -10,7 +10,9 @@
         },
 
         subscriptions: {
-            "ScrumPage:PlanningBoardSelected": "backlogsInit"
+            "ScrumPage:PlanningBoardSelected": "backlogsInit",
+            "SprintBacklog:EmptySprintBacklog": "hideStartSprint",
+            "SprintBacklog:FilledSprintBacklog": "showStartSprint"
         },
 
         backlogsInit: function(elem, project_id) {
@@ -24,6 +26,7 @@
 
         render: function() {
             this.$el.append(this.template());
+            this.$start_sprint = this.$(".start-sprint");
 
             return this;
         },
@@ -37,6 +40,14 @@
             };
             
             mediator.pub("PlanningBoard:CreateNewItem", attributes);
+        },
+
+        hideStartSprint: function() {
+            this.$start_sprint.addClass('hidden');
+        },
+
+        showStartSprint: function() {
+            this.$start_sprint.removeClass('hidden');
         }
 
     });
