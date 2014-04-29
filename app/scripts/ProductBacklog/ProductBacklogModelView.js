@@ -36,7 +36,7 @@
 
         moveToSprint: function() {
             mediator.pub("ProductBacklog:MoveSprintBacklog", this.model);
-            this.model.set('moved', true);
+            //this.model.set('moved', true);
             this.remove();
         },
 
@@ -52,9 +52,9 @@
         },
 
         hideDeleteBtn: function() {
-            if(!this.model.get('moved')) {
+            //if(!this.model.get('moved')) {
                 this.$story_delete_btn.addClass("hidden");
-            }
+            //}
         },
 
         removeStory: function(){
