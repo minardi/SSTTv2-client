@@ -61,38 +61,28 @@
         },
 
         saveChanges: function() {
-            this._modelBinder.bind(this.model, this.$el, null, {initialCopyDirection: Backbone.ModelBinder.Constants.ViewToModel});
-            //ForTesting/////////////////////////////////
-            if(this.model.get("item_type") === "sprint") {
-                this.model.set("start_at", "27.07.1992");
-                this.model.set("end_at", "18.12.2001");
-            }
-            console.log(this.model);
+
+            this._modelBinder.bind(this.model, this.$el, null, {initialCopyDirection: Backbone.ModelBinder.Constants.ViewToModel});         
+
             if(this.dataValidation()) {
                 this.showHideView();
                 mediator.pub("BacklogItemEdit:SavedChanges", this.model);
 
-                this._modelBinder.unbind(); 
-            } else {
-                console.log(':(');
+                this._modelBinder.unbind();
             }
         },
 
         dataValidation: function() {
-            var reg_empty = new RegExp('([^\\s*]+)','g'),
-                reg_date = new RegExp('([0-2]\d|3[01])\.(0\d|1[012])\.(\d{4})'),
-                valid = false;
+            var valid = false;
 
-            if(this.model.get("item_type") === "story") {
-                valid = Boolean(this.model.get("title").replace(/\s+/g, '').length);
-            } else {
-                valid = Boolean(this.model.get("title").replace(/\s+/g, '').length) && 
-                Boolean(this.model.get("start_at").replace(/\s+/g, '').length) && 
-                Boolean(this.model.get("end_at").replace(/\s+/g, '').length);;
+            this.$(".required").each(function(i, el){
+                if(el.value.replace(/\s+/g, '').length) {
+                    valid = true;
+                } else {
+                    console.log(el, 'must be filled');
+                }
+            });
 
-                console.log(valid);
-            }
-            
             return valid;
         },
 

@@ -31,7 +31,9 @@
         addSprint: function() {
             var attributes = {
                 "item_type": "sprint",
-                "parent_id": this.project_id
+                "parent_id": this.project_id,
+                "start_at" : "dd.mm.yyyy",
+                "end_at" : "dd.mm.yyyy"
             };
             
             mediator.pub("PlanningBoard:CreateNewItem", attributes);
