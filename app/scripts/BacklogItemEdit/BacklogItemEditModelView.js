@@ -12,7 +12,7 @@
         },     
 
         initialize: function() {
-            this.$editView = this.$(".edit-backlog-item");
+            //this.$el = this.$(".edit-backlog-item");
         },
 
         subscriptions: {
@@ -46,7 +46,7 @@
             var type = this.model.get("item_type");
                 item_template = this.innerTemplate[type];
 
-            this.$editView.html(item_template(this.model.toJSON()));
+            this.$el.html(item_template(this.model.toJSON()));
             this.showHideView();
             
             return this;
@@ -94,7 +94,7 @@
         },
 
         showHideView: function() {
-            this.$editView.toggleClass("hidden");
+            this.$el.toggleClass("hidden");
         }
         
     });
