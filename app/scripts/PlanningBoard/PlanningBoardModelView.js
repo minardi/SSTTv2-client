@@ -43,11 +43,11 @@
         },
 
         hideStartSprint: function() {
-            this.$start_sprint.addClass('hidden');
+            this.$start_sprint.attr("disabled","disabled");
         },
 
         showStartSprint: function() {
-            this.$start_sprint.removeClass('hidden');
+            this.$start_sprint.removeAttr("disabled");
         }
 
     });

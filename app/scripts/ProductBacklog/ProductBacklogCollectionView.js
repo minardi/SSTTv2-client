@@ -28,7 +28,12 @@
         },
 
         initCollection: function () {
-            this.collection = new module.Collection("story", "product", this.project_id);
+            this.collection = new module.Collection([], {
+                    item_type: "story",
+                    status: "product",
+                    parent_id: this.project_id
+                });
+            
             this.collection.on("add", this.renderOne, this);
             this.collection.on("destroy", this.removeStory, this);
 

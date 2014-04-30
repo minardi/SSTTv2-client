@@ -19,10 +19,14 @@
             this.$list = this.$(".sprintstory-list");
 
             _.bindAll(this, "storyBindToSprint");
-            this.collection = new module.Collection("story", "sprint", project_id);
+            this.collection = new module.Collection([], {
+                    item_type: "story",
+                    status: "sprint",
+                    parent_id: project_id
+                });
 
-            this.collection.on("add", this.isEmpty, this);
-            this.collection.on("remove", this.isEmpty, this);
+            this.collection.on("add", this.checkFilling, this);
+            this.collection.on("remove", this.checkDepletion, this);
 
             this.render();
         },
@@ -61,10 +65,14 @@
             this.collection.remove(story);
         },
 
-        isEmpty: function() {
-            if(this.collection.length == 2) {
+        checkFilling: function() {
+            if(!this.collection.isEmpty()) {
                 mediator.pub("SprintBacklog:FilledSprintBacklog");
-            } else if(this.collection.length == 1){
+            }
+        },
+
+        checkDepletion: function() {
+            if(this.collection.isEmpty()) {
                 mediator.pub("SprintBacklog:EmptySprintBacklog");
             }
         }
