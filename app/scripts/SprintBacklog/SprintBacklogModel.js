@@ -1,1 +1,1 @@
-app.SprintBacklog.Model = app.BacklogItem.Model;
+app.SprintBacklog.Model = app.BacklogItem.Model

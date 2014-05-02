@@ -17,7 +17,6 @@
             this.collection = new module.Collection();
         },
 
-
         render: function() {
 		    this.$el.html(this.template());
             this.$list = this.$(".list");

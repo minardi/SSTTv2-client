@@ -43,7 +43,7 @@
         },
 
         hideStartSprint: function() {
-            this.$start_sprint.attr("disabled","disabled");
+            this.$start_sprint.attr("disabled", "disabled");
         },
 
         showStartSprint: function() {
