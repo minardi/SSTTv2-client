@@ -11,10 +11,6 @@
             "sprint" : JST['app/scripts/BacklogItemEdit/BacklogItemEditSprintTpl.ejs']
         },     
 
-        initialize: function() {
-            //this.$el = this.$(".edit-backlog-item");
-        },
-
         subscriptions: {
             "PlanningBoard:CreateNewItem" : "initItem",
             "ProductBacklog:CreateNewItem" : "initItem",
@@ -61,36 +57,27 @@
         },
 
         saveChanges: function() {
-
-            this._modelBinder.bind(this.model, this.$el, null, {initialCopyDirection: Backbone.ModelBinder.Constants.ViewToModel});         
-
-            //if(this.dataValidation()) {
             try{
-                this.dataValidation()
+                this.dataValidation();
+                this._modelBinder.bind(this.model, this.$el, null, {initialCopyDirection: Backbone.ModelBinder.Constants.ViewToModel});
                 this.showHideView();
                 mediator.pub("BacklogItemEdit:SavedChanges", this.model);
 
                 this._modelBinder.unbind();
             } catch(e) {
-                console.log(e.message);
+                this.$el.append(e.message);
             }
-            //}
         },
 
         dataValidation: function() {
-            //var valid = false;
 
             this.$(".required").each(function(i, el) {
-                if(!el.value.replace(/\s+/g, '').length) {
-                    //valid = true;
-                //} else {
+                    if(!el.value.trim().length) {
                     el.style.border = "1px solid red";
-                    throw new Error("must be filled");
-                    //console.log(el, 'must be filled');
+                    //$(el).addClass("blank");
+                    throw new Error("Please, fill in the required fields");
                 }
             });
-
-            //return valid;
         },
 
         showHideView: function() {

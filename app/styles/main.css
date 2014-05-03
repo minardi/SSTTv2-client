@@ -518,13 +518,15 @@ textarea {
 }
 
 .cancel_button, .save_button {
-    margin: 10px 0 0 30px;
+    margin: 10px 0 10px 30px;
 }
 
 p {
     font-size: 16px;
 }
-
+.blank {
+    border: 1px solid red;
+}
 /*BacklogItemEdit end*/
 
 /*edit team page*/

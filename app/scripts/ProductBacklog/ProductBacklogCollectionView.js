@@ -40,19 +40,10 @@
             this.collection.fetch();
         },
 
-        /*render: function() {
-            this.$list.html("");
-            this.collection.each(this.renderOne, this);
-            
-            return this;
-        },*/
-
         renderOne: function(story) {
             var story_view = new module.ModelView({model: story});
-            
-            //if(!story.get('moved')) {
-                this.$list.append(story_view.render().el);
-            //}
+
+            this.$list.append(story_view.render().el);
         },
 
         addStory: function() {
@@ -70,7 +61,6 @@
                 if(model.isNew()) {
                     this.collection.add(model);
                     model.save();
-                    //this.renderOne(model);
                 } else {
                     model.save();
                 }
