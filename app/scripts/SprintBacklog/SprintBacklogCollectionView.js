@@ -32,7 +32,7 @@
             
             this.collection.each(function (model) {
                 model.set("parent_id", story_parent_id);
-                model.set("status", "sprint");
+                model.set("status", "todo");
                 model.save(null,{
                     success: this.storyBindToSprint
                 });
