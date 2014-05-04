@@ -7,7 +7,8 @@
         template: JST['app/scripts/User/UserTpl.ejs'],
          
         initialize: function(init_user) {
-            this.model = new module.Model(init_user.user_content);  /*changed to 'init_user'*/               
+            this.model = new module.Model(init_user.user_content);  /*changed to 'init_user'*/    
+            this.model.fetch();         
             this.render();           
         },
 
@@ -18,7 +19,11 @@
 
         getId: function() {
             return this.model.get("id");
-        }               
+        },
+
+        getRoleInProject: function(project_id) {
+            return this.model.getRole(project_id);
+        }
              
     });
 

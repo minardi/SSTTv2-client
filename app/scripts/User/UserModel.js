@@ -3,13 +3,20 @@
 (function(module) {
         
     module.Model = Backbone.Model.extend({       
+
+        url: "/users/get_roles",
         
-        defaults: { /*defaults filled */
+        defaults: {
         	"first_name": "",
 		    "last_name": "",
 			"email": "",
 			"password": "",
-			"password_confirmation": ""
+			"password_confirmation": "",
+            "roles": "" 
+        },
+
+        getRole: function(project_id) {
+            return this.get("roles")[project_id];
         }
         
     });
