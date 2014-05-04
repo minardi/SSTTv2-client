@@ -17,7 +17,6 @@
             this.collection = new module.Collection();
         },
 
-
         render: function() {
 		    this.$el.html(this.template());
             this.$list = this.$(".list");
@@ -34,21 +33,17 @@
             this.$list.append(sprintView.render().el);
         },
 
-        saveSprint: function (edit_model) {
-            var is_new = edit_model.is_new,
-                model = edit_model.model;
-                
+        saveSprint: function (model) {         
             if (model.get("item_type") === 'sprint') {
-                this.listenToOnce(this.collection, "sync", this.sprintWasSaved);
                 this.collection.add(model);
+                this.listenToOnce(this.collection, "sync", this.sprintWasSaved);
 
                 model.save();
             }
         },
 
         sprintWasSaved: function () {
-            console.log("Sprint:Save", this.collection.last());
-            mediator.pub("Spirnt:SprintWasSaved", this.collection.last());
+            mediator.pub("Sprint:SprintWasSaved", this.collection.last());
         }
     });
 

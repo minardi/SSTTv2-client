@@ -1,16 +1,17 @@
     <span class = "title">Edit Sprint</span>
     <br /><br />
     <p>Title:</p>
-    <input class = "input" type = "text" name = "title" value = "<%= title %>"/>
+    <input class = "input required" type = "text" name = "title" value = "<%= title %>"/>
 
     <p>Description:</p>
     <textarea class = "input" size = 300 name = "description"></textarea>
 
     <p>Start:</p>
-    <input class = "input" type = "text" name = "title"/>
+    <input class = "input start-date required" type = "date" name = "start_date"/>
 
     <p>End:</p>
-    <input class = "input" type = "text" name = "title"/>
+    <input class = "input end-date required" type = "date" name = "end_date"/>
+    
     <div class = "save_button btn btn-default">Start sprint</div>
     <div class = "cancel_button btn btn-default">Cancel</div>
 

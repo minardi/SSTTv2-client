@@ -34,7 +34,7 @@ $(function() {
 
     sstt.scrum_page = new app.ScrumPage.ModelView({
         el: $(".b-main"),
-        model: new app.ScrumPage.Model()
+        model: new app.ScrumPage.Model() //????
     });
 
     sstt.project_info = new app.Projectinfo.ModelView({
@@ -65,7 +65,7 @@ $(function() {
     sstt.team_candidates = new app.TeamCandidates.CollectionView();
 
     sstt.backlog_item_edit = new app.BacklogItemEdit.ModelView({
-        el: $('.b-main')
+        el: $('.edit-backlog-item')
     });
 
     sstt.planning_Board = new app.PlanningBoard.ModelView();
