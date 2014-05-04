@@ -98,7 +98,7 @@
             var task_view = new module.ModelView({
                     model: task,
                     permission: this.access_moving
-                });			
+                });	
 			
             this.status[task.get("status")].append(task_view.render().el);            
         },
