@@ -29,9 +29,11 @@
                     "status": "active",
                     "parent_id": project_id
                 });
+
             this.sprints.on("add", this.initTasks, this);
             this.sprints.fetch();
             this.render();
+            this.findActiveSprints();
         },
 
         initTasks: function() {
@@ -117,6 +119,10 @@
             story.set("status", this.sprint_settings.story.status);
             story.set("parent_id", this.sprint_settings.story.project_id);
             story.save();
+        },
+
+        findActiveSprints: function() {
+            console.log(this.sprints);
         }
 
     });

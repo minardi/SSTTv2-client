@@ -36,6 +36,8 @@
             this.element = this.$el.find("#ScrumPage");
 
             this.showPlanning();
+
+            mediator.pub("ScrumPage:Open", this.model.get('project_id'));
         },
         
          render: function() {
