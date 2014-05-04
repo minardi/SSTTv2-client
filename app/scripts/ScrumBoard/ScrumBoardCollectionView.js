@@ -12,35 +12,42 @@
             "ScrumBoard:TaskMoved": "renderOne"
         },
 
-       /* initCollection: function (project_id) {
-            var role = sstt.user.getRoleInProject(project_id);
-            this.access_moving = this.setAccess(role);
-
-            this.collection = new module.Collection();  
-            this.collection.url = "backlog_items/get_tasks/" + project_id;
-			this.collection.fetch();
-        }, 
-
-        setAccess: function(role) {
-            return ($.inArray(role, this.roles) !== -1)? true: false;
-        },
-
-        render: function (content_el) {
-			this.setElement(content_el);
-            this.$el.html(this.template());
-            this.status = {
-                "todo": this.$(".todo"),
-                "progress": this.$(".in-progress"),
-                "verify": this.$(".to-verify"),
-                "done": this.$(".done"),
-    
-            };
-            this.collection.each(this.renderOne,this);*/
-
         roles: ["developer", "techlead"],
 
         events: {
             "click .stop-sprint": "pretermStopSprint"
+        },
+
+        initCollection: function (content_el, project_id, role) {
+            if (content_el) {
+                this.setElement(content_el);
+            }
+
+            this.role = "developer";
+            this.project_id = project_id;
+
+            this.sprints = new module.Collection([], {
+                    "item_type": "sprint",
+                    "status": "active",
+                    "parent_id": project_id
+                });
+            this.sprints.on("add", this.initTasks, this);
+            this.sprints.fetch();
+            this.render();
+        },
+
+        initTasks: function() {
+            this.sprint = this.sprints.last();
+            this.collection = new module.Collection();
+            this.collection.url = "backlog_items/get_tasks/" + this.sprint.id;
+            this.collection.on("add", this.renderOne, this);
+            this.collection.fetch();
+        },
+
+        render: function () {
+            this.$el.html(this.template());
+            //this.collection.each(this.renderOne,this);
+            return this;
         },
 
         initCollection: function (content_el, project_id) {
@@ -80,8 +87,7 @@
                 "todo": this.$(".todo"),
                 "progress": this.$(".in-progress"),
                 "verify": this.$(".to-verify"),
-                "done": this.$(".done"),
-    
+                "done": this.$(".done"),    
             };
             //this.collection.each(this.renderOne,this);
 
