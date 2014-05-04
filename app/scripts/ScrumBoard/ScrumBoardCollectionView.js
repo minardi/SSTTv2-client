@@ -10,13 +10,13 @@
             /*"ProjectPage:ProjectSelected": "initCollection",*/
             "ScrumPage:ScrumBoardSelected": "initCollection",
             "ScrumBoard:TaskMoved": "renderOne"
-        },
-
-        roles: ["developer", "techlead"],
+        },        
 
         events: {
             "click .stop-sprint": "pretermStopSprint"
         },
+
+        roles: ["developer", "techlead"],
 
         initCollection: function (content_el, project_id, role) {
             if (content_el) {
