@@ -113,27 +113,15 @@
         },
 
         pretermStopSprint: function() {
-            if(true /*this.isTasksDone && this.sprint.end_date === */) {
-                this.stopSprint({
-                    sprint: {
-                        status: "done"
-                    },
-                    story: {
-                        status: "sprint",
-                        parent_id: this.sprint.id
-                    }
-                });
-            } else {
-                this.stopSprint({
-                    sprint: {
-                        status: "failed"
-                    },
-                    story: {
-                        status: "product",
-                        parent_id: this.project_id
-                    }
-                });
-            }
+            this.stopSprint({
+                sprint: {
+                    status: "failed"
+                },
+                story: {
+                    status: "product",
+                    parent_id: this.project_id
+                }
+            });
         },
 
         stopSprint: function(sprint_settings) {
