@@ -20,10 +20,7 @@
         },   
 
         render: function (content_el) {
-			if (content_el) {
-				this.setElement(content_el);
-			}
-			
+			this.setElement(content_el);
             this.$el.html(this.template());
             this.collection.each(this.renderOne,this);
             return this;

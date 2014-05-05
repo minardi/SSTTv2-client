@@ -35,7 +35,9 @@
         },
 
         saveSprint: function (model) {         
-
+			
+			console.log(model);
+			
             if (model.get("item_type") === 'sprint') {
                 this.listenToOnce(this.collection, "sync", this.sprintWasSaved);
                 this.collection.add(model);
