@@ -1,6 +1,6 @@
 /* ScrumBoard */
 
-(function (module) {
+(function (module, sstt) {
 
     module.CollectionView = Backbone.View.extend({
 
@@ -12,7 +12,7 @@
             "ScrumBoard:TaskMoved": "renderOne",
             "BacklogItemEdit:TryToCreateSprint": "findActiveSprint",
             "BacklogItemEdit:AccessToStopSprint": "pretermStopSprint"
-        },
+        },        
 
         events: {
             "click .stop-sprint": "pretermStopSprint"
@@ -23,6 +23,8 @@
             this.date = new Date();
             console.log(this.date);
         },
+
+        roles: ["developer", "techlead"],
 
         initCollection: function (content_el, project_id, role) {
             if (content_el) {
@@ -57,18 +59,55 @@
             return this;
         },
 
-        renderOne: function (task) {
-            var task_view = new module.ModelView({
-                    model: task,
-                    role: this.role
+        initCollection: function (content_el, project_id) {
+            var role = sstt.user.getRoleInProject(project_id);
+            this.access_moving = this.setAccess(role);  
+
+            this.setElement(content_el);          
+
+            this.project_id = project_id;
+
+            this.sprints = new module.Collection([], {
+                    "item_type": "sprint",
+                    "status": "active",
+                    "parent_id": project_id
                 });
-				
-			this.status = {
+
+            this.sprints.on("add", this.initTasks, this);
+            this.sprints.fetch();
+            this.render();
+        },
+
+        setAccess: function(role) {
+            return ($.inArray(role, this.roles) !== -1)? true: false;
+        },
+
+        initTasks: function() {
+            this.sprint = this.sprints.last();
+            this.collection = new module.Collection();
+            this.collection.url = "backlog_items/get_tasks/" + this.sprint.id;
+            this.collection.on("add", this.renderOne, this);
+            this.collection.fetch();
+        },
+
+        render: function () {
+            this.$el.html(this.template());
+            this.status = {
                 "todo": this.$(".todo"),
                 "progress": this.$(".in-progress"),
                 "verify": this.$(".to-verify"),
-                "done": this.$(".done"),
+                "done": this.$(".done"),    
             };
+            //this.collection.each(this.renderOne,this);
+
+            return this;
+        },
+
+        renderOne: function (task) {
+            var task_view = new module.ModelView({
+                    model: task,
+                    permission: this.access_moving
+                });	
 			
             this.status[task.get("status")].append(task_view.render().el);            
         },
@@ -143,4 +182,4 @@
 
     });
 
-})(app.ScrumBoard);
+})(app.ScrumBoard, sstt);

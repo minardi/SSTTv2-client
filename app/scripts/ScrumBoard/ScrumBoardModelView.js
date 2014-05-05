@@ -14,7 +14,7 @@
 		initialize: function(init_data) {
 			this.status = ["todo", "progress", "verify", "done"];
 			this.current_status = this.status.indexOf(this.model.get("status"));
-			this.role = init_data["role"];
+			this.permission= init_data["permission"];
 		},
 		
 		render: function() {
@@ -37,14 +37,14 @@
 		},
 		
 		moveLeft: function() {
-			if(this.role === "developer" || this.role === "techlead") {				
+			if(this.permission) {		
 				this.current_status--;
 				this.updateStatus();
 			}
 		},
 		
-		moveRight: function() {
-			if(this.role === "developer" || this.role === "techlead") {				
+		moveRight: function() {			
+			if(this.permission) {			
 				this.current_status++;
 				this.updateStatus();
 			}

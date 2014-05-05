@@ -16,7 +16,7 @@
         },
 
         selectProject: function() {
-            mediator.pub("ProjectPage:ProjectSelected", this.model.id, this.getCurrentUserRole());
+            mediator.pub("ProjectPage:ProjectSelected", this.model.id);
         },
         
         showProjectInfo: function() {
@@ -28,10 +28,6 @@
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
             return this;
-        },
-
-        getCurrentUserRole: function() {
-            return this.model.get("role");
         }
 
     });
