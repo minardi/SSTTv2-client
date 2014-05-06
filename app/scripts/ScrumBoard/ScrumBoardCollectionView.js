@@ -7,7 +7,6 @@
         template: JST["app/scripts/ScrumBoard/ScrumBoardCollectionTpl.ejs"],
         
         subscriptions: {   
-            //"ProjectPage:ProjectSelected": "initCollection",
             "ScrumPage:ScrumBoardSelected": "initCollection",
             "ScrumBoard:TaskMoved": "renderOne",
             "BacklogItemEdit:TryToCreateSprint": "findActiveSprint",
@@ -55,7 +54,6 @@
 
         render: function () {
             this.$el.html(this.template());
-            //this.collection.each(this.renderOne,this);
             return this;
         },
 
@@ -98,8 +96,6 @@
                 "verify": this.$(".to-verify"),
                 "done": this.$(".done"),    
             };
-            //this.collection.each(this.renderOne,this);
-
             return this;
         },
 
@@ -113,27 +109,15 @@
         },
 
         pretermStopSprint: function() {
-            if(true /*this.isTasksDone && this.sprint.end_date === */) {
-                this.stopSprint({
-                    sprint: {
-                        status: "done"
-                    },
-                    story: {
-                        status: "sprint",
-                        parent_id: this.sprint.id
-                    }
-                });
-            } else {
-                this.stopSprint({
-                    sprint: {
-                        status: "failed"
-                    },
-                    story: {
-                        status: "product",
-                        parent_id: this.project_id
-                    }
-                });
-            }
+            this.stopSprint({
+                sprint: {
+                    status: "failed"
+                },
+                story: {
+                    status: "product",
+                    parent_id: this.project_id
+                }
+            });
         },
 
         stopSprint: function(sprint_settings) {
