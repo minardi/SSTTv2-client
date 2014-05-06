@@ -174,10 +174,6 @@
             } else {
                 mediator.pub("ScrumBoard:NoActiveSprints", attributes);
             }
-        },
-
-        sprintTimeOut: function() {
-
         }
 
     });
