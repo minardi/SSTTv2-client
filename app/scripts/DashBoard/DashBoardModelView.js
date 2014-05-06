@@ -32,7 +32,7 @@
 			if (this.items_selected > 1) {
 				this.$(".config").addClass("hidden");
 			} else {
-				//this.$(".config").removeClass("hidden");
+				this.$(".config").removeClass("hidden");
 			}
 			
 		},
@@ -43,7 +43,7 @@
 			if (this.items_selected > 1) {
 				this.$(".config").addClass("hidden");
 			} else {
-				//this.$(".config").removeClass("hidden");
+				this.$(".config").removeClass("hidden");
 			}
 			
 		},
