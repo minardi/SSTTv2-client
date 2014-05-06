@@ -14,10 +14,9 @@
 
         subscriptions: {
             "ProductBacklog:EditStory" : "fillingFields",
-            "ProductBacklog:CreateNewItem" : "initItem",
+            "SprintBacklog:ActiveSprintWasFound": "showConfirm",
+            "SprintBacklog:NoActiveSprints": "initItem",
             "PlanningBoard:CreateNewItem" : "findActiveSprints",
-            "ScrumBoard:ActiveSprintWasFound": "showConfirm",
-            "ScrumBoard:NoActiveSprints": "initItem",
         },  
 
         events: {
@@ -100,8 +99,8 @@
         },
 
         stopSprint: function() {
-
             mediator.pub("BacklogItemEdit:AccessToStopSprint");
+            mediator.pub("BacklogItemEdit:NeedToRerenderView");
 
             this.showHideView();
         }
