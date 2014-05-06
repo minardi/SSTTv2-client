@@ -12,7 +12,7 @@
         },     
 
         initialize: function() {
-            this.$editView = this.$(".edit-backlog-item");
+            //this.$el = this.$(".edit-backlog-item");
         },
 
         subscriptions: {
@@ -46,7 +46,7 @@
             var type = this.model.get("item_type");
                 item_template = this.innerTemplate[type];
 
-            this.$editView.html(item_template(this.model.toJSON()));
+            this.$el.html(item_template(this.model.toJSON()));
             this.showHideView();
             
             return this;
@@ -64,30 +64,37 @@
 
             this._modelBinder.bind(this.model, this.$el, null, {initialCopyDirection: Backbone.ModelBinder.Constants.ViewToModel});         
 
-            if(this.dataValidation()) {
+            //if(this.dataValidation()) {
+            try{
+                this.dataValidation()
                 this.showHideView();
                 mediator.pub("BacklogItemEdit:SavedChanges", this.model);
 
                 this._modelBinder.unbind();
+            } catch(e) {
+                console.log(e.message);
             }
+            //}
         },
 
         dataValidation: function() {
-            var valid = false;
+            //var valid = false;
 
-            this.$(".required").each(function(i, el){
-                if(el.value.replace(/\s+/g, '').length) {
-                    valid = true;
-                } else {
-                    console.log(el, 'must be filled');
+            this.$(".required").each(function(i, el) {
+                if(!el.value.replace(/\s+/g, '').length) {
+                    //valid = true;
+                //} else {
+                    el.style.border = "1px solid red";
+                    throw new Error("must be filled");
+                    //console.log(el, 'must be filled');
                 }
             });
 
-            return valid;
+            //return valid;
         },
 
         showHideView: function() {
-            this.$editView.toggleClass("hidden");
+            this.$el.toggleClass("hidden");
         }
         
     });

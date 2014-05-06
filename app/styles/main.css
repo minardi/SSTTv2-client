@@ -561,3 +561,7 @@ p {
 .story-box:hover{
     box-shadow: 0 0 10px rgba(20,100,20,.9);
 }
+
+.stop-sprint {
+    float: right;
+}
