@@ -8,9 +8,8 @@
 
         subscriptions: {
             "ProductBacklog:MoveSprintBacklog": "addBacklogItem",
-            "Sprint:SprintWasSaved": "saveAllStory",
             "PlanningBoard:InitSprintBacklog": "initSprintBacklog",
-            "SprintBacklog:RestoreStory": "removeStory",
+            "SprintBacklog:RestoreStory": "restoreStory",
             "BacklogItemEdit:TryToCreateSprint": "findActiveSprint",
             "BacklogItemEdit:AccessToStopSprint": "stopSprint",
             "BacklogItemEdit:SavedChanges": "saveSprint"
@@ -25,12 +24,12 @@
             this.$el.append(this.template());
             this.$list = this.$(".sprintstory-list");
 
-            _.bindAll(this, "storyBindToSprint");
+            _.bindAll(this, "restoreStory");
+
             this.collection = new module.Collection();
             this.sprint_collection = new module.Collection();
 
-            this.collection.on("add", this.checkFilling, this);
-            this.collection.on("remove", this.checkFilling, this);
+            this.collection.on("add remove", this.checkFilling, this);
 
             this.sprints = new module.Collection([], {
                 "item_type": "sprint",
@@ -44,8 +43,8 @@
             this.render();
         },
 
-        initSprint: function() {
-            this.sprint = this.sprints.last();
+        initSprint: function(sprint) {
+            this.sprint = sprint;
         },
 
         stopSprint: function(sprint) {
@@ -55,18 +54,16 @@
         saveSprint: function(sprint) {
             this.sprint = sprint;
             mediator.pub("SprintBacklog:SprintWasReplaced", this.sprint);
-            console.log(this.sprint);
             if (sprint.get("item_type") === 'sprint') {
                 this.sprint_collection.add(sprint);
                 this.listenToOnce(this.sprint_collection, "sync", this.sprintWasSaved);
 
                 sprint.save();
-                console.log(sprint);
             }
         },
 
         sprintWasSaved: function () {
-            mediator.pub("Sprint:SprintWasSaved", this.sprint_collection.last());
+            this.saveAllStory(this.sprint_collection.last());
         },
 
         saveAllStory: function (sprint) {
@@ -76,14 +73,11 @@
                 model.set("parent_id", story_parent_id);
                 model.set("status", "todo");
                 model.save(null,{
-                    success: this.storyBindToSprint
+                    success: this.restoreStory
                 });
             }, this);
-            this.$list.empty();
-        },
 
-        storyBindToSprint: function (model) {
-            this.collection.remove(model);
+            this.$list.empty();
         },
 
         addBacklogItem: function(story) {
@@ -99,12 +93,12 @@
             this.$list.append(backlogItemView.render().el);
         },
 
-        removeStory: function(story) {
+        restoreStory: function(story) {
             this.collection.remove(story);
         },
 
         checkFilling: function() {
-            if(this.collection.isEmpty()) {
+            if (this.collection.isEmpty()) {
                 mediator.pub("SprintBacklog:EmptySprintBacklog");
             } else {
                 mediator.pub("SprintBacklog:FilledSprintBacklog");
@@ -112,13 +106,13 @@
         },
 
         findActiveSprint: function(attributes) {
-            console.log(this.sprint);
             if(this.sprint.get("status") === "active") {
                 mediator.pub("SprintBacklog:ActiveSprintWasFound", this.sprint);
             } else {
                 mediator.pub("SprintBacklog:NoActiveSprints", attributes);
             }
         }
+
     });
 
 })(app.SprintBacklog);

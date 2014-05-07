@@ -16,7 +16,6 @@ var sstt = {},
         BacklogItem: {},
         BacklogItemEdit: {},
         PlanningBoard: {},
-        Sprint: {},
         empty: {}
     };
 
@@ -34,7 +33,7 @@ $(function() {
 
     sstt.scrum_page = new app.ScrumPage.ModelView({
         el: $(".b-main"),
-        model: new app.ScrumPage.Model() //????
+        model: new app.ScrumPage.Model()
     });
 
     sstt.project_info = new app.Projectinfo.ModelView({

@@ -38,29 +38,33 @@
 
             this.sprints.on("add", this.initTasks, this);
             this.sprints.fetch();
-            this.render();
-        },
 
-        setAccess: function(role) {
-            return ($.inArray(role, this.roles) !== -1)? true: false;
+            this.render();
         },
 
         initTasks: function() {
             this.sprint = this.sprints.last();
             this.collection = new module.Collection();
             this.collection.url = "backlog_items/get_tasks/" + this.sprint.id;
+
             this.collection.on("add", this.renderOne, this);
             this.collection.fetch();
         },
 
+        setAccess: function(role) {
+            return (_.indexOf(role, this.roles) !== -1)? true: false;
+        },
+
         render: function () {
             this.$el.html(this.template());
+
             this.status = {
                 "todo": this.$(".todo"),
                 "progress": this.$(".in-progress"),
                 "verify": this.$(".to-verify"),
                 "done": this.$(".done"),    
             };
+
             return this;
         },
 
