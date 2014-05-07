@@ -13,7 +13,7 @@
             "SprintBacklog:RestoreStory": "removeStory",
             "BacklogItemEdit:TryToCreateSprint": "findActiveSprint",
             "BacklogItemEdit:AccessToStopSprint": "stopSprint",
-            "BacklogItemEdit:SavedChanges": "setSprint"
+            "BacklogItemEdit:SavedChanges": "saveSprint"
         },
 
         initialize: function() {
@@ -27,6 +27,7 @@
 
             _.bindAll(this, "storyBindToSprint");
             this.collection = new module.Collection();
+            this.sprint_collection = new module.Collection();
 
             this.collection.on("add", this.checkFilling, this);
             this.collection.on("remove", this.checkFilling, this);
@@ -51,9 +52,21 @@
             this.sprint.set("status", "failed");
         },
 
-        setSprint: function(sprint) {
+        saveSprint: function(sprint) {
             this.sprint = sprint;
             mediator.pub("SprintBacklog:SprintWasReplaced", this.sprint);
+            console.log(this.sprint);
+            if (sprint.get("item_type") === 'sprint') {
+                this.sprint_collection.add(sprint);
+                this.listenToOnce(this.sprint_collection, "sync", this.sprintWasSaved);
+
+                sprint.save();
+                console.log(sprint);
+            }
+        },
+
+        sprintWasSaved: function () {
+            mediator.pub("Sprint:SprintWasSaved", this.sprint_collection.last());
         },
 
         saveAllStory: function (sprint) {
