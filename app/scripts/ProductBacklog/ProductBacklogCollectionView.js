@@ -70,7 +70,6 @@
         removeStory: function(model) {
             this.collection.remove(model);
         }
-
     });
 
 })(app.ProductBacklog);

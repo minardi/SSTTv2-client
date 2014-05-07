@@ -14,6 +14,7 @@
         
         action: function() {
             mediator.pub("DashBoard:Active" + this.model.get("content"), this.model.get("project_id"));
+			mediator.pub("DashBoard:" + this.model.get("content"));
         },
 
         render: function () {

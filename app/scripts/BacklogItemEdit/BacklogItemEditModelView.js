@@ -14,10 +14,10 @@
 
         subscriptions: {
             "ProductBacklog:EditStory" : "fillingFields",
-            "ProductBacklog:CreateNewItem" : "initItem",
+            "SprintBacklog:ActiveSprintWasFound": "showConfirm",
+            "SprintBacklog:NoActiveSprints": "initItem",
             "PlanningBoard:CreateNewItem" : "findActiveSprints",
-            "ScrumBoard:ActiveSprintWasFound": "showConfirm",
-            "ScrumBoard:NoActiveSprints": "initItem",
+            "ProductBacklog:CreateNewItem" : "initItem"
         },  
 
         events: {
@@ -52,6 +52,8 @@
                 item_template = this.template[type];
 
             this.$el.html(item_template(this.model.toJSON()));
+            createDatePicker();
+
             this.showHideView();
             
             return this;
@@ -98,8 +100,8 @@
         },
 
         stopSprint: function() {
-
             mediator.pub("BacklogItemEdit:AccessToStopSprint");
+            mediator.pub("BacklogItemEdit:NeedToRerenderView");
 
             this.showHideView();
         }

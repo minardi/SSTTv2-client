@@ -7,10 +7,8 @@
         template: JST["app/scripts/ScrumBoard/ScrumBoardCollectionTpl.ejs"],
         
         subscriptions: {   
-            //"ProjectPage:ProjectSelected": "initCollection",
             "ScrumPage:ScrumBoardSelected": "initCollection",
             "ScrumBoard:TaskMoved": "renderOne",
-            "BacklogItemEdit:TryToCreateSprint": "findActiveSprint",
             "BacklogItemEdit:AccessToStopSprint": "pretermStopSprint"
         },        
 
@@ -20,8 +18,6 @@
 
         initialize: function() {
             this.sprint = new module.Model();
-            this.date = new Date();
-            console.log(this.date);
         },
 
         roles: ["developer", "techlead"],
@@ -65,8 +61,6 @@
                 "verify": this.$(".to-verify"),
                 "done": this.$(".done"),    
             };
-            //this.collection.each(this.renderOne,this);
-
             return this;
         },
 
@@ -121,18 +115,6 @@
             story.set("status", this.sprint_settings.story.status);
             story.set("parent_id", this.sprint_settings.story.project_id);
             story.save();
-        },
-
-        findActiveSprint: function(attributes) {
-            if(this.sprint.get("status") === "active") {
-                mediator.pub("ScrumBoard:ActiveSprintWasFound", this.sprint);
-            } else {
-                mediator.pub("ScrumBoard:NoActiveSprints", attributes);
-            }
-        },
-
-        sprintTimeOut: function() {
-
         }
 
     });

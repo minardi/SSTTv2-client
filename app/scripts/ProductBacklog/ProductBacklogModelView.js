@@ -9,18 +9,20 @@
         tagName: "div",
 
         className: "story-box",
+		
+		selected: "false",
 
         template: JST['app/scripts/ProductBacklog/ProductBacklogTpl.ejs'],
 
         events: {
            "dblclick" : "moveToSprint",
-           "contextmenu" : "edit",
            "click": "storySelected",
-           "click .story-delete-btn": "removeStory"
         },
 
         subscriptions: {
-            "ProductBacklog:SelectedStory": "hideDeleteBtn"
+		   "DashBoard:Configure": "edit",
+		   "DashBoard:Delete": "removeStory",
+		   "module:UnitSelected": "deselectAll"
         },
 
         initialize: function() {
@@ -36,31 +38,37 @@
 
         moveToSprint: function() {
             mediator.pub("ProductBacklog:MoveSprintBacklog", this.model);
-            //this.model.set('moved', true);
             this.remove();
         },
 
         edit: function() {
-            event.preventDefault();
-
-            mediator.pub("ProductBacklog:EditStory", this.model);
+		
+			if (this.selected === "true") {
+				mediator.pub("ProductBacklog:EditStory", this.model);
+			}
+			
         },
 
         storySelected: function() {
-            mediator.pub("ProductBacklog:SelectedStory");
-            this.$story_delete_btn.removeClass('hidden');
+			mediator.pub("ProductBacklog:SelectedStory");
+			mediator.pub("module:UnitSelected");
+
+			this.selected = "true";
+			this.$story_delete_btn.removeClass('hidden');
         },
 
-        hideDeleteBtn: function() {
-            //if(!this.model.get('moved')) {
-                this.$story_delete_btn.addClass("hidden");
-            //}
-        },
-
-        removeStory: function(){
+        removeStory: function() {
+		
+			if (this.selected === "true") {
             this.model.destroy();
             this.remove();
-        }
+			}
+        },
+		
+		deselectAll: function() {
+			this.selected = "false";
+			this.$story_delete_btn.addClass('hidden');
+		}
 
     });
 

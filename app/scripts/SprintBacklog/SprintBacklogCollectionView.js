@@ -9,22 +9,64 @@
         subscriptions: {
             "ProductBacklog:MoveSprintBacklog": "addBacklogItem",
             "Sprint:SprintWasSaved": "saveAllStory",
-            "PlanningBoard:InitSprintBacklog": "initializeSprintBacklog",
-            "SprintBacklog:RestoreStory": "removeStory"
+            "PlanningBoard:InitSprintBacklog": "initSprintBacklog",
+            "SprintBacklog:RestoreStory": "removeStory",
+            "BacklogItemEdit:TryToCreateSprint": "findActiveSprint",
+            "BacklogItemEdit:AccessToStopSprint": "stopSprint",
+            "BacklogItemEdit:SavedChanges": "saveSprint"
         },
 
-        initializeSprintBacklog: function (el, project_id) {
+        initialize: function() {
+            this.sprint = new module.Model();
+        },
+
+        initSprintBacklog: function (el, project_id) {
             this.setElement(el);
             this.$el.append(this.template());
             this.$list = this.$(".sprintstory-list");
 
             _.bindAll(this, "storyBindToSprint");
             this.collection = new module.Collection();
+            this.sprint_collection = new module.Collection();
 
             this.collection.on("add", this.checkFilling, this);
             this.collection.on("remove", this.checkFilling, this);
 
+            this.sprints = new module.Collection([], {
+                "item_type": "sprint",
+                "status": "active",
+                "parent_id": project_id
+            });
+
+            this.sprints.on("add", this.initSprint, this);
+            this.sprints.fetch();
+
             this.render();
+        },
+
+        initSprint: function() {
+            this.sprint = this.sprints.last();
+        },
+
+        stopSprint: function(sprint) {
+            this.sprint.set("status", "failed");
+        },
+
+        saveSprint: function(sprint) {
+            this.sprint = sprint;
+            mediator.pub("SprintBacklog:SprintWasReplaced", this.sprint);
+            console.log(this.sprint);
+            if (sprint.get("item_type") === 'sprint') {
+                this.sprint_collection.add(sprint);
+                this.listenToOnce(this.sprint_collection, "sync", this.sprintWasSaved);
+
+                sprint.save();
+                console.log(sprint);
+            }
+        },
+
+        sprintWasSaved: function () {
+            mediator.pub("Sprint:SprintWasSaved", this.sprint_collection.last());
         },
 
         saveAllStory: function (sprint) {
@@ -66,6 +108,15 @@
                 mediator.pub("SprintBacklog:EmptySprintBacklog");
             } else {
                 mediator.pub("SprintBacklog:FilledSprintBacklog");
+            }
+        },
+
+        findActiveSprint: function(attributes) {
+            console.log(this.sprint);
+            if(this.sprint.get("status") === "active") {
+                mediator.pub("SprintBacklog:ActiveSprintWasFound", this.sprint);
+            } else {
+                mediator.pub("SprintBacklog:NoActiveSprints", attributes);
             }
         }
     });
