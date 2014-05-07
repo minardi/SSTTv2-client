@@ -70,6 +70,4 @@ $(function() {
 
     sstt.planning_Board = new app.PlanningBoard.ModelView();
 
-    sstt.sprint = new app.Sprint.CollectionView();
-
 });

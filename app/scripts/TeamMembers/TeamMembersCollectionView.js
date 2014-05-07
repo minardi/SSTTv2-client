@@ -16,7 +16,6 @@
             "click #save": "saveCollection",
         },
 
-
         initUsers: function(team_info) {
             this.team_id = team_info["team_id"];
             this.$el = team_info["element"].find('.team-members');
@@ -29,7 +28,7 @@
             this.collection.fetch();
         },
 
-         render: function() {
+        render: function() {
             this.$el.html(this.template());
             this.collection.each(this.renderOne, this);
            
@@ -46,9 +45,8 @@
         },     
 
         saveCollection: function() {
-            this.collection.each(function(model) {
-                model.save(null, {success: function() {mediator.pub("TeamMembers:Saved")},
-                    error: function() {console.log("Save error")}});
+            this.collection.each(function(model) {                
+                model.save();   
             });
         },
 

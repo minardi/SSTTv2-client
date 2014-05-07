@@ -26,41 +26,8 @@
 
         roles: ["developer", "techlead"],
 
-        initCollection: function (content_el, project_id, role) {
-            if (content_el) {
-                this.setElement(content_el);
-            }
-
-            this.role = "developer";
-            this.project_id = project_id;
-
-            this.sprints = new module.Collection([], {
-                    "item_type": "sprint",
-                    "status": "active",
-                    "parent_id": project_id
-                });
-
-            this.sprints.on("add", this.initTasks, this);
-            this.sprints.fetch();
-            this.render();
-        },
-
-        initTasks: function() {
-            this.sprint = this.sprints.last();
-            this.collection = new module.Collection();
-            this.collection.url = "backlog_items/get_tasks/" + this.sprint.id;
-            this.collection.on("add", this.renderOne, this);
-            this.collection.fetch();
-        },
-
-        render: function () {
-            this.$el.html(this.template());
-            //this.collection.each(this.renderOne,this);
-            return this;
-        },
-
         initCollection: function (content_el, project_id) {
-            var role = sstt.user.getRoleInProject(project_id);
+            var role = sstt.user.getRoleInProject();
             this.access_moving = this.setAccess(role);  
 
             this.setElement(content_el);          
@@ -79,7 +46,7 @@
         },
 
         setAccess: function(role) {
-            return ($.inArray(role, this.roles) !== -1)? true: false;
+            return (_.indexOf(role, this.roles) !== -1)? true: false;
         },
 
         initTasks: function() {

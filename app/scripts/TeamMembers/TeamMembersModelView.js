@@ -9,7 +9,8 @@
         template: JST['app/scripts/TeamMembers/TeamMembersTpl.ejs'],
         
         initialize: function() {
-            this.model.on('change', this.show, this);
+            this.model.on("change", this.show, this);
+            this.model.on("sync", this.saveRole, this);
             this.show();
         },
 
@@ -20,6 +21,11 @@
         show: function() {
             this.canRender() ? this.$el.removeClass('hide'): 
                                 this.$el.addClass('hide');
+        },
+
+        saveRole: function() {
+            mediator.pub("TeamMembers:Saved");
+            mediator.pub("TeamMembers:ChangeRole");
         },
 
         canRender: function() {

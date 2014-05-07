@@ -1,6 +1,6 @@
 // /* Projects */
 
-(function(module) {
+(function(module, sstt) {
         
     module.CollectionView = Backbone.View.extend({
      
@@ -16,7 +16,8 @@
         subscriptions: {
             "ProjectPage:ProjectSelected": "hide",
             "DashBoard:ActiveTeam": "hide",
-            "DashBoard:ActiveBack": "show"
+            "DashBoard:ActiveBack": "show",
+            "User:ChangeRole": "updateRole"
         },
 
         hide: function() {
@@ -38,8 +39,13 @@
                 model: projectModel
             });
             this.$el.find(".content").append(project.render().el);
+        },
+
+        updateRole: function() {
+            var project = this.projectsCollection.get(sstt.user.getCurrentProject());
+            project.set("role", sstt.user.getRoleInProject());
         }
      
     });
 
-})(app.Projects);
+})(app.Projects, sstt);

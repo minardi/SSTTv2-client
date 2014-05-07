@@ -9,13 +9,12 @@
         defaults: {
         	"first_name": "",
 		    "last_name": "",
-			"email": "",
-			"password": "",
-			"password_confirmation": "",
+            "current_project": "",
             "roles": "" 
         },
 
-        getRole: function(project_id) {
+        getRole: function() {
+            var project_id = this.get("current_project");
             return this.get("roles")[project_id];
         }
         
