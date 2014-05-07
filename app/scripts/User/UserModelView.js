@@ -7,7 +7,7 @@
         template: JST['app/scripts/User/UserTpl.ejs'],
          
         initialize: function(init_user) {
-            this.model = new module.Model(init_user.user_content);  /*changed to 'init_user'*/             
+            this.model = new module.Model(init_user.user_content);             
             this.model.fetch();         
             this.render();           
         },
@@ -22,12 +22,12 @@
         },
 
         updateRoles: function() {
-            this.model.fetch(); 
-            console.log("model");
-            console.log(this.model);
-            console.log("toJSON");
-            console.log(this.model.toJSON());
-            mediator.pub("User:ChangeRole");            
+            this.model.on("change", this.updateRole, this);  
+            this.model.fetch();          
+        },
+
+        updateRole: function() {
+            mediator.pub("User:ChangeRole");
         },
 
         getId: function() {

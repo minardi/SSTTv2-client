@@ -10,7 +10,7 @@
         
         initialize: function() {
             this.model.on("change", this.show, this);
-            this.model.on("sync", this.saveRole, this);
+            this.model.once("sync", this.saveRole, this);
             this.show();
         },
 

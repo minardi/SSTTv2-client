@@ -52,7 +52,7 @@
         },
 
         saveSprint: function(sprint) {
-            this.sprint = sprint;
+            this.sprints.add(sprint);
             mediator.pub("SprintBacklog:SprintWasReplaced", this.sprint);
             if (sprint.get("item_type") === 'sprint') {
                 this.sprint_collection.add(sprint);
