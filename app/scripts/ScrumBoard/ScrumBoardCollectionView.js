@@ -22,20 +22,6 @@
 
         roles: ["developer", "techlead"],
 
-        initTasks: function() {
-            console.log("init tasks");
-            this.sprint = this.sprints.last();
-            this.collection = new module.Collection();
-            this.collection.url = "backlog_items/get_tasks/" + this.sprint.id;
-            this.collection.on("add", this.renderOne, this);
-            this.collection.fetch();
-        },
-
-        render: function () {
-            this.$el.html(this.template());
-            return this;
-        },
-
         initCollection: function (content_el, project_id) {
             var role = sstt.user.getRoleInProject(project_id);
             this.access_moving = this.setAccess(role);  
