@@ -21,7 +21,8 @@
 
         subscriptions: {
 		   "DashBoard:Configure": "edit",
-		   "DashBoard:Delete": "removeStory"
+		   "DashBoard:Delete": "removeStory",
+		   "module:UnitSelected": "deselectAll"
         },
 
         initialize: function() {
@@ -49,18 +50,11 @@
         },
 
         storySelected: function() {
-	
-			if (this.selected === "false") { 
-				this.selected = "true";
-				this.$story_delete_btn.removeClass('hidden');
-				 mediator.pub("ProductBacklog:SelectedStory");
-				 mediator.pub("module:UnitSelected");
-			} else {
-				this.selected = "false";
-				this.$story_delete_btn.addClass('hidden');
-				mediator.pub("module:UnitDeselected");
-			}
-			
+			mediator.pub("ProductBacklog:SelectedStory");
+			mediator.pub("module:UnitSelected");
+
+			this.selected = "true";
+			this.$story_delete_btn.removeClass('hidden');
         },
 
         removeStory: function() {
@@ -69,7 +63,12 @@
             this.model.destroy();
             this.remove();
 			}
-        }
+        },
+		
+		deselectAll: function() {
+			this.selected = "false";
+			this.$story_delete_btn.addClass('hidden');
+		}
 
     });
 
