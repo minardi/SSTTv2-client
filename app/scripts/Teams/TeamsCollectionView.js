@@ -14,6 +14,7 @@
         },
 
         initTeam: function(project_id) {
+            sstt.user.setCurrentProject(project_id);
             this.teamsCollection = new module.Collection(project_id);
             this.listenTo(this.teamsCollection, "sync", this.render);
             this.teamsCollection.fetch(); 
