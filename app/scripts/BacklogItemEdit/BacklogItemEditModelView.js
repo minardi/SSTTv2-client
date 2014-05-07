@@ -17,6 +17,7 @@
             "SprintBacklog:ActiveSprintWasFound": "showConfirm",
             "SprintBacklog:NoActiveSprints": "initItem",
             "PlanningBoard:CreateNewItem" : "findActiveSprints",
+            "ProductBacklog:CreateNewItem" : "initItem"
         },  
 
         events: {
