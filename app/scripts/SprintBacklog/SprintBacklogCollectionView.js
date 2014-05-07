@@ -44,7 +44,7 @@
             this.render();
         },
 
-        initSprint: function() {
+        initSprint: function(sprint) {
             this.sprint = this.sprints.last();
         },
 
@@ -53,15 +53,13 @@
         },
 
         saveSprint: function(sprint) {
-            this.sprint = sprint;
+            this.sprints.add(sprint);
             mediator.pub("SprintBacklog:SprintWasReplaced", this.sprint);
-            console.log(this.sprint);
             if (sprint.get("item_type") === 'sprint') {
                 this.sprint_collection.add(sprint);
                 this.listenToOnce(this.sprint_collection, "sync", this.sprintWasSaved);
 
                 sprint.save();
-                console.log(sprint);
             }
         },
 

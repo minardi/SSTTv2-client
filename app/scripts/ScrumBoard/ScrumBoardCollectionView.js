@@ -6,8 +6,10 @@
 
         template: JST["app/scripts/ScrumBoard/ScrumBoardCollectionTpl.ejs"],
         
-        subscriptions: {   
+        subscriptions: {
+            /*"ProjectPage:ProjectSelected": "initCollection",*/
             "ScrumPage:ScrumBoardSelected": "initCollection",
+            "PlanningBoard:StartSprint": "initCollection",
             "ScrumBoard:TaskMoved": "renderOne",
             "BacklogItemEdit:AccessToStopSprint": "pretermStopSprint"
         },        
@@ -22,11 +24,9 @@
 
         roles: ["developer", "techlead"],
 
-        initCollection: function (content_el, project_id) {
+        initCollection: function (project_id, content_el) {
             var role = sstt.user.getRoleInProject();
-            this.access_moving = this.setAccess(role);  
-
-            this.setElement(content_el);          
+            this.access_moving = this.setAccess(role);         
 
             this.project_id = project_id;
 
@@ -36,17 +36,25 @@
                     "parent_id": project_id
                 });
 
-            this.sprints.on("add", this.initTasks, this);
+            this.sprints.on("add", this.getLast, this);
             this.sprints.fetch();
-            this.render();
+            
+            if(content_el) {
+                this.setElement(content_el); 
+                this.render();
+            }
         },
 
         setAccess: function(role) {
             return (_.indexOf(role, this.roles) !== -1)? true: false;
         },
 
+        getLast: function(sprint) {
+            this.sprint = sprint;
+            this.initTasks();
+        },
+
         initTasks: function() {
-            this.sprint = this.sprints.last();
             this.collection = new module.Collection();
             this.collection.url = "backlog_items/get_tasks/" + this.sprint.id;
             this.collection.on("add", this.renderOne, this);
@@ -61,28 +69,36 @@
                 "verify": this.$(".to-verify"),
                 "done": this.$(".done"),    
             };
+
             return this;
         },
 
         renderOne: function (task) {
-            var task_view = new module.ModelView({
+            var task_view;
+            if(this.status) {
+                task_view= new module.ModelView({
                     model: task,
                     permission: this.access_moving
                 });	
-			
-            this.status[task.get("status")].append(task_view.render().el);            
+    			
+                this.status[task.get("status")].append(task_view.render().el);
+            }
         },
 
         pretermStopSprint: function() {
-            this.stopSprint({
-                sprint: {
-                    status: "failed"
-                },
-                story: {
-                    status: "product",
-                    parent_id: this.project_id
-                }
-            });
+            //if(this.collection){
+                this.stopSprint({
+                    sprint: {
+                        status: "failed"
+                    },
+                    story: {
+                        status: "product",
+                        parent_id: this.project_id
+                    }
+                });
+            //} else {
+            //    this.initTasks();
+            //}
         },
 
         stopSprint: function(sprint_settings) {

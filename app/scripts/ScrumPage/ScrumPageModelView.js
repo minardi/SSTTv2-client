@@ -5,6 +5,8 @@
 
         template: JST["app/scripts/ScrumPage/ScrumPageTpl.ejs"],
 		
+        model: new app.ScrumPage.Model(),
+        
         events: {
             "click #planning": "showPlanning",
             "click #scrumboard": "showScrum",
@@ -23,7 +25,7 @@
         },
 
         showScrum: function() {
-            mediator.pub("ScrumPage:ScrumBoardSelected", this.element, this.model.get('project_id'));
+            mediator.pub("ScrumPage:ScrumBoardSelected", this.model.get('project_id'), this.element);
         },
 
         showStat: function() {
