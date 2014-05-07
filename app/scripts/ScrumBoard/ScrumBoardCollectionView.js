@@ -9,7 +9,6 @@
         subscriptions: {   
             "ScrumPage:ScrumBoardSelected": "initCollection",
             "ScrumBoard:TaskMoved": "renderOne",
-            "BacklogItemEdit:TryToCreateSprint": "findActiveSprint",
             "BacklogItemEdit:AccessToStopSprint": "pretermStopSprint"
         },        
 
@@ -19,32 +18,12 @@
 
         initialize: function() {
             this.sprint = new module.Model();
-            this.date = new Date();
-            console.log(this.date);
         },
 
         roles: ["developer", "techlead"],
 
-        initCollection: function (content_el, project_id, role) {
-            if (content_el) {
-                this.setElement(content_el);
-            }
-
-            this.role = "developer";
-            this.project_id = project_id;
-
-            this.sprints = new module.Collection([], {
-                    "item_type": "sprint",
-                    "status": "active",
-                    "parent_id": project_id
-                });
-
-            this.sprints.on("add", this.initTasks, this);
-            this.sprints.fetch();
-            this.render();
-        },
-
         initTasks: function() {
+            console.log("init tasks");
             this.sprint = this.sprints.last();
             this.collection = new module.Collection();
             this.collection.url = "backlog_items/get_tasks/" + this.sprint.id;
@@ -150,18 +129,6 @@
             story.set("status", this.sprint_settings.story.status);
             story.set("parent_id", this.sprint_settings.story.project_id);
             story.save();
-        },
-
-        findActiveSprint: function(attributes) {
-            if(this.sprint.get("status") === "active") {
-                mediator.pub("ScrumBoard:ActiveSprintWasFound", this.sprint);
-            } else {
-                mediator.pub("ScrumBoard:NoActiveSprints", attributes);
-            }
-        },
-
-        sprintTimeOut: function() {
-
         }
 
     });

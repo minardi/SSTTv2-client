@@ -12,7 +12,8 @@
         subscriptions: {
             "ScrumPage:PlanningBoardSelected": "backlogsInit",
             "SprintBacklog:EmptySprintBacklog": "hideStartSprint",
-            "SprintBacklog:FilledSprintBacklog": "showStartSprint"
+            "SprintBacklog:FilledSprintBacklog": "showStartSprint",
+            "BacklogItemEdit:NeedToRerenderView": "addSprint"
         },
 
         backlogsInit: function(elem, project_id) {

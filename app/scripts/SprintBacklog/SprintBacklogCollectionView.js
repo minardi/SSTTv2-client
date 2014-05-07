@@ -9,11 +9,18 @@
         subscriptions: {
             "ProductBacklog:MoveSprintBacklog": "addBacklogItem",
             "Sprint:SprintWasSaved": "saveAllStory",
-            "PlanningBoard:InitSprintBacklog": "initializeSprintBacklog",
-            "SprintBacklog:RestoreStory": "removeStory"
+            "PlanningBoard:InitSprintBacklog": "initSprintBacklog",
+            "SprintBacklog:RestoreStory": "removeStory",
+            "BacklogItemEdit:TryToCreateSprint": "findActiveSprint",
+            "BacklogItemEdit:AccessToStopSprint": "stopSprint",
+            "BacklogItemEdit:SavedChanges": "setSprint"
         },
 
-        initializeSprintBacklog: function (el, project_id) {
+        initialize: function() {
+            this.sprint = new module.Model();
+        },
+
+        initSprintBacklog: function (el, project_id) {
             this.setElement(el);
             this.$el.append(this.template());
             this.$list = this.$(".sprintstory-list");
@@ -24,7 +31,29 @@
             this.collection.on("add", this.checkFilling, this);
             this.collection.on("remove", this.checkFilling, this);
 
+            this.sprints = new module.Collection([], {
+                "item_type": "sprint",
+                "status": "active",
+                "parent_id": project_id
+            });
+
+            this.sprints.on("add", this.initSprint, this);
+            this.sprints.fetch();
+
             this.render();
+        },
+
+        initSprint: function() {
+            this.sprint = this.sprints.last();
+        },
+
+        stopSprint: function(sprint) {
+            this.sprint.set("status", "failed");
+        },
+
+        setSprint: function(sprint) {
+            this.sprint = sprint;
+            mediator.pub("SprintBacklog:SprintWasReplaced", this.sprint);
         },
 
         saveAllStory: function (sprint) {
@@ -66,6 +95,15 @@
                 mediator.pub("SprintBacklog:EmptySprintBacklog");
             } else {
                 mediator.pub("SprintBacklog:FilledSprintBacklog");
+            }
+        },
+
+        findActiveSprint: function(attributes) {
+            console.log(this.sprint);
+            if(this.sprint.get("status") === "active") {
+                mediator.pub("SprintBacklog:ActiveSprintWasFound", this.sprint);
+            } else {
+                mediator.pub("SprintBacklog:NoActiveSprints", attributes);
             }
         }
     });
