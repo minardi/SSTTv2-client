@@ -42,7 +42,7 @@
         },
 
         setAccess: function(role) {
-            return (_.indexOf(role, this.roles) !== -1)? true: false;
+            return (_.indexOf(this.roles, role) !== -1)? true: false;
         },
 
         initTasks: function() {
