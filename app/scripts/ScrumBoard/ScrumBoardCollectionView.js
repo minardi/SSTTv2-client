@@ -19,13 +19,28 @@
             "click .stop-sprint": "pretermStopSprint"
         },
 
+        roles: ["developer", "techlead"],
+
         initialize: function() {
+            var today = new Date();
+                day = this.normalize(today.getDate());
+                mounth = this.normalize(today.getMonth() + 1);
+                year = this.normalize(today.getFullYear());
+
+            this.date = mounth + '/' + day + '/' + year;
+
             this.sprint = new module.Model();
         },
 
-        roles: ["developer", "techlead"],
+        normalize: function(time_value) {
+            if (time_value < 10) {
+                time_value = "0" + time_value;
+            }
 
-        initCollection: function (project_id, content_el) {
+            return time_value;  
+        },
+
+        initCollection: function(project_id, content_el) {
             var role = sstt.user.getRoleInProject();
             this.access_moving = this.setAccess(role);         
 
@@ -58,13 +73,57 @@
         initTasks: function() {
             this.collection = new module.Collection();
             this.collection.url = "backlog_items/get_tasks/" + this.sprint.id;
+
+            this.collection.once("add", this.checkEndOfSprint, this);
             this.collection.on("add", this.renderOne, this);
             this.done_count = 0;
             this.collection.fetch();
         },
 
+        checkEndOfSprint: function() {
+            var sprint_settings = {
+                sprint: {
+                    status: "done"
+                },
+                story: {}
+            };
+
+            if(this.compareDates(this.date, this.sprint.get("end_date"))) {
+                this.collection.each(function(item){
+                    if(item.get("status") !== "done") {
+                        sprint_settings.sprint["status"] = "failed";
+                        sprint_settings.story["status"] = "product";
+                        sprint_settings.story["parent_id"]= this.project_id
+                    }
+                });
+
+                this.stopSprint(sprint_settings);
+            }
+        },
+
+        compareDates: function(today, endSprint) {
+            var timeout = false;
+
+            today = today.split('/');
+            endSprint = endSprint.split('/');
+
+            today = new Date(today[2], (today[0] - 1), today[1]);
+            endSprint = new Date(endSprint[2], (endSprint[0] - 1), endSprint[1]);
+
+            if (today > endSprint) {
+                timeout = true;
+            }
+
+            return timeout;
+        },
+
+        setAccess: function(role) {
+            return (_.indexOf(role, this.roles) !== -1)? true: false;
+        },
+
         render: function () {
             this.$el.html(this.template());
+
             this.status = {
                 "todo": this.$(".todo"),
                 "progress": this.$(".in-progress"),
@@ -88,8 +147,10 @@
                     model: task,
                     permission: this.access_moving
                 });	
-    			
-                this.status[task.get("status")].append(task_view.render().el);
+
+    			if(this.sprint.get("status") === "active") {
+                    this.status[task.get("status")].append(task_view.render().el); 
+                }
             }
         },
 

@@ -13,11 +13,11 @@
         },     
 
         subscriptions: {
-            "ProductBacklog:EditStory" : "fillingFields",
-            "SprintBacklog:ActiveSprintWasFound": "showConfirm",
-            "SprintBacklog:NoActiveSprints": "initItem",
             "PlanningBoard:CreateNewItem" : "findActiveSprints",
-            "ProductBacklog:CreateNewItem" : "initItem"
+            "ProductBacklog:EditStory" : "fillingFields",
+            "ProductBacklog:CreateNewItem" : "initItem",
+            "SprintBacklog:NoActiveSprints": "initItem",
+            "SprintBacklog:ActiveSprintWasFound": "showConfirm"
         },  
 
         events: {

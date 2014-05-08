@@ -16,7 +16,6 @@ var sstt = {},
         BacklogItem: {},
         BacklogItemEdit: {},
         PlanningBoard: {},
-        Sprint: {},
         empty: {}
     };
 
