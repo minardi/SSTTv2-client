@@ -6,26 +6,34 @@
 
         template: JST["app/scripts/ScrumBoard/ScrumBoardCollectionTpl.ejs"],
         
-        subscriptions: {   
+        subscriptions: {
+            /*"ProjectPage:ProjectSelected": "initCollection",*/
             "ScrumPage:ScrumBoardSelected": "initCollection",
+            "PlanningBoard:StartSprint": "initCollection",
             "ScrumBoard:TaskMoved": "renderOne",
-            "BacklogItemEdit:AccessToStopSprint": "pretermStopSprint"
+            "BacklogItemEdit:AccessToStopSprint": "pretermStopSprint",
+            "ScrumBoard:TaskLeftDone": "doneCountDec"
         },        
 
         events: {
             "click .stop-sprint": "pretermStopSprint"
         },
 
+        roles: ["developer", "techlead"],
+
         initialize: function() {
+            var today = new Date();
+                day = this.normalize(today.getDate());
+                mounth = this.normalize(today.getMonth() + 1);
+                year = this.normalize(today.getFullYear());
+
+            this.date = mounth + '/' + day + '/' + year;
+
             this.sprint = new module.Model();
         },
 
-        roles: ["developer", "techlead"],
-
         initCollection: function (content_el, project_id) {
-            this.access_moving = sstt.user.checkRole(this.roles); 
-
-            this.setElement(content_el);          
+            this.access_moving = sstt.user.checkRole(this.roles);        
 
             this.project_id = project_id;
 
@@ -35,49 +43,132 @@
                     "parent_id": project_id
                 });
 
-            this.sprints.on("add", this.initTasks, this);
+            this.sprints.on("add", this.getLast, this);
             this.sprints.fetch();
-            this.render();
+            
+            if(content_el) {
+                this.setElement(content_el); 
+                this.render();
+            }
+        },
+
+        getLast: function(sprint) {
+            this.sprint = sprint;
+            this.initTasks();
         },
 
         initTasks: function() {
-            this.sprint = this.sprints.last();
             this.collection = new module.Collection();
             this.collection.url = "backlog_items/get_tasks/" + this.sprint.id;
+
+            this.collection.once("add", this.checkEndOfSprint, this);
             this.collection.on("add", this.renderOne, this);
+            this.done_count = 0;
             this.collection.fetch();
+        },
+
+        checkEndOfSprint: function() {
+            var sprint_settings = {
+                sprint: {
+                    status: "done"
+                },
+                story: {}
+            };
+
+            if(this.compareDates(this.date, this.sprint.get("end_date"))) {
+                this.collection.each(function(item){
+                    if(item.get("status") !== "done") {
+                        sprint_settings.sprint["status"] = "failed";
+                        sprint_settings.story["status"] = "product";
+                        sprint_settings.story["parent_id"]= this.project_id
+                    }
+                });
+
+                this.stopSprint(sprint_settings);
+            }
+        },
+
+        compareDates: function(today, endSprint) {
+            var timeout = false;
+
+            today = today.split('/');
+            endSprint = endSprint.split('/');
+
+            today = new Date(today[2], (today[0] - 1), today[1]);
+            endSprint = new Date(endSprint[2], (endSprint[0] - 1), endSprint[1]);
+
+            if (today > endSprint) {
+                timeout = true;
+            }
+
+            return timeout;
         },
 
         render: function () {
             this.$el.html(this.template());
+
             this.status = {
                 "todo": this.$(".todo"),
                 "progress": this.$(".in-progress"),
                 "verify": this.$(".to-verify"),
                 "done": this.$(".done"),    
             };
+
             return this;
         },
 
         renderOne: function (task) {
-            var task_view = new module.ModelView({
+            var task_view;
+
+            if(task.get("status") === "done") {
+                this.done_count++;
+                this.autoStop();
+            }
+
+            if(this.status) {
+                task_view= new module.ModelView({
                     model: task,
                     permission: this.access_moving
                 });	
-			
-            this.status[task.get("status")].append(task_view.render().el);            
+
+    			if(this.sprint.get("status") === "active") {
+                    this.status[task.get("status")].append(task_view.render().el); 
+                }
+            }
+        },
+
+        doneCountDec: function() {
+            this.done_count--;
+        },
+
+        autoStop: function() {
+            if(this.collection.length === this.done_count) {
+                this.stopSprint({
+                    sprint: {
+                        status: "done"
+                    },
+                    story: {
+                        status: "done",
+                        parent_id: this.sprint.id
+                    }
+                });
+            }
         },
 
         pretermStopSprint: function() {
-            this.stopSprint({
-                sprint: {
-                    status: "failed"
-                },
-                story: {
-                    status: "product",
-                    parent_id: this.project_id
-                }
-            });
+            //if(this.collection){
+                this.stopSprint({
+                    sprint: {
+                        status: "failed"
+                    },
+                    story: {
+                        status: "product",
+                        parent_id: this.project_id
+                    }
+                });
+            //} else {
+            //    this.initTasks();
+            //}
         },
 
         stopSprint: function(sprint_settings) {
@@ -104,6 +195,9 @@
             this.sprint.set("status", sprint_settings.sprint.status);
 
             this.sprint.save();
+
+            mediator.pub("ScrumBoard:SprintWasStoped");
+            this.render();
         },
 
         resetStatus: function(story) {
