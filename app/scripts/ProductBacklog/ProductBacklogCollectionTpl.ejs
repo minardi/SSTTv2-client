@@ -1,7 +1,9 @@
 <div class="backlog-box-name">   
     ProductBacklog
     <div class="backlog-box-actions">
+    <% if (sstt.user.getRoleInProject() === "techlead") { %>
         <button class="add-new-story btn-new-story">+</button>
+    <% } %>
     </div>
 </div> 
 <div class="backlogstory-list">

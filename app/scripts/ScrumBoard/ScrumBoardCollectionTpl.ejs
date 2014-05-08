@@ -19,4 +19,6 @@
     </div>
 </div>
 
-<button class = "btn btn-info stop-sprint">Stop sprint</button>
+<% if (sstt.user.getRoleInProject() === "techlead") { %>
+    <button class = "btn btn-info stop-sprint">Stop sprint</button>
+<% } %>
