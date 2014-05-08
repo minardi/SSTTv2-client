@@ -12,7 +12,8 @@
             "SprintBacklog:RestoreStory": "restoreStory",
             "BacklogItemEdit:TryToCreateSprint": "findActiveSprint",
             "BacklogItemEdit:AccessToStopSprint": "stopSprint",
-            "BacklogItemEdit:SavedChanges": "saveSprint"
+            "BacklogItemEdit:SavedChanges": "saveSprint",
+            "ScrumBoard:SprintWasStoped" : "stopSprint"
         },
 
         initialize: function() {

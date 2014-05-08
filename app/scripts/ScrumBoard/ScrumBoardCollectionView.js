@@ -186,6 +186,8 @@
             this.sprint.set("status", sprint_settings.sprint.status);
 
             this.sprint.save();
+
+            mediator.pub("ScrumBoard:SprintWasStoped");
         },
 
         resetStatus: function(story) {
