@@ -59,6 +59,22 @@
             return this;
         },
 
+        showHideView: function() {
+            this.$el.toggleClass("hidden");
+        },
+        
+        showConfirm: function() {
+            this.$el.html(this.template["confirm"]);
+            this.$el.toggleClass("hidden");
+        },
+
+        stopSprint: function() {
+            mediator.pub("BacklogItemEdit:AccessToStopSprint");
+            mediator.pub("BacklogItemEdit:NeedToRerenderView");
+
+            this.showHideView();
+        },
+
         cancelChanges: function() {
             if(this.model.isNew()) {
                 this.model.destroy();
@@ -88,24 +104,8 @@
                     throw new Error("Please, fill in the required fields");
                 }
             });
-        },
-
-        showHideView: function() {
-            this.$el.toggleClass("hidden");
-        },
-
-        showConfirm: function() {
-            this.$el.html(this.template["confirm"]);
-            this.$el.toggleClass("hidden");
-        },
-
-        stopSprint: function() {
-            mediator.pub("BacklogItemEdit:AccessToStopSprint");
-            mediator.pub("BacklogItemEdit:NeedToRerenderView");
-
-            this.showHideView();
         }
-        
+
     });
 
 })(app.BacklogItemEdit);
