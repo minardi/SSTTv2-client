@@ -25,7 +25,7 @@
         },
 
         showScrum: function() {
-            mediator.pub("ScrumPage:ScrumBoardSelected", this.model.get('project_id'), this.element);
+            mediator.pub("ScrumPage:ScrumBoardSelected", this.element, this.model.get('project_id'));
         },
 
         showStat: function() {

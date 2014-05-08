@@ -21,14 +21,8 @@
 
         roles: ["developer", "techlead"],
 
-        initialize: function() {
-            var today = new Date();
-                day = this.normalize(today.getDate());
-                mounth = this.normalize(today.getMonth() + 1);
-                year = this.normalize(today.getFullYear());
-
-            this.date = mounth + '/' + day + '/' + year;
-
+        initialize: function() {                       
+            this.date = new Date();
             this.sprint = new module.Model();
         },
 
@@ -91,13 +85,10 @@
         compareDates: function(today, endSprint) {
             var timeout = false;
 
-            today = today.split('/');
             endSprint = endSprint.split('/');
-
-            today = new Date(today[2], (today[0] - 1), today[1]);
             endSprint = new Date(endSprint[2], (endSprint[0] - 1), endSprint[1]);
 
-            if (today > endSprint) {
+            if (today.valueOf() > endSprint.valueOf()) {
                 timeout = true;
             }
 
