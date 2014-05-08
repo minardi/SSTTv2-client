@@ -66,6 +66,6 @@ $(function() {
         el: $('.edit-backlog-item')
     });
 
-    sstt.planning_Board = new app.PlanningBoard.ModelView();
+    sstt.planning_board = new app.PlanningBoard.ModelView();
 
 });

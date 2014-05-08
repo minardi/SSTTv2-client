@@ -10,7 +10,7 @@
 
         className: "story-box",
 		
-		selected: "false",
+		selected: false,
 
         template: JST['app/scripts/ProductBacklog/ProductBacklogTpl.ejs'],
 
@@ -22,6 +22,7 @@
         subscriptions: {
 		   "DashBoard:Configure": "edit",
 		   "DashBoard:Delete": "removeStory",
+           "DashBoard:Back": "deselectAll",
 		   "module:UnitSelected": "deselectAll"
         },
 
@@ -45,7 +46,7 @@
         },
 
         edit: function() {		
-			if (this.selected === "true") {
+			if (this.selected) {
 				mediator.pub("ProductBacklog:EditStory", this.model);
 			}			
         },
@@ -54,20 +55,20 @@
 			mediator.pub("ProductBacklog:SelectedStory");
 			mediator.pub("module:UnitSelected");
 
-			this.selected = "true";
-			this.$story_delete_btn.removeClass('hidden');
+			this.selected = true;
+            this.$el.addClass('selected');
         },
 
         removeStory: function() {		
-			if (this.selected === "true") {
+			if (this.selected) {
             this.model.destroy();
             this.remove();
 			}
         },
 		
 		deselectAll: function() {
-			this.selected = "false";
-			this.$story_delete_btn.addClass('hidden');
+			this.selected = false;
+            this.$el.removeClass('selected');
 		}
 
     });

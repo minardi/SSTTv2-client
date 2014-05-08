@@ -38,8 +38,8 @@
                 "parent_id": project_id
             });
 
-            this.sprints.on("add", this.initSprint, this);
-            this.sprints.fetch();
+            this.sprints.on("add", this.initSprint, this)
+                .fetch();
 
             this.render();
         },
@@ -55,11 +55,12 @@
         saveSprint: function(sprint) {
             this.sprints.add(sprint);
             mediator.pub("SprintBacklog:SprintWasReplaced", this.sprint);
-            if (sprint.get("item_type") === 'sprint') {
-                this.sprint_collection.add(sprint);
-                this.listenToOnce(this.sprint_collection, "sync", this.sprintWasSaved);
 
-                sprint.save();
+            if (sprint.get("item_type") === 'sprint') {
+                this.sprint_collection.add(sprint);                
+
+                sprint.save()
+                    .success(_.bind(this.sprintWasSaved, this));
             }
         },
 
@@ -74,22 +75,22 @@
                 model.set("parent_id", story_parent_id);
                 model.set("status", "todo");
                 model.save(null,{
-                    success: this.restoreStory
+                    success: _.bind(this.restoreStory, this)
                 });
             }, this);
 
             this.$list.empty();
         },
 
-        addBacklogItem: function(story) {
+        addBacklogItem: function (story) {
             this.collection.add(story);
             this.renderOne(story);
         },
 
         renderOne: function (backlogItem) {
             var backlogItemView = new module.ModelView({
-                model: backlogItem
-            });
+                    model: backlogItem
+                });
 
             this.$list.append(backlogItemView.render().el);
         },
@@ -99,15 +100,16 @@
         },
 
         checkFilling: function() {
-            if (this.collection.isEmpty()) {
-                mediator.pub("SprintBacklog:EmptySprintBacklog");
-            } else {
-                mediator.pub("SprintBacklog:FilledSprintBacklog");
-            }
+            var pub_map = {
+                true: "SprintBacklog:EmptySprintBacklog",
+                false: "SprintBacklog:FilledSprintBacklog"
+            };
+
+            mediator.pub(pub_map[this.collection.isEmpty()]);
         },
 
         findActiveSprint: function(attributes) {
-            if(this.sprint.get("status") === "active") {
+            if (this.sprint.get("status") === "active") {
                 mediator.pub("SprintBacklog:ActiveSprintWasFound", this.sprint);
             } else {
                 mediator.pub("SprintBacklog:NoActiveSprints", attributes);

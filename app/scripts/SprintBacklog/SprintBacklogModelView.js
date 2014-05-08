@@ -4,8 +4,6 @@
 
     module.ModelView = Backbone.View.extend({
 
-        tagName: "div",
-
         className: "story-box",
 
         template: JST['app/scripts/SprintBacklog/SprintBacklogTpl.ejs'],
@@ -19,11 +17,12 @@
         	mediator.pub("SprintBacklog:RestoreStory", this.model);
         },
 
-        render: function() {
+        render: function () {
             this.$el.html(this.template(this.model.toJSON()));
+            
             return this;
         }
 
-    })
+    });
 
 })(app.SprintBacklog);

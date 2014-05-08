@@ -176,6 +176,10 @@ ________________________________________________*/
     border-radius: 10px;
 }
 
+.selected {
+  font-weight: bold;
+}
+
 .story-box .delete{
     float: right;
     padding-right: 22px;

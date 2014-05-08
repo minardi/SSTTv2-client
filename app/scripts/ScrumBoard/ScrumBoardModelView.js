@@ -11,53 +11,52 @@
             "click .arrow-right": "moveRight"
         },
 
-        initialize: function(init_data) {
+        initialize: function (init_data) {
             this.status = ["todo", "progress", "verify", "done"];
             this.current_status = this.status.indexOf(this.model.get("status"));
             this.permission = init_data["permission"];
         },
         
-        render: function() {
-            this.$el.html(this.template(this.model.toJSON()));
-            this.$el.addClass(this.getClassName());
+        render: function () {
+            this.$el.html(this.template(this.model.toJSON()))
+                .addClass(this.getClassName());
+
             return this;
         },
 
         getClassName: function () {
             var status = this.model.get("status"),
-                className;
+                status_map = {
+                    "todo": "left",
+                    "done": "right"
+                };
 
-            if (status === "todo") {
-                className = "left";
-            } else if (status === "done") {
-                className = "right";
-            }
-
-            return className;
+            return status_map[status];
         },
         
-        moveLeft: function() {
-            if(this.permission) {        
+        moveLeft: function () {
+            if (this.permission) {        
                 this.current_status--;
                 this.updateStatus();
             }
 
-            if(this.model.get("status") === "verify") {
+            if (this.model.get("status") === "verify") {
                 mediator.pub("ScrumBoard:TaskLeftDone");
             }
         },
         
-        moveRight: function() {            
-            if(this.permission) {            
+        moveRight: function () {            
+            if (this.permission) {            
                 this.current_status++;
                 this.updateStatus();
             }
         },
         
         updateStatus: function() {
-            this.model.set("status", this.status[this.current_status]);
-            mediator.pub("ScrumBoard:TaskMoved", this.model);
-            this.model.save(); 
+            this.model.set("status", this.status[this.current_status]);            
+            this.model.save().success(_.bind(function () {
+                mediator.pub("ScrumBoard:TaskMoved", this.model);
+            }, this));
             this.remove();
         }
 
