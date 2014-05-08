@@ -21,28 +21,15 @@
 
         roles: ["developer", "techlead"],
 
-        initialize: function() {
-            var today = new Date();
-                day = this.normalize(today.getDate());
-                mounth = this.normalize(today.getMonth() + 1);
-                year = this.normalize(today.getFullYear());
-
-            this.date = mounth + '/' + day + '/' + year;
+        initialize: function() {                       
+            this.date = new Date();
 
             this.sprint = new module.Model();
         },
 
-        normalize: function(time_value) {
-            if (time_value < 10) {
-                time_value = "0" + time_value;
-            }
-
-            return time_value;  
-        },
-
-        initCollection: function(project_id, content_el) {
+        initCollection: function(project_id, content_el) {     
             var role = sstt.user.getRoleInProject();
-            this.access_moving = this.setAccess(role);         
+            this.access_moving = this.setAccess(role);  
 
             this.project_id = project_id;
 
@@ -59,10 +46,6 @@
                 this.setElement(content_el); 
                 this.render();
             }
-        },
-
-        setAccess: function(role) {
-            return (_.indexOf(this.roles, role) !== -1)? true: false;
         },
 
         getLast: function(sprint) {
@@ -104,13 +87,10 @@
         compareDates: function(today, endSprint) {
             var timeout = false;
 
-            today = today.split('/');
             endSprint = endSprint.split('/');
-
-            today = new Date(today[2], (today[0] - 1), today[1]);
             endSprint = new Date(endSprint[2], (endSprint[0] - 1), endSprint[1]);
 
-            if (today > endSprint) {
+            if (today.valueOf() > endSprint.valueOf()) {
                 timeout = true;
             }
 
@@ -118,7 +98,7 @@
         },
 
         setAccess: function(role) {
-            return (_.indexOf(role, this.roles) !== -1)? true: false;
+            return (_.indexOf(this.roles, role) !== -1)? true: false;
         },
 
         render: function () {
