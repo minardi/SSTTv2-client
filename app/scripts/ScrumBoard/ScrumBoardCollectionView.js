@@ -11,7 +11,8 @@
             "ScrumPage:ScrumBoardSelected": "initCollection",
             "PlanningBoard:StartSprint": "initCollection",
             "ScrumBoard:TaskMoved": "renderOne",
-            "BacklogItemEdit:AccessToStopSprint": "pretermStopSprint"
+            "BacklogItemEdit:AccessToStopSprint": "pretermStopSprint",
+            "ScrumBoard:TaskLeftDone": "doneCountDec"
         },        
 
         events: {
@@ -58,6 +59,7 @@
             this.collection = new module.Collection();
             this.collection.url = "backlog_items/get_tasks/" + this.sprint.id;
             this.collection.on("add", this.renderOne, this);
+            this.done_count = 0;
             this.collection.fetch();
         },
 
@@ -75,6 +77,12 @@
 
         renderOne: function (task) {
             var task_view;
+
+            if(task.get("status") === "done") {
+                this.done_count++;
+                this.autoStop();
+            }
+
             if(this.status) {
                 task_view= new module.ModelView({
                     model: task,
@@ -82,6 +90,24 @@
                 });	
     			
                 this.status[task.get("status")].append(task_view.render().el);
+            }
+        },
+
+        doneCountDec: function() {
+            this.done_count--;
+        },
+
+        autoStop: function() {
+            if(this.collection.length === this.done_count) {
+                this.stopSprint({
+                    sprint: {
+                        status: "done"
+                    },
+                    story: {
+                        status: "done",
+                        parent_id: this.sprint.id
+                    }
+                });
             }
         },
 
@@ -125,6 +151,8 @@
             this.sprint.set("status", sprint_settings.sprint.status);
 
             this.sprint.save();
+
+            mediator.pub("ScrumBoard:SprintStoped");
         },
 
         resetStatus: function(story) {
