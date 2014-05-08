@@ -25,7 +25,8 @@
 		   "module:UnitSelected": "deselectAll"
         },
 
-        initialize: function() {
+        initialize: function(init_data) {
+            this.permission = init_data["permission"];
             this.model.on("change", this.render, this);
         },
 
@@ -37,16 +38,16 @@
         },
 
         moveToSprint: function() {
-            mediator.pub("ProductBacklog:MoveSprintBacklog", this.model);
-            this.remove();
+            if (this.permission) {
+                mediator.pub("ProductBacklog:MoveSprintBacklog", this.model);
+                this.remove();
+            }
         },
 
-        edit: function() {
-		
+        edit: function() {		
 			if (this.selected === "true") {
 				mediator.pub("ProductBacklog:EditStory", this.model);
-			}
-			
+			}			
         },
 
         storySelected: function() {
@@ -57,8 +58,7 @@
 			this.$story_delete_btn.removeClass('hidden');
         },
 
-        removeStory: function() {
-		
+        removeStory: function() {		
 			if (this.selected === "true") {
             this.model.destroy();
             this.remove();

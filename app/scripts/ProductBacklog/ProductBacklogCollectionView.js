@@ -1,6 +1,6 @@
 /* ProductBacklog */
 
-(function(module) {
+(function(module, sstt) {
 
     module.CollectionView = Backbone.View.extend({
       
@@ -17,7 +17,10 @@
             "click .add-new-story": "addStory",
         },
 
+        roles: ["techlead"],
+
         initProductBacklog: function(elem, project_id) {
+            this.access_crud = sstt.user.checkRole(this.roles); 
             this.setElement(elem);
             this.project_id = project_id;
 
@@ -41,7 +44,10 @@
         },
 
         renderOne: function(story) {
-            var story_view = new module.ModelView({model: story});
+            var story_view = new module.ModelView({
+                                    model: story,
+                                    permission: this.access_crud
+                                });
 
             this.$list.append(story_view.render().el);
         },
@@ -72,5 +78,5 @@
         }
     });
 
-})(app.ProductBacklog);
+})(app.ProductBacklog, sstt);
 

@@ -14,7 +14,7 @@
 		initialize: function(init_data) {
 			this.status = ["todo", "progress", "verify", "done"];
 			this.current_status = this.status.indexOf(this.model.get("status"));
-			this.permission= init_data["permission"];
+			this.permission = init_data["permission"];
 		},
 		
 		render: function() {

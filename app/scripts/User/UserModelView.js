@@ -22,11 +22,11 @@
         },
 
         updateRoles: function() {
-            this.model.on("change", this.updateRole, this);  
+            this.model.once("change", this.updateRoleProject, this);
             this.model.fetch();          
         },
 
-        updateRole: function() {
+        updateRoleProject: function() {
             mediator.pub("User:ChangeRole");
         },
 
@@ -44,6 +44,11 @@
 
         getCurrentProject: function() {
             return this.model.get("current_project");
+        },
+
+        checkRole: function(roles_access) {
+            var role = this.getRoleInProject();
+            return (_.indexOf(roles_access, role) !== -1)? true: false;
         }
              
     });

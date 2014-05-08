@@ -23,8 +23,7 @@
         roles: ["developer", "techlead"],
 
         initCollection: function (content_el, project_id) {
-            var role = sstt.user.getRoleInProject();
-            this.access_moving = this.setAccess(role);  
+            this.access_moving = sstt.user.checkRole(this.roles); 
 
             this.setElement(content_el);          
 
@@ -39,10 +38,6 @@
             this.sprints.on("add", this.initTasks, this);
             this.sprints.fetch();
             this.render();
-        },
-
-        setAccess: function(role) {
-            return (_.indexOf(this.roles, role) !== -1)? true: false;
         },
 
         initTasks: function() {

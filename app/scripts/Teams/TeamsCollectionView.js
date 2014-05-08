@@ -39,6 +39,7 @@
         },
 
         removeTeamPage: function() {
+            sstt.user.setCurrentProject(0);
             this.$el.find(".team-page").remove();
         },
 

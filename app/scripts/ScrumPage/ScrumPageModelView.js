@@ -47,6 +47,7 @@
         },
         
         removeScrumPage: function() {
+            sstt.user.setCurrentProject(0);
             this.$el.find(".scrum-page").remove();
         }
         
