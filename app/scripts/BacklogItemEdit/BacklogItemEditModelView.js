@@ -52,7 +52,8 @@
                 item_template = this.template[type];
 
             this.$el.html(item_template(this.model.toJSON()));
-            createDatePicker();
+
+            sstt.date_picker.render();
 
             this.showHideView();
             

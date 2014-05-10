@@ -7,22 +7,20 @@
         template: JST["app/scripts/ScrumBoard/ScrumBoardCollectionTpl.ejs"],
         
         subscriptions: {
-            /*"ProjectPage:ProjectSelected": "initCollection",*/
             "ScrumPage:ScrumBoardSelected": "initCollection",
             "PlanningBoard:StartSprint": "initCollection",
             "ScrumBoard:TaskMoved": "renderOne",
-            "BacklogItemEdit:AccessToStopSprint": "pretermStopSprint",
+            "BacklogItemEdit:AccessToStopSprint": "stopSprint",
             "ScrumBoard:TaskLeftDone": "doneCountDec"
         },        
 
         events: {
-            "click .stop-sprint": "pretermStopSprint"
+            "click .stop-sprint": "stopSprint"
         },
 
         roles: ["developer", "techlead"],
 
         initialize: function() {                       
-            this.date = new Date();
             this.sprint = new module.Model();
         },
 
@@ -60,21 +58,10 @@
         },
 
         checkEndOfSprint: function () {
-            var sprint_settings = {
-                    sprint: {
-                        status: "done"
-                    },
-                    story: {}
-                };
+            var today = new Date();
 
-            if (this.compareDates(this.date, this.sprint.get("end_date"))) {
-                this.collection.each(function (item) {
-                    sprint_settings.sprint["status"] = "failed";
-                    sprint_settings.story["status"] = "product";
-                    sprint_settings.story["parent_id"] = this.project_id;
-                }, this);
-
-                this.stopSprint(sprint_settings);
+            if (this.compareDates(today, this.sprint.get("end_date"))) {
+                this.stopSprint();
             }
         },
 
@@ -130,7 +117,7 @@
 
         autoStop: function() {
             if(this.collection.length === this.done_count) {
-                this.stopSprint({
+                this._stopSprint({
                     sprint: {
                         status: "done"
                     },
@@ -142,8 +129,8 @@
             }
         },
 
-        pretermStopSprint: function() {
-            this.stopSprint({
+        stopSprint: function() {
+            this._stopSprint({
                 sprint: {
                     status: "failed"
                 },
@@ -154,7 +141,7 @@
             });
         },
 
-        stopSprint: function(sprint_settings) {
+        _stopSprint: function(sprint_settings) {
             var sprint_stories;
 
             this.sprint_settings = sprint_settings;
