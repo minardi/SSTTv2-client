@@ -19,6 +19,6 @@
     </div>
 </div>
 
-<% if (sstt.user.getRoleInProject() === "techlead") { %>
+<% if (sstt.user.getRoleInProject() === "techlead" && sprint_status === "active") { %>
     <button class = "btn btn-info stop-sprint">Stop sprint</button>
 <% } %>

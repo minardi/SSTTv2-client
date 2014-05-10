@@ -30,6 +30,7 @@
             this.access_moving = sstt.user.checkRole(this.roles);        
 
             this.project_id = project_id;
+            this.content_el = content_el;
 
             this.sprints = new module.Collection([], {
                     "item_type": "sprint",
@@ -40,14 +41,20 @@
             this.sprints.on("add", this.getLast, this);
             this.sprints.fetch();
             
-            if(content_el) {
-                this.setElement(content_el); 
+            if(this.content_el) {
+                this.setElement(this.content_el); 
                 this.render();
             }
         },
 
         getLast: function(sprint) {
             this.sprint = sprint;
+            
+            if(this.content_el) {
+                this.setElement(this.content_el); 
+                this.render();
+            }
+
             this.initTasks();
         },
 
@@ -96,7 +103,7 @@
         },
 
         render: function () {
-            this.$el.html(this.template());
+            this.$el.html(this.template({"sprint_status": this.sprint.get("status")}));
 
             this.status = {
                 "todo": this.$(".todo"),
