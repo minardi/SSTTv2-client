@@ -16,6 +16,7 @@ var sstt = {},
         BacklogItem: {},
         BacklogItemEdit: {},
         PlanningBoard: {},
+        DatePicker: {},
         empty: {}
     };
 
@@ -66,6 +67,8 @@ $(function() {
         el: $('.edit-backlog-item')
     });
 
-    sstt.planning_Board = new app.PlanningBoard.ModelView();
+    sstt.planning_board = new app.PlanningBoard.ModelView();
+
+    sstt.date_picker = new app.DatePicker.ModelView();
 
 });

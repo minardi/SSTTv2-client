@@ -15,6 +15,7 @@
 
         getRole: function() {
             var project_id = this.get("current_project");
+            
             return this.get("roles")[project_id];
         }
         

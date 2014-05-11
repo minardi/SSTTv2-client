@@ -7,22 +7,20 @@
         template: JST["app/scripts/ScrumBoard/ScrumBoardCollectionTpl.ejs"],
         
         subscriptions: {
-            /*"ProjectPage:ProjectSelected": "initCollection",*/
             "ScrumPage:ScrumBoardSelected": "initCollection",
             "PlanningBoard:StartSprint": "initCollection",
             "ScrumBoard:TaskMoved": "renderOne",
-            "BacklogItemEdit:AccessToStopSprint": "pretermStopSprint",
+            "BacklogItemEdit:AccessToStopSprint": "stopSprint",
             "ScrumBoard:TaskLeftDone": "doneCountDec"
         },        
 
         events: {
-            "click .stop-sprint": "pretermStopSprint"
+            "click .stop-sprint": "stopSprint"
         },
 
         roles: ["developer", "techlead"],
 
         initialize: function() {                       
-            this.date = new Date();
             this.sprint = new module.Model();
         },
 
@@ -32,74 +30,58 @@
             this.project_id = project_id;
             this.content_el = content_el;
 
-            this.sprints = new module.Collection([], {
+            this.sprints = (new module.Collection([], {
                     "item_type": "sprint",
                     "status": "active",
                     "parent_id": project_id
-                });
-
-            this.sprints.on("add", this.getLast, this);
+                }))
+                .on("add", this.getLast, this);            
             this.sprints.fetch();
             
-            if(this.content_el) {
-                this.setElement(this.content_el); 
-                this.render();
+            if (content_el) {
+                this.setElement(content_el).render();
             }
         },
 
-        getLast: function(sprint) {
+        getLast: function (sprint) {
             this.sprint = sprint;
             
-            if(this.content_el) {
-                this.setElement(this.content_el); 
-                this.render();
+            if (this.content_el) {
+                this.setElement(this.content_el).render();
             }
 
             this.initTasks();
         },
 
-        initTasks: function() {
+        initTasks: function () {
             this.collection = new module.Collection();
             this.collection.url = "backlog_items/get_tasks/" + this.sprint.id;
 
-            this.collection.once("add", this.checkEndOfSprint, this);
-            this.collection.on("add", this.renderOne, this);
             this.done_count = 0;
-            this.collection.fetch();
+            this.collection.once("add", this.checkEndOfSprint, this)
+                .on("add", this.renderOne, this)
+                .fetch();
         },
 
-        checkEndOfSprint: function() {
-            var sprint_settings = {
-                sprint: {
-                    status: "done"
-                },
-                story: {}
-            };
+        checkEndOfSprint: function () {
+            var today = new Date();
 
-            if(this.compareDates(this.date, this.sprint.get("end_date"))) {
-                this.collection.each(function(item){
-                    if(item.get("status") !== "done") {
-                        sprint_settings.sprint["status"] = "failed";
-                        sprint_settings.story["status"] = "product";
-                        sprint_settings.story["parent_id"]= this.project_id
-                    }
-                });
-
-                this.stopSprint(sprint_settings);
+            if (this.compareDates(today, this.sprint.get("end_date"))) {
+                this.stopSprint();
             }
         },
 
-        compareDates: function(today, endSprint) {
-            var timeout = false;
+        compareDates: function (today, endSprint) {
+            var out_of_date = false;
 
             endSprint = endSprint.split('/');
             endSprint = new Date(endSprint[2], (endSprint[0] - 1), endSprint[1]);
 
             if (today.valueOf() > endSprint.valueOf()) {
-                timeout = true;
+                out_of_date = true;
             }
 
-            return timeout;
+            return out_of_date;
         },
 
         render: function () {
@@ -109,7 +91,7 @@
                 "todo": this.$(".todo"),
                 "progress": this.$(".in-progress"),
                 "verify": this.$(".to-verify"),
-                "done": this.$(".done"),    
+                "done": this.$(".done")
             };
 
             return this;
@@ -118,18 +100,18 @@
         renderOne: function (task) {
             var task_view;
 
-            if(task.get("status") === "done") {
+            if (task.get("status") === "done") {
                 this.done_count++;
                 this.autoStop();
             }
 
-            if(this.status) {
-                task_view= new module.ModelView({
+            if (this.status) {
+                task_view = new module.ModelView({
                     model: task,
                     permission: this.access_moving
                 });	
 
-    			if(this.sprint.get("status") === "active") {
+    			if (this.sprint.get("status") === "active") {
                     this.status[task.get("status")].append(task_view.render().el); 
                 }
             }
@@ -141,7 +123,7 @@
 
         autoStop: function() {
             if(this.collection.length === this.done_count) {
-                this.stopSprint({
+                this._stopSprint({
                     sprint: {
                         status: "done"
                     },
@@ -153,24 +135,21 @@
             }
         },
 
-        pretermStopSprint: function() {
-            //if(this.collection){
-                this.stopSprint({
-                    sprint: {
-                        status: "failed"
-                    },
-                    story: {
-                        status: "product",
-                        parent_id: this.project_id
-                    }
-                });
-            //} else {
-            //    this.initTasks();
-            //}
+        stopSprint: function() {
+            this._stopSprint({
+                sprint: {
+                    status: "failed"
+                },
+                story: {
+                    status: "product",
+                    parent_id: this.project_id
+                }
+            });
         },
 
-        stopSprint: function(sprint_settings) {
+        _stopSprint: function(sprint_settings) {
             var sprint_stories;
+
             this.sprint_settings = sprint_settings;
 
             sprint_stories = new module.Collection([], {
@@ -179,29 +158,29 @@
                     "parent_id": this.sprint.id
                 });
 
-            sprint_stories.on("add", this.resetStatus, this);
-            sprint_stories.fetch();
+            sprint_stories.on("add", this.resetStatus, this)
+                .fetch();
 
-            this.collection.each(function(item) {
-                    if(item.get("item_type") === "story") {
-                        item.set("status", sprint_settings.story.status);
-                        item.set("parent_id", sprint_settings.story.parent_id);
-                        item.save();
+            this.collection.each(function (item) {
+                    if (item.get("item_type") === "story") {
+                        item.set("status", sprint_settings.story.status)
+                            .set("parent_id", sprint_settings.story.parent_id)
+                            .save();
                     }
                 }, this);
 
-            this.sprint.set("status", sprint_settings.sprint.status);
-
-            this.sprint.save();
+            this.sprint.save({
+                status: sprint_settings.sprint.status
+            });
 
             mediator.pub("ScrumBoard:SprintWasStoped");
             this.render();
         },
 
         resetStatus: function(story) {
-            story.set("status", this.sprint_settings.story.status);
-            story.set("parent_id", this.sprint_settings.story.project_id);
-            story.save();
+            story.set("status", this.sprint_settings.story.status)
+                .set("parent_id", this.sprint_settings.story.project_id)
+                .save();
         }
 
     });

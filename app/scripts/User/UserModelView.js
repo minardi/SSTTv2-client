@@ -22,8 +22,8 @@
         },
 
         updateRoles: function() {
-            this.model.once("change", this.updateRoleProject, this);
-            this.model.fetch();          
+            this.model.once("change", this.updateRoleProject, this)
+                .fetch();
         },
 
         updateRoleProject: function() {
@@ -31,7 +31,7 @@
         },
 
         getId: function() {
-            return this.model.get("id");
+            return this.model.id;
         },
 
         getRoleInProject: function() {
@@ -48,7 +48,8 @@
 
         checkRole: function(roles_access) {
             var role = this.getRoleInProject();
-            return (_.indexOf(roles_access, role) !== -1)? true: false;
+
+            return (_.indexOf(roles_access, role) !== -1);
         }
              
     });
