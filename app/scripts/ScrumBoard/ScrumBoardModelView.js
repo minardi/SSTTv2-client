@@ -41,7 +41,7 @@
             }
 
             if (this.model.get("status") === "verify") {
-                mediator.pub("ScrumBoard:TaskLeftDone");
+                mediator.pub("ScrumBoard:TaskReturnedToVerify");
             }
         },
         

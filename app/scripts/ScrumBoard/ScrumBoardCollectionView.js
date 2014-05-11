@@ -10,9 +10,9 @@
             "ScrumPage:ScrumBoardSelected": "initCollection",
             "PlanningBoard:StartSprint": "initCollection",
             "ScrumBoard:TaskMoved": "renderOne",
-            "BacklogItemEdit:AccessToStopSprint": "stopSprint",
-            "ScrumBoard:TaskLeftDone": "doneCountDec"
-        },        
+            "BacklogItemEdit:StopSprintConfirmed": "stopSprint",
+            "ScrumBoard:TaskReturnedToVerify": "reduceCompletedTasksNumber"
+        },
 
         events: {
             "click .stop-sprint": "stopSprint"
@@ -54,6 +54,7 @@
 
             this.done_count = 0;
             this.collection.once("add", this.checkEndOfSprint, this)
+                .on("add", this.increaseCompletedTasksNumber, this)
                 .on("add", this.renderOne, this)
                 .fetch();
         },
@@ -79,19 +80,6 @@
             return out_of_date;
         },
 
-        render: function () {
-            this.$el.html(this.template({"sprint_status": this.sprint.get("status")}));
-
-            this.status = {
-                "todo": this.$(".todo"),
-                "progress": this.$(".in-progress"),
-                "verify": this.$(".to-verify"),
-                "done": this.$(".done")
-            };
-
-            return this;
-        },
-
         renderOne: function (task) {
             var task_view;
 
@@ -112,7 +100,20 @@
             }
         },
 
-        doneCountDec: function() {
+        render: function () {
+            this.$el.html(this.template({"sprint_status": this.sprint.get("status")}));
+
+            this.status = {
+                "todo": this.$(".todo"),
+                "progress": this.$(".in-progress"),
+                "verify": this.$(".to-verify"),
+                "done": this.$(".done")
+            };
+
+            return this;
+        },
+
+        reduceCompletedTasksNumber: function() {
             this.done_count--;
         },
 

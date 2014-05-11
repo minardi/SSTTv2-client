@@ -40,7 +40,7 @@
 
         moveToSprint: function() {
             if (this.permission) {
-                mediator.pub("ProductBacklog:MoveSprintBacklog", this.model);
+                mediator.pub("ProductBacklog:MovedStory", this.model);
                 this.remove();
             }
         },

@@ -7,11 +7,11 @@
         template: JST['app/scripts/SprintBacklog/SprintBacklogCollectionTpl.ejs'],  
 
         subscriptions: {
-            "ProductBacklog:MoveSprintBacklog": "addBacklogItem",
+            "ProductBacklog:MovedStory": "addBacklogItem",
             "PlanningBoard:InitSprintBacklog": "initSprintBacklog",
             "SprintBacklog:RestoreStory": "restoreStory",
             "BacklogItemEdit:TryToCreateSprint": "findActiveSprint",
-            "BacklogItemEdit:AccessToStopSprint": "stopSprint",
+            "BacklogItemEdit:StopSprintConfirmed": "stopSprint",
             "BacklogItemEdit:SavedChanges": "saveSprint",
             "ScrumBoard:SprintWasStoped" : "stopSprint"
         },
@@ -28,21 +28,11 @@
             _.bindAll(this, "restoreStory");
 
             this.collection = new module.Collection();
-            this.sprint_collection = new module.Collection();
-
             this.collection.on("add remove", this.checkFilling, this);
 
-            /*this.sprints = new module.Collection([], {
-                "item_type": "sprint",
-                "status": "active",
-                "parent_id": project_id
+            this.sprint = new module.Model({}, {
+                urlRoot: "backlog_items/get_active_sprint/" + project_id
             });
-
-            this.sprints.on("add", this.initSprint, this)
-                .fetch();*/
-
-            this.sprint = new module.Model();
-            this.sprint.urlRoot = "backlog_items/get_active_sprint/" + project_id;
             this.sprint.fetch();
 
             this.render();
@@ -57,7 +47,6 @@
         },
 
         saveSprint: function(sprint) {
-            //this.sprints.add(sprint);
             mediator.pub("SprintBacklog:SprintWasReplaced", this.sprint);
 
             if (sprint.get("item_type") === 'sprint') {
@@ -68,11 +57,9 @@
         },
 
         sprintWasSaved: function () {
-            this.sprint.clear();
-            this.sprint.on("change", this.saveAllStory, this);
-            this.sprint.fetch();
-            //console.log(this.sprint);
-            //this.saveAllStory(this.sprint);
+            this.sprint.clear()
+                .on("change", this.saveAllStory, this)
+                .fetch();
         },
 
         saveAllStory: function (sprint) {
