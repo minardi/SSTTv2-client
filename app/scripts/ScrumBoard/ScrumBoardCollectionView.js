@@ -29,23 +29,18 @@
 
             this.project_id = project_id;
             this.content_el = content_el;
-
-            this.sprints = (new module.Collection([], {
-                    "item_type": "sprint",
-                    "status": "active",
-                    "parent_id": project_id
-                }))
-                .on("add", this.getLast, this);            
-            this.sprints.fetch();
+            
+            this.sprint = (new module.Model());
+            this.sprint.urlRoot = "backlog_items/get_active_sprint/" + project_id;
+            this.sprint.on("change", this.sprintFetched, this)
+                .fetch();
             
             if (content_el) {
                 this.setElement(content_el).render();
             }
         },
 
-        getLast: function (sprint) {
-            this.sprint = sprint;
-            
+        sprintFetched: function(model) {
             if (this.content_el) {
                 this.setElement(this.content_el).render();
             }
@@ -109,7 +104,7 @@
                 task_view = new module.ModelView({
                     model: task,
                     permission: this.access_moving
-                });	
+                });
 
     			if (this.sprint.get("status") === "active") {
                     this.status[task.get("status")].append(task_view.render().el); 
