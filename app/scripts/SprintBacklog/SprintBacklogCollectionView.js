@@ -32,14 +32,18 @@
 
             this.collection.on("add remove", this.checkFilling, this);
 
-            this.sprints = new module.Collection([], {
+            /*this.sprints = new module.Collection([], {
                 "item_type": "sprint",
                 "status": "active",
                 "parent_id": project_id
             });
 
             this.sprints.on("add", this.initSprint, this)
-                .fetch();
+                .fetch();*/
+
+            this.sprint = new module.Model();
+            this.sprint.urlRoot = "backlog_items/get_active_sprint/" + project_id;
+            this.sprint.fetch();
 
             this.render();
         },
@@ -53,11 +57,10 @@
         },
 
         saveSprint: function(sprint) {
-            this.sprints.add(sprint);
+            //this.sprints.add(sprint);
             mediator.pub("SprintBacklog:SprintWasReplaced", this.sprint);
 
             if (sprint.get("item_type") === 'sprint') {
-                this.sprint_collection.add(sprint);                
 
                 sprint.save()
                     .success(_.bind(this.sprintWasSaved, this));
@@ -65,12 +68,18 @@
         },
 
         sprintWasSaved: function () {
-            this.saveAllStory(this.sprint_collection.last());
+            this.sprint.clear();
+            this.sprint.on("change", this.saveAllStory, this);
+            this.sprint.fetch();
+            //console.log(this.sprint);
+            //this.saveAllStory(this.sprint);
         },
 
         saveAllStory: function (sprint) {
             var story_parent_id = sprint.get("id");
             
+            this.sprint.off("change");
+
             this.collection.each(function (model) {
                 model.set("parent_id", story_parent_id);
                 model.set("status", "todo");

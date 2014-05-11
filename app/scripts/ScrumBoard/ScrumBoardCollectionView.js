@@ -29,10 +29,10 @@
 
             this.project_id = project_id;
             this.content_el = content_el;
-            
-            this.sprint = (new module.Model());
+
+            this.sprint = new module.Model();
             this.sprint.urlRoot = "backlog_items/get_active_sprint/" + project_id;
-            this.sprint.on("change", this.sprintFetched, this)
+            this.sprint.on("change", this.sprintInit, this)
                 .fetch();
             
             if (content_el) {
@@ -40,11 +40,11 @@
             }
         },
 
-        sprintFetched: function(model) {
+        sprintInit: function(model) {
             if (this.content_el) {
                 this.setElement(this.content_el).render();
             }
-
+            
             this.initTasks();
         },
 
