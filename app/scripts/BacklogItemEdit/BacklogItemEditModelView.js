@@ -70,7 +70,7 @@
         },
 
         stopSprint: function() {
-            mediator.pub("BacklogItemEdit:StopSprintConfirmed");
+            mediator.pub("BacklogItemEdit:StopSprintConfirmed", true);
             mediator.pub("BacklogItemEdit:NeedToRerenderView");
 
             this.showHideView();
