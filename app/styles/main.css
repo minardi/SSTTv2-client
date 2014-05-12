@@ -327,7 +327,6 @@ ________________________________________________*/
     opacity: 0.5;
     position: absolute;
     height: 100%;
-    line-height: 45px;
     cursor: pointer;
 }
 
@@ -772,3 +771,22 @@ p {
 }
 
 /*-------------end DatePicker----------*/
+
+.centered-block {
+  text-align: center;
+}
+ 
+/* The ghost, nudged to maintain perfect centering */
+.centered-block:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+/* The element to be centered, can
+   also be of any width and height */ 
+.centered-text {
+  display: inline-block;
+  vertical-align: middle;
+}
