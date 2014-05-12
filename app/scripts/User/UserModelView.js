@@ -7,9 +7,13 @@
         template: JST['app/scripts/User/UserTpl.ejs'],
          
         initialize: function(init_user) {
-            this.model = new module.Model(init_user.user_content);  /*changed to 'init_user'*/    
+            this.model = new module.Model(init_user.user_content);             
             this.model.fetch();         
             this.render();           
+        },
+
+        subscriptions: {
+            "TeamMembers:ChangeRole": "updateRoles"
         },
 
         render: function() {                       
@@ -17,12 +21,35 @@
             return this;
         },
 
-        getId: function() {
-            return this.model.get("id");
+        updateRoles: function() {
+            this.model.once("change", this.updateRoleProject, this)
+                .fetch();
         },
 
-        getRoleInProject: function(project_id) {
-            return this.model.getRole(project_id);
+        updateRoleProject: function() {
+            mediator.pub("User:ChangeRole");
+        },
+
+        getId: function() {
+            return this.model.id;
+        },
+
+        getRoleInProject: function() {
+            return this.model.getRole();
+        },
+
+        setCurrentProject: function(project_id) {
+            this.model.set("current_project", project_id);
+        },
+
+        getCurrentProject: function() {
+            return this.model.get("current_project");
+        },
+
+        checkRole: function(roles_access) {
+            var role = this.getRoleInProject();
+
+            return (_.indexOf(roles_access, role) !== -1);
         }
              
     });

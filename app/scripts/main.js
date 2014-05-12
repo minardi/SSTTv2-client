@@ -16,7 +16,7 @@ var sstt = {},
         BacklogItem: {},
         BacklogItemEdit: {},
         PlanningBoard: {},
-        Sprint: {},
+        DatePicker: {},
         empty: {}
     };
 
@@ -33,8 +33,7 @@ $(function() {
     });
 
     sstt.scrum_page = new app.ScrumPage.ModelView({
-        el: $(".b-main"),
-        model: new app.ScrumPage.Model() //????
+        el: $(".b-main")
     });
 
     sstt.project_info = new app.Projectinfo.ModelView({
@@ -68,8 +67,8 @@ $(function() {
         el: $('.edit-backlog-item')
     });
 
-    sstt.planning_Board = new app.PlanningBoard.ModelView();
+    sstt.planning_board = new app.PlanningBoard.ModelView();
 
-    sstt.sprint = new app.Sprint.CollectionView();
+    sstt.date_picker = new app.DatePicker.ModelView();
 
 });

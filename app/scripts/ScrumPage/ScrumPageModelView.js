@@ -1,10 +1,12 @@
 /* ScrumPage */
 
-(function(module) {
+(function(module, sstt) {
     module.ModelView = Backbone.View.extend({
 
         template: JST["app/scripts/ScrumPage/ScrumPageTpl.ejs"],
 		
+        model: new app.ScrumPage.Model(),
+        
         events: {
             "click #planning": "showPlanning",
             "click #scrumboard": "showScrum",
@@ -31,6 +33,7 @@
         },
 
         renderDefaultTab: function(project_id) {
+            sstt.user.setCurrentProject(project_id);
             this.model.set('project_id', project_id);
             this.render();
             this.element = this.$el.find("#ScrumPage");
@@ -46,8 +49,9 @@
         },
         
         removeScrumPage: function() {
+            sstt.user.setCurrentProject(0);
             this.$el.find(".scrum-page").remove();
         }
         
     });
-})(app.ScrumPage);
+})(app.ScrumPage, sstt);

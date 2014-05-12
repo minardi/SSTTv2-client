@@ -13,10 +13,11 @@
         },     
 
         subscriptions: {
-            "ProductBacklog:EditStory" : "fillingFields",
-            "SprintBacklog:ActiveSprintWasFound": "showConfirm",
-            "SprintBacklog:NoActiveSprints": "initItem",
             "PlanningBoard:CreateNewItem" : "findActiveSprints",
+            "ProductBacklog:EditStory" : "fillingFields",
+            "ProductBacklog:CreateNewItem" : "initItem",
+            "SprintBacklog:NoActiveSprints": "initItem",
+            "SprintBacklog:ActiveSprintWasFound": "showConfirm"
         },  
 
         events: {
@@ -51,11 +52,28 @@
                 item_template = this.template[type];
 
             this.$el.html(item_template(this.model.toJSON()));
-            createDatePicker();
+
+            sstt.date_picker.render();
 
             this.showHideView();
             
             return this;
+        },
+
+        showHideView: function() {
+            this.$el.toggleClass("hidden");
+        },
+        
+        showConfirm: function() {
+            this.$el.html(this.template["confirm"]);
+            this.$el.toggleClass("hidden");
+        },
+
+        stopSprint: function() {
+            mediator.pub("BacklogItemEdit:StopSprintConfirmed");
+            mediator.pub("BacklogItemEdit:NeedToRerenderView");
+
+            this.showHideView();
         },
 
         cancelChanges: function() {
@@ -87,24 +105,8 @@
                     throw new Error("Please, fill in the required fields");
                 }
             });
-        },
-
-        showHideView: function() {
-            this.$el.toggleClass("hidden");
-        },
-
-        showConfirm: function() {
-            this.$el.html(this.template["confirm"]);
-            this.$el.toggleClass("hidden");
-        },
-
-        stopSprint: function() {
-            mediator.pub("BacklogItemEdit:AccessToStopSprint");
-            mediator.pub("BacklogItemEdit:NeedToRerenderView");
-
-            this.showHideView();
         }
-        
+
     });
 
 })(app.BacklogItemEdit);

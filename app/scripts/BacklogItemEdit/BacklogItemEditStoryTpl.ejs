@@ -1,13 +1,15 @@
     <span class = "title">Edit Story</span>
-    <br /><br />
-    <p>Title*:</p>
+    <span class = "legend">Title*:</span>
     <input class = "input required" type = "text" name = "title" value = "<%= title %>"/>
 
-    <p>Description:</p>
+    <span class = "legend">Description:</span>
     <textarea class = "input" size = 300 name = "description"><%= description %></textarea>
 
+    <span class = "legend">Estimation*:</span>
+    <input class = "input required" type = "text" name = "estimation" value = "<%= estimation %>"/>
+
     <div class = "save_button btn btn-default">Save</div>
-    <div class = "cancel_button btn btn-default">Cancel</div><br /><br />
+    <div class = "cancel_button btn btn-default">Cancel</div>
 
     <div class = "error-box"></div>
 

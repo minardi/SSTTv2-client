@@ -10,7 +10,7 @@
 
         className: "story-box",
 		
-		selected: "false",
+		selected: false,
 
         template: JST['app/scripts/ProductBacklog/ProductBacklogTpl.ejs'],
 
@@ -22,10 +22,13 @@
         subscriptions: {
 		   "DashBoard:Configure": "edit",
 		   "DashBoard:Delete": "removeStory",
+           "DashBoard:Back": "deselectAll",
+		   "DashBoard:Team": "deselectAll",
 		   "module:UnitSelected": "deselectAll"
         },
 
-        initialize: function() {
+        initialize: function(init_data) {
+            this.permission = init_data["permission"];
             this.model.on("change", this.render, this);
         },
 
@@ -37,37 +40,37 @@
         },
 
         moveToSprint: function() {
-            mediator.pub("ProductBacklog:MoveSprintBacklog", this.model);
-            this.remove();
+            if (this.permission) {
+                mediator.pub("ProductBacklog:MovedStory", this.model);
+                this.remove();
+            }
         },
 
-        edit: function() {
-		
-			if (this.selected === "true") {
+        edit: function() {		
+			if (this.selected) {
 				mediator.pub("ProductBacklog:EditStory", this.model);
-			}
-			
+			}			
         },
 
         storySelected: function() {
 			mediator.pub("ProductBacklog:SelectedStory");
 			mediator.pub("module:UnitSelected");
 
-			this.selected = "true";
-			this.$story_delete_btn.removeClass('hidden');
+			this.selected = true;
+            this.$el.addClass('selected');
         },
 
-        removeStory: function() {
-		
-			if (this.selected === "true") {
-				this.model.destroy();
-				this.remove();
+        removeStory: function() {		
+			if (this.selected) {
+            this.model.destroy();
+            this.remove();
+
 			}
         },
 		
 		deselectAll: function() {
-			this.selected = "false";
-			this.$story_delete_btn.addClass('hidden');
+			this.selected = false;
+            this.$el.removeClass('selected');
 		}
 
     });

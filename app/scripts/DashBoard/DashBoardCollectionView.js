@@ -52,7 +52,9 @@
             this.$el.append(this.template());
             this.$dashboard = this.$(".dashboard");
             
-            this.current_right = (this.project.get("pm").user_id == sstt.user.getId())? "pm": "not_pm";
+            this.is_pm = (this.project.get("pm").user_id == sstt.user.getId())? "pm": "not_pm";
+            this.is_tl = sstt.user.getRoleInProject();
+
             this.collection.each(this.renderOne, this);
             return this;
         },
@@ -73,7 +75,7 @@
 
             if (permition.must_be.right) {
                 _.each(permition.must_be.right, function(el) {
-                        if (el !== this.current_right) {
+                        if (el !== this.is_pm) {
                             answer = false;
                         }
                     }
@@ -89,9 +91,18 @@
                 , this)
             }
 
+            if (permition.must_be.role) {
+                _.each(permition.must_be.role, function(el) {                   
+                        if (el !== this.is_tl) {
+                            answer = false;
+                        }
+                    }
+                , this)
+            }
+
             if (permition.not.page) {
                 _.each(permition.not.right, function(el) {
-                        if (el === this.current_rigth) {
+                        if (el === this.is_pm) {
                             answer = false;
                         }
                     }

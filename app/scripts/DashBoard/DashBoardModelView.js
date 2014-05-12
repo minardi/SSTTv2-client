@@ -13,14 +13,16 @@
         },
 		 
         action: function() {
-			var content = this.model.get("content");
-			
+
+            var content = this.model.get("content");
+            
             mediator.pub("DashBoard:Active" + content, this.model.get("project_id"));
 			mediator.pub("DashBoard:" + content);
         },
 
         render: function () {
             this.$el.addClass(this.general_class + ' ' + this.model.get("type"));
+
             return this;
         }
 

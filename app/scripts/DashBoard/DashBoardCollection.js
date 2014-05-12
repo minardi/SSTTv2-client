@@ -51,9 +51,11 @@
                         "must_be": {
                             right: ["pm"]
                         },
-                        "not": ""
+                        "not": {
+                            page: ["scrum_page"]
+                        }
                     }
-                },
+                },               
 
                 {
                     content: "Delete",
@@ -62,12 +64,42 @@
                         "must_be": {
                             right: ["pm"]
                         },
-                        "not": ""
+                        "not": {
+                            page: ["scrum_page"]
+                        }
+                    }
+                },
+
+                {
+                    content: "Configure",
+                    type: "config",
+                    permition: {
+                        "must_be": {
+                            role: ["techlead"]
+                        },
+                        "not": {
+                            page: ["project_page", "team_page", "team_edit_page"]
+                        }
+                    }
+                },
+
+                {
+                    content: "Delete",
+                    type: "delete",
+                    permition: {
+                        "must_be": {
+                            role: ["techlead"]
+                        },
+                        "not": {
+                            page: ["project_page", "team_page", "team_edit_page"]
+                        }
                     }
                 } 
-            ]);
-        }
 
-    });
+            ]);
+
+    }
+	
+	});
 
 })(app.DashBoard);
