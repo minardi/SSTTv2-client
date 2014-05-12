@@ -520,6 +520,10 @@ a:visited {
   margin-top: 10px;
 }
 
+.edit-backlog-item .message {
+  display: block;
+  margin-top: 25px;
+}
 
 .edit-backlog-item .error-box {
   margin-top: 10px;
