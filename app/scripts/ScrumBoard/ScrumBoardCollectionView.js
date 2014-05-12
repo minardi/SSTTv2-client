@@ -131,7 +131,7 @@
             }
         },
 
-        stopSprint: function() {
+        stopSprint: function(without_render) {
             this._stopSprint({
                 sprint: {
                     status: "failed"
@@ -141,6 +141,10 @@
                     parent_id: this.project_id
                 }
             });
+
+            if(!without_render) {
+                this.render();
+            }
         },
 
         _stopSprint: function(sprint_settings) {
@@ -170,7 +174,6 @@
             });
 
             mediator.pub("ScrumBoard:SprintWasStoped");
-            this.render();
         },
 
         resetStatus: function(story) {
