@@ -15,7 +15,7 @@
         template: JST['app/scripts/ProductBacklog/ProductBacklogTpl.ejs'],
 
         events: {
-           "dblclick" : "moveToSprint",
+           "dblclick": "moveToSprint",
            "click": "storySelected",
         },
 
@@ -60,8 +60,8 @@
         removeStory: function() {
 		
 			if (this.selected === "true") {
-            this.model.destroy();
-            this.remove();
+				this.model.destroy();
+				this.remove();
 			}
         },
 		
