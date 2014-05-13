@@ -8,9 +8,7 @@
         
         subscriptions: {
             "ScrumPage:ScrumBoardSelected": "initCollection",
-            "PlanningBoard:StartSprint": "initCollection",
             "ScrumBoard:TaskMoved": "renderOne",
-            "BacklogItemEdit:StopSprintConfirmed": "stopSprint",
             "ScrumBoard:TaskReturnedToVerify": "reduceCompletedTasksNumber"
         },
 
@@ -118,69 +116,17 @@
         },
 
         autoStop: function() {
-            if(this.collection.length === this.done_count) {
-                this._stopSprint({
-                    sprint: {
-                        status: "done"
-                    },
-                    story: {
-                        status: "done",
-                        parent_id: this.sprint.id
-                    }
-                });
-            }
-        },
-
-        stopSprint: function(without_render) {
-            this._stopSprint({
-                sprint: {
-                    status: "failed"
-                },
-                story: {
-                    status: "product",
-                    parent_id: this.project_id
-                }
-            });
-
-            if(!without_render) {
+            if(this.done_count === this.collection.length) {
+                this.sprint.save({status: "done"});
                 this.render();
             }
         },
 
-        _stopSprint: function(sprint_settings) {
-            var sprint_stories;
-
-            this.sprint_settings = sprint_settings;
-
-            sprint_stories = new module.Collection([], {
-                    "item_type": "story",
-                    "status": "sprint",
-                    "parent_id": this.sprint.id
-                });
-
-            sprint_stories.on("add", this.resetStatus, this)
-                .fetch();
-
-            this.collection.each(function (item) {
-                    if (item.get("item_type") === "story") {
-                        item.set("status", sprint_settings.story.status)
-                            .set("parent_id", sprint_settings.story.parent_id)
-                            .save();
-                    }
-                }, this);
-
-            this.sprint.save({
-                status: sprint_settings.sprint.status
-            });
-
+        stopSprint: function() {
+            this.sprint.save({status: "failed"})
             mediator.pub("ScrumBoard:SprintWasStoped");
+            this.render();
         },
-
-        resetStatus: function(story) {
-            story.set("status", this.sprint_settings.story.status)
-                .set("parent_id", this.sprint_settings.story.project_id)
-                .save();
-        }
 
     });
 
