@@ -11,8 +11,9 @@
         events: {
             "click": "action"
         },
-        
+		 
         action: function() {
+
             var content = this.model.get("content");
             
             mediator.pub("DashBoard:Active" + content, this.model.get("project_id"));

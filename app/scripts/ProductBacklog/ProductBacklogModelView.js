@@ -15,7 +15,7 @@
         template: JST['app/scripts/ProductBacklog/ProductBacklogTpl.ejs'],
 
         events: {
-           "dblclick" : "moveToSprint",
+           "dblclick": "moveToSprint",
            "click": "storySelected",
         },
 
@@ -23,6 +23,7 @@
 		   "DashBoard:Configure": "edit",
 		   "DashBoard:Delete": "removeStory",
            "DashBoard:Back": "deselectAll",
+		   "DashBoard:Team": "deselectAll",
 		   "module:UnitSelected": "deselectAll"
         },
 
@@ -63,6 +64,7 @@
 			if (this.selected) {
             this.model.destroy();
             this.remove();
+
 			}
         },
 		
