@@ -85,10 +85,12 @@
         },
 
         saveChanges: function() {
-            try{
+            try {
                 this.dataValidation();
-                this._modelBinder.bind(this.model, this.$el, null, {initialCopyDirection: Backbone.ModelBinder.Constants.ViewToModel});
+                this._modelBinder.bind(this.model, this.$el, null, 
+                    {initialCopyDirection: Backbone.ModelBinder.Constants.ViewToModel});
                 this.showHideView();
+                
                 mediator.pub("BacklogItemEdit:SavedChanges", this.model);
 
                 this._modelBinder.unbind();
