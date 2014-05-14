@@ -38,12 +38,8 @@
             this.render();
         },
 
-        initSprint: function(sprint) {
-            this.sprint = sprint;
-        },
-
-        stopSprint: function(sprint) {
-            this.sprint.set("status", "failed");
+        stopSprint: function() {
+            this.sprint.save({status: "failed"});
         },
 
         saveSprint: function(sprint) {

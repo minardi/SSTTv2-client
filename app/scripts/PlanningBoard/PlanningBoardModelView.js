@@ -42,7 +42,6 @@
             };
             
             mediator.pub("PlanningBoard:CreateNewItem", attributes);
-            mediator.pub("PlanningBoard:StartSprint", false, this.project_id);
         },
 
         hideStartSprint: function() {
