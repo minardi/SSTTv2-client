@@ -52,6 +52,7 @@
                 item_template = this.template[type];
 
             this.$el.html(item_template(this.model.toJSON()));
+            this._modelBinder.bind(this.model, this.$el);
 
             sstt.date_picker.render();
 
@@ -79,21 +80,21 @@
         cancelChanges: function() {
             if(this.model.isNew()) {
                 this.model.destroy();
+            } else {
+                this.model.set(this.model.previousAttributes());
             }
 
+            this.modelUnbind();
             this.showHideView();
         },
 
         saveChanges: function() {
             try {
                 this.dataValidation();
-                this._modelBinder.bind(this.model, this.$el, null, 
-                    {initialCopyDirection: Backbone.ModelBinder.Constants.ViewToModel});
                 this.showHideView();
-                
-                mediator.pub("BacklogItemEdit:SavedChanges", this.model);
+                this.modelUnbind();
 
-                this._modelBinder.unbind();
+                mediator.pub("BacklogItemEdit:SavedChanges", this.model);
             } catch(e) {
                 this.$(".error-box").html(e.message);
             }
@@ -107,6 +108,10 @@
                     throw new Error("Please, fill in the required fields");
                 }
             });
+        },
+
+        modelUnbind: function() {
+            this._modelBinder.unbind();
         }
 
     });
