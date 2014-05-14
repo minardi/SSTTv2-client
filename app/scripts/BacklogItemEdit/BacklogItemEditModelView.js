@@ -7,6 +7,7 @@
         _modelBinder: undefined,
 
         template: {
+            "task" : JST['app/scripts/BacklogItemEdit/BacklogItemEditTaskTpl.ejs'],
             "story" : JST['app/scripts/BacklogItemEdit/BacklogItemEditStoryTpl.ejs'],
             "sprint" : JST['app/scripts/BacklogItemEdit/BacklogItemEditSprintTpl.ejs'],
             "confirm": JST['app/scripts/BacklogItemEdit/BacklogItemEditDialogTpl.ejs']
@@ -52,17 +53,19 @@
                 item_template = this.template[type];
 
             this.$el.html(item_template(this.model.toJSON()));
+
             this._modelBinder.bind(this.model, this.$el);
 
             sstt.date_picker.render();
 
             this.showHideView();
-            
+
             return this;
         },
 
         showHideView: function() {
             this.$el.toggleClass("hidden");
+            $(".cover").toggleClass("hidden");
         },
         
         showConfirm: function() {

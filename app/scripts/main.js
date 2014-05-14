@@ -17,6 +17,7 @@ var sstt = {},
         BacklogItemEdit: {},
         PlanningBoard: {},
         DatePicker: {},
+        Confirmation: {},
         empty: {}
     };
 
@@ -70,5 +71,9 @@ $(function() {
     sstt.planning_board = new app.PlanningBoard.ModelView();
 
     sstt.date_picker = new app.DatePicker.ModelView();
+
+    sstt.confirmation = new app.Confirmation.ModelView({
+        el: $('.alert-confirm-container')
+    });
 
 });
