@@ -29,7 +29,7 @@
         },
 
         showStat: function() {
-            mediator.pub("ScrumPage:StatBoardSelected", this.element);
+            mediator.pub("ScrumPage:StatBoardSelected", this.element, this.model.get('project_id'));
         },
 
         renderDefaultTab: function(project_id) {

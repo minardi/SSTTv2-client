@@ -17,6 +17,7 @@ var sstt = {},
         BacklogItemEdit: {},
         PlanningBoard: {},
         DatePicker: {},
+        Statistics: {},
         empty: {}
     };
 
@@ -49,6 +50,7 @@ $(function() {
     sstt.team_edit_page = new app.TeamEditPage.ModelView({
         el: $(".b-main")
     });
+
     sstt.dashboard = new app.DashBoard.CollectionView({
         el: $(".b-sidebar")
     });
@@ -70,5 +72,6 @@ $(function() {
     sstt.planning_board = new app.PlanningBoard.ModelView();
 
     sstt.date_picker = new app.DatePicker.ModelView();
-
+    
+    sstt.statistics = new app.Statistics.CollectionView();
 });
