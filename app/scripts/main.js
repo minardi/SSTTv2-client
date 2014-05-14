@@ -18,6 +18,7 @@ var sstt = {},
         PlanningBoard: {},
         DatePicker: {},
         Statistics: {},
+        Confirmation: {},
         empty: {}
     };
 
@@ -74,4 +75,8 @@ $(function() {
     sstt.date_picker = new app.DatePicker.ModelView();
     
     sstt.statistics = new app.Statistics.CollectionView();
+
+    sstt.confirmation = new app.Confirmation.ModelView({
+        el: $('.alert-confirm-container')
+    });
 });
