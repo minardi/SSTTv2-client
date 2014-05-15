@@ -7,7 +7,7 @@
         template: JST['app/scripts/Statistics/StatisticsCollectionTpl.ejs'],
 
         events: {
-            "click .sprint-list": "drawBurnDownChart"
+            "click .sprint-list": "selectSprint"
         },
 
         subscriptions: {
@@ -15,6 +15,8 @@
         },
 
         collection: {},
+
+        current_sprint_id: NaN,
 
         initStatistics: function(elem, project_id) {
             //this.project_id = project_id;
@@ -28,8 +30,7 @@
                     parent_id: project_id
                 });
 
-            this.sprints.on("add", this.initTasks, this)
-                .on("add", this.renderSprint, this)
+            this.sprints.on("add", this.renderSprint, this)
                 .fetch();
         },
 
@@ -37,13 +38,6 @@
             this.$el.html(this.template());
 
             return this;
-        },
-
-        initTasks: function(sprint) {
-            var tasks = new module.Collection();
-            tasks.url = "backlog_items/get_tasks/" + sprint.id;
-            tasks.on("reset", this.addTasksToCollection, this)
-                .reset();
         },
 
         renderSprint: function(sprint) {
@@ -54,16 +48,45 @@
             this.$sprint_list.append(view.render().el);
         },
 
+        /*initStories: function(sprint) {
+            var stories = new module.Collection();
+            stories.url = "backlog_items/get_stories/" + sprint.id;
+            stories.on("sync", this.addStoriesToCollection, this)
+                .fetch();
+        },
+
         addTasksToCollection: function(tasks) {
-            if(!tasks.isEmpty()){
-                console.log(tasks.first().get("parent_id"));
-                this.collection[tasks.first().get("parent_id")] = tasks;
+            var sprint_id = tasks.url.replace("backlog_items/get_stories/", "");
+            if(!tasks.isEmpty()) {
+                this.collection[sprint_id] = tasks;
             }
+        },*/
+
+        selectSprint: function() {
+            this.current_sprint_id = this.$sprint_list.val();
+            
+            if(!this.collection[this.current_sprint_id]){
+                this.initStories();
+            }
+
+        },
+
+        initStories: function() {
+            var stories = new module.Collection();
+            
+            stories.url = "backlog_items/get_stories/" + this.current_sprint_id;
+            stories.on("sync", this.addStoriesToCollection, this)
+                .fetch();
+        },
+
+        addTasksToCollection: function(stories) {
+            this.collection[this.current_sprint_id] = stories;
+
+            this.drawBurnDownChart(stories);
         },
 
         drawBurnDownChart: function() {
-            console.log(this.collection);
-            //console.log(this.collection[this.$sprint_list.val()]);
+            //
         }
 
     });
