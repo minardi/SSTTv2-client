@@ -71,6 +71,7 @@
         showConfirm: function() {
             this.$el.html(this.template["confirm"]);
             this.$el.toggleClass("hidden");
+            $(".cover").toggleClass("hidden");
         },
 
         stopSprint: function() {

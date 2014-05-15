@@ -5,10 +5,12 @@
     module.Collection = Backbone.Collection.extend({
 
         model: module.Model,
+		
+		url: "dash_buttons",
 
         initialize: function() {
 
-            this.add([
+            /*this.add([
                 {
                     content: "Back",
                     type: "back",
@@ -96,7 +98,7 @@
                     }
                 } 
 
-            ]);
+            ]);*/
 
     }
 	
