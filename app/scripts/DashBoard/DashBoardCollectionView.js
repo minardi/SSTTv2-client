@@ -8,6 +8,8 @@
         
         initialize: function() {
             this.collection = new module.Collection();
+			this.collection.on("sync", this.render, this);
+			this.collection.fetch();
         },
 
         subscriptions: {
@@ -52,7 +54,7 @@
             this.$el.append(this.template());
             this.$dashboard = this.$(".dashboard");
             
-            this.is_pm = (this.project.get("pm").user_id == sstt.user.getId())? "pm": "not_pm";
+            this.is_pm = true; //(this.project.get("pm").user_id == sstt.user.getId())? "pm": "not_pm";
             this.is_tl = sstt.user.getRoleInProject();
 
             this.collection.each(this.renderOne, this);
@@ -61,8 +63,8 @@
 
         renderOne: function (btn_model) {
             var btn;
-            btn_model.set("project_id", this.project.id);
-            if (this.canRender(btn_model.get("permition"))) {
+            //btn_model.set("project_id", this.project.id);
+            if (this.canRender(btn_model.get("permission"))) {
                 btn = new module.ModelView({
                         model: btn_model
                 });
@@ -70,11 +72,11 @@
             };
         },
 
-        canRender: function (permition) {
+        canRender: function (permission) {
             var answer = true;
 
-            if (permition.must_be.right) {
-                _.each(permition.must_be.right, function(el) {
+            if (permission.allowed_for) {
+                _.each(permission.allowed_for, function(el) {
                         if (el !== this.is_pm) {
                             answer = false;
                         }
@@ -82,8 +84,8 @@
                 , this)
             }
 
-            if (permition.must_be.page) {
-                _.each(permition.must_be.page, function(el) {
+            if (permission.allowed_for) {
+                _.each(permission.allowed_for, function(el) {
                         if (el !== this.current_page) {
                             answer = false;
                         }
@@ -91,8 +93,8 @@
                 , this)
             }
 
-            if (permition.must_be.role) {
-                _.each(permition.must_be.role, function(el) {                   
+            if (permission.allowed_for) {
+                _.each(permission.allowed_for, function(el) {                   
                         if (el !== this.is_tl) {
                             answer = false;
                         }
@@ -100,8 +102,8 @@
                 , this)
             }
 
-            if (permition.not.page) {
-                _.each(permition.not.right, function(el) {
+            if (permission.denied_for) {
+                _.each(permission.denied_for, function(el) {
                         if (el === this.is_pm) {
                             answer = false;
                         }
@@ -109,8 +111,8 @@
                 , this)
             }
 
-            if (permition.not.page) {
-                _.each(permition.not.page, function(el) {
+            if (permission.denied_for) {
+                _.each(permission.denied_for, function(el) {
                         if (el === this.current_page) {
                             answer = false;
                         }
