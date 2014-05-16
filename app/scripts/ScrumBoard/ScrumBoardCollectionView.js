@@ -118,14 +118,21 @@
         autoStop: function() {
             if(this.done_count === this.collection.length) {
                 this.sprint.save({status: "done"});
-                this.render();
+
+                sstt.confirmation.render({
+                    type: "popup",
+                    title: "All tasks done",
+                    message: "Sprint done",
+                    callback: function() {
+                        console.log("^^");
+                        }
+                    });
             }
         },
 
         stopSprint: function() {
             this.sprint.save({status: "failed"})
             mediator.pub("ScrumBoard:SprintWasStoped");
-            this.render();
         },
 
     });

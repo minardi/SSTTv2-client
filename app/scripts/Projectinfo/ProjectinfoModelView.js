@@ -7,7 +7,8 @@
         template: JST['app/scripts/Projectinfo/ProjectinfoTpl.ejs'],        
         
         subscriptions: {
-            "ProjectPage:ProjectChecked": "showProjectInfo",
+            "ProjectPage:ProjectChecked": "showProjectInfo"
+           // "module:UnitSelected" : "showProjectInfo"
         },
 
         showProjectInfo: function(project_model) {

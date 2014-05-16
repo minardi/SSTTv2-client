@@ -4,9 +4,15 @@
         
     module.ModelView = Backbone.View.extend({	     
 		
-        template: JST['app/scripts/Confirmation/ConfirmationTpl.ejs'],        
+        template: {
+            "alert": JST['app/scripts/Confirmation/ConfirmationAlertTpl.ejs'],
+            "confirm": JST['app/scripts/Confirmation/ConfirmationConfirmTpl.ejs'],
+            "popup": JST['app/scripts/Confirmation/ConfirmationPopUpTpl.ejs']
+
+        },        
  	
         initialize: function() {
+            this.$el = $(".message-container");
         },
 
         events: {
@@ -15,8 +21,11 @@
         subscriptions: {
         },	
 
-        render: function() {
-            
+        render: function(attributes) {
+
+            this.$el.html(this.template[attributes.type](attributes));
+            this.$el.toggleClass("hidden");
+
             return this;
         }		
 
