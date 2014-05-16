@@ -15,8 +15,9 @@
 
         subscriptions: {
             "ProjectPage:ProjectSelected": "renderDefaultTab",
-            "DashBoard:ActiveTeam": "removeScrumPage",
-            "DashBoard:ActiveBack": "removeScrumPage"
+            "DashBoard:Team": "removeScrumPage",
+            "DashBoard:Back": "removeScrumPage"
+			
         },
 
         showPlanning: function() {
@@ -33,7 +34,6 @@
         },
 
         renderDefaultTab: function(project_id) {
-            sstt.user.setCurrentProject(project_id);
             this.model.set('project_id', project_id);
             this.render();
             this.element = this.$el.find("#ScrumPage");
@@ -49,7 +49,6 @@
         },
         
         removeScrumPage: function() {
-            sstt.user.setCurrentProject(0);
             this.$el.find(".scrum-page").remove();
         }
         

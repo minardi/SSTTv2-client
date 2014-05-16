@@ -15,8 +15,8 @@
 
         subscriptions: {
             "ProjectPage:ProjectSelected": "hide",
-            "DashBoard:ActiveTeam": "hide",
-            "DashBoard:ActiveBack": "show",
+            "DashBoard:Team": "hide",
+            "DashBoard:Back": "show",
             "User:ChangeRole": "updateRole"
         },
 
@@ -42,7 +42,7 @@
         },
 
         updateRole: function() {
-            var project = this.projectsCollection.get(sstt.user.getCurrentProject());
+            var project = this.projectsCollection.get(sstt.current_project);
             project.set("role", sstt.user.getRoleInProject());
         }
      

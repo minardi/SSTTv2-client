@@ -12,17 +12,18 @@
         
         events: {
             "dblclick": "selectProject",
-            "click": "showProjectInfo",
+			"click": "checkProject"
         },
 
         selectProject: function() {
             mediator.pub("ProjectPage:ProjectSelected", this.model.id);
         },
-        
-        showProjectInfo: function() {
-            mediator.pub("ProjectPage:ProjectChecked", this.model);
-            this.$el.siblings().removeClass("active-tab"); 
-            this.$el.addClass("active-tab"); 
+		
+		checkProject: function() {
+			sstt.current_project = this.model.id;
+			this.$el.siblings().removeClass("active-tab"); 
+            this.$el.addClass("active-tab");
+			mediator.pub("ProjectPage:ProjectChecked", this.model);
         },
 
         render: function() {

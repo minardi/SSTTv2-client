@@ -1,4 +1,6 @@
-var sstt = {},
+var sstt = {
+        current_project: 0
+    },
     mediator = Backbone.Mediator,
     app = {
         User: {},
@@ -25,10 +27,8 @@ var sstt = {},
 $(function() {
     "use strict";
 
-    sstt.user = new app.User.ModelView({
-        el: $(".user"),
-        user_content: current_user_content
-    });
+    sstt.user = app.User;
+    sstt.user.setElem($(".user"));
 
     sstt.projects = new app.Projects.CollectionView({
         el: $(".b-main")

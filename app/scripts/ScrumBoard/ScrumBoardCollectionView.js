@@ -59,7 +59,6 @@
 
         checkEndOfSprint: function () {
             var today = new Date();
-
             if (this.compareDates(today, this.sprint.get("end"))) {
                 this.stopSprint();
             }
@@ -99,7 +98,9 @@
         },
 
         render: function () {
-            this.$el.html(this.template({"sprint_status": this.sprint.get("status")}));
+            this.$el.html(this.template({"sprint_status": this.sprint.get("status"),
+                                         "role": sstt.user.getRoleInProject()   
+                                        }));
 
             this.status = {
                 "todo": this.$(".todo"),

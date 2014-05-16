@@ -7,14 +7,14 @@
         template: JST['app/scripts/Teams/TeamsCollectionTpl.ejs'],
 
         subscriptions: {
-            "DashBoard:ActiveTeam": "initTeam",
+            "DashBoard:Team": "initTeam",
             "TeamPage:TeamSelected": "hide",
-            "DashBoard:ActiveBack": "removeTeamPage",
-            "DashBoard:ActiveBackFromTeamEditPage": "show"
+            "DashBoard:Back": "removeTeamPage",
+            "DashBoard:BackFromTeamEditPage": "show"
         },
 
         initTeam: function(project_id) {
-            sstt.user.setCurrentProject(project_id);
+            sstt.current_project = project_id;
             this.teamsCollection = new module.Collection(project_id);
             this.listenTo(this.teamsCollection, "sync", this.render);
             this.teamsCollection.fetch(); 
@@ -39,7 +39,6 @@
         },
 
         removeTeamPage: function() {
-            sstt.user.setCurrentProject(0);
             this.$el.find(".team-page").remove();
         },
 

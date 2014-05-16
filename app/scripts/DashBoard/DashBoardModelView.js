@@ -13,15 +13,11 @@
         },
 		 
         action: function() {
-
-            var content = this.model.get("content");
-            
-            mediator.pub("DashBoard:Active" + content, this.model.get("project_id"));
-			mediator.pub("DashBoard:" + content);
+			mediator.pub("DashBoard:" + this.model.get("btn_content"), sstt.current_project);
         },
 
         render: function () {
-            this.$el.addClass(this.general_class + ' ' + this.model.get("type"));
+            this.$el.addClass(this.general_class + ' ' + this.model.get("btn_type"));
 
             return this;
         }
