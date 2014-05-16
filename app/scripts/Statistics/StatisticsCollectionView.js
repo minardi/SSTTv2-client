@@ -7,7 +7,7 @@
         template: JST['app/scripts/Statistics/StatisticsCollectionTpl.ejs'],
 
         events: {
-            "click .sprint-list": "selectSprint"
+            "change .sprint-list": "selectSprint"
         },
 
         subscriptions: {
@@ -19,7 +19,6 @@
         current_sprint_id: NaN,
 
         initStatistics: function(elem, project_id) {
-            //this.project_id = project_id;
             this.setElement(elem);
             this.render();
             this.$sprint_list = this.$(".sprint-list");
@@ -48,45 +47,30 @@
             this.$sprint_list.append(view.render().el);
         },
 
-        /*initStories: function(sprint) {
-            var stories = new module.Collection();
-            stories.url = "backlog_items/get_stories/" + sprint.id;
-            stories.on("sync", this.addStoriesToCollection, this)
-                .fetch();
-        },
-
-        addTasksToCollection: function(tasks) {
-            var sprint_id = tasks.url.replace("backlog_items/get_stories/", "");
-            if(!tasks.isEmpty()) {
-                this.collection[sprint_id] = tasks;
-            }
-        },*/
-
         selectSprint: function() {
             this.current_sprint_id = this.$sprint_list.val();
-            
-            if(!this.collection[this.current_sprint_id]){
+                
+            if(this.collection[this.current_sprint_id]){
+                this.drawBurnDownChart(this.collection[this.current_sprint_id]);
+            } else {
                 this.initStories();
             }
-
         },
 
         initStories: function() {
-            var stories = new module.Collection();
+            this.collection[this.current_sprint_id] = new module.Collection();
             
-            stories.url = "backlog_items/get_stories/" + this.current_sprint_id;
-            stories.on("sync", this.addStoriesToCollection, this)
+            this.collection[this.current_sprint_id].url = "backlog_items/get_stories/" + this.current_sprint_id;
+            this.collection[this.current_sprint_id].on("sync", this.addStoriesToCollection, this)
                 .fetch();
         },
 
-        addTasksToCollection: function(stories) {
-            this.collection[this.current_sprint_id] = stories;
-
-            this.drawBurnDownChart(stories);
+        addStoriesToCollection: function() {
+            this.drawBurnDownChart(this.collection[this.current_sprint_id]);
         },
 
-        drawBurnDownChart: function() {
-            //
+        drawBurnDownChart: function(stories) {
+            console.log(stories);
         }
 
     });

@@ -59,7 +59,6 @@
 
         checkEndOfSprint: function () {
             var today = new Date();
-
             if (this.compareDates(today, this.sprint.get("end"))) {
                 this.stopSprint();
             }
