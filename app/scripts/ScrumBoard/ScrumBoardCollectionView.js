@@ -59,17 +59,16 @@
 
         checkEndOfSprint: function () {
             var today = new Date();
-
-            if (this.compareDates(today, this.sprint.get("end_date"))) {
+            if (this.compareDates(today, this.sprint.get("end"))) {
                 this.stopSprint();
             }
         },
 
         compareDates: function (today, endSprint) {
             var out_of_date = false;
-
+            
             endSprint = endSprint.split('/');
-            endSprint = new Date(endSprint[2], (endSprint[0] - 1), endSprint[1]);
+            endSprint = new Date(endSprint[2], (endSprint[1] - 1), endSprint[0]);
 
             if (today.valueOf() > endSprint.valueOf()) {
                 out_of_date = true;

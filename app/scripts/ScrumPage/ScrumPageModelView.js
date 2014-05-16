@@ -15,8 +15,8 @@
 
         subscriptions: {
             "ProjectPage:ProjectSelected": "renderDefaultTab",
-            "DashBoard:ActiveTeam": "removeScrumPage",
-            "DashBoard:ActiveBack": "removeScrumPage"
+            "DashBoard:Team": "removeScrumPage",
+            "DashBoard:Back": "removeScrumPage"
         },
 
         showPlanning: function() {
@@ -29,7 +29,7 @@
         },
 
         showStat: function() {
-            mediator.pub("ScrumPage:StatBoardSelected", this.element);
+            mediator.pub("ScrumPage:StatBoardSelected", this.element, this.model.get('project_id'));
         },
 
         renderDefaultTab: function(project_id) {

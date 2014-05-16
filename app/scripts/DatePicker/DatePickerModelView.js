@@ -5,8 +5,12 @@
     module.ModelView = Backbone.View.extend({
 
         render: function() {
-            $(".start-date").datepicker();
-            $(".end-date").datepicker();               
+            $(".input-daterange").datepicker({
+            	format: "dd/mm/yyyy",
+            	daysOfWeekDisabled: "0,6",
+            	todayHighlight: true,
+            	autoclose: true
+            });        
         }
 
     });
