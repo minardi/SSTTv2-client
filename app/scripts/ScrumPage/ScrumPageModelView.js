@@ -17,6 +17,7 @@
             "ProjectPage:ProjectSelected": "renderDefaultTab",
             "DashBoard:Team": "removeScrumPage",
             "DashBoard:Back": "removeScrumPage"
+			
         },
 
         showPlanning: function() {
@@ -33,7 +34,6 @@
         },
 
         renderDefaultTab: function(project_id) {
-            sstt.current_project = project_id;
             this.model.set('project_id', project_id);
             this.render();
             this.element = this.$el.find("#ScrumPage");
@@ -49,7 +49,6 @@
         },
         
         removeScrumPage: function() {
-            sstt.current_project = 0;
             this.$el.find(".scrum-page").remove();
         }
         

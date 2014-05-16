@@ -39,7 +39,6 @@
         },
 
         removeTeamPage: function() {
-            sstt.current_project = 0;
             this.$el.find(".team-page").remove();
         },
 

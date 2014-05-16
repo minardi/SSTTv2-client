@@ -21,7 +21,7 @@
         },
 
         setProject: function(project) {
-			sstt.user.setCurrentProject(project.get("id"));
+			this.current_page = "project_page";
 			this.user_role = sstt.user.getRoleInProject();
 			this.is_pm = (project.get("pm").user_id == sstt.user.getId())? "pm": false;
 			this.render();
