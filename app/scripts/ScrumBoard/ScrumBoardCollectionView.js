@@ -30,7 +30,7 @@
 
             this.sprint = new module.Model();
             this.sprint.urlRoot = "backlog_items/get_active_sprint/" + project_id;
-            this.sprint.on("change", this.sprintInit, this)
+            this.sprint.once("change", this.sprintInit, this)
                 .fetch();
             
             if (content_el) {
@@ -83,6 +83,7 @@
             if (task.get("status") === "done") {
                 this.done_count++;
                 this.autoStop();
+                
             }
 
             if (this.status) {
@@ -123,11 +124,11 @@
                 sstt.confirmation.render({
                     type: "popup",
                     title: "All tasks done",
-                    message: "Sprint done",
+                    message: "Current sprint done!",
                     callback: function() {
-                        console.log("^^");
+                        mediator.pub("ProjectPage:ProjectSelected", sstt.project_info.model.get("id")); //Очень костыльный костыль
                         }
-                    });
+                });
             }
         },
 

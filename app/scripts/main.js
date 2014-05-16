@@ -77,6 +77,6 @@ $(function() {
     sstt.statistics = new app.Statistics.CollectionView();
 
     sstt.confirmation = new app.Confirmation.ModelView({
-        el: $('.alert-confirm-container')
+        el: $('.message-container')
     });
 });
