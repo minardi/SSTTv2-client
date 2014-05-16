@@ -5,9 +5,9 @@
     module.Model = Backbone.Model.extend({
 
         defaults: {
-            content: "",
-            type: "",
-            permission: []
+            btn_content: "",
+            btn_type: "",
+            permission: {}
         }
     });
 

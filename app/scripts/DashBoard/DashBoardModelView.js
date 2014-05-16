@@ -13,11 +13,11 @@
         },
 		 
         action: function() {
-			mediator.pub("DashBoard:" + this.model.get("content"));
+			mediator.pub("DashBoard:" + this.model.get("btn_content"));
         },
 
         render: function () {
-            this.$el.addClass(this.general_class + ' ' + this.model.get("type"));
+            this.$el.addClass(this.general_class + ' ' + this.model.get("btn_type"));
 
             return this;
         }

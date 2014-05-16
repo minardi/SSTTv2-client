@@ -8,23 +8,23 @@
         
         initialize: function() {
             this.collection = new module.Collection();
-			this.collection.on("sync", this.render, this);
 			this.collection.fetch();
         },
 
         subscriptions: {
             "ProjectPage:ProjectChecked": "setProject",
-            "DashBoard:ActiveBack": "toProjectPage",
+            "DashBoard:Back": "toProjectPage",
             "ProjectPage:ProjectSelected": "toScrumPage",
-            "DashBoard:ActiveTeam": "toTeamPage",
+            "DashBoard:Team": "toTeamPage",
             "TeamPage:TeamSelected": "toTeamEditPage",
-            "DashBoard:ActiveBackFromTeamEditPage": "toTeamPage",
+            "DashBoard:BackFromTeamEditPage": "toTeamPage",
         },
 
         setProject: function(project) {
-            this.project = project;
-            this.current_page = "project_page";
-            this.render();
+			sstt.user.setCurrentProject(project.get("id"));
+			this.user_role = sstt.user.getRoleInProject();
+			this.is_pm = (project.get("pm").user_id == sstt.user.getId())? "pm": false;
+			this.render();
         },
 
         toProjectPage: function() {
@@ -47,15 +47,12 @@
             this.render();
         },
 
-        render: function(project) {
+        render: function() {
             if(this.$dashboard) {
                 this.$dashboard.remove();
             }
             this.$el.append(this.template());
             this.$dashboard = this.$(".dashboard");
-            
-            this.is_pm = true; //(this.project.get("pm").user_id == sstt.user.getId())? "pm": "not_pm";
-            this.is_tl = sstt.user.getRoleInProject();
 
             this.collection.each(this.renderOne, this);
             return this;
@@ -63,62 +60,54 @@
 
         renderOne: function (btn_model) {
             var btn;
-            //btn_model.set("project_id", this.project.id);
+			
             if (this.canRender(btn_model.get("permission"))) {
                 btn = new module.ModelView({
                         model: btn_model
                 });
                 this.$dashboard.append(btn.render().el);
-            };
+            }
+			
         },
 
         canRender: function (permission) {
             var answer = true;
 
             if (permission.allowed_for) {
-                _.each(permission.allowed_for, function(el) {
-                        if (el !== this.is_pm) {
-                            answer = false;
-                        }
-                    }
-                , this)
+                _.each(permission.allowed_for, allowChecker, this);
+				console.log ("allowChecker gives final answer");
+				console.log (answer);
             }
-
-            if (permission.allowed_for) {
-                _.each(permission.allowed_for, function(el) {
-                        if (el !== this.current_page) {
-                            answer = false;
-                        }
-                    }
-                , this)
+			
+			if (permission.denied_for) {
+                _.each(permission.denied_for, denyChecker, this);
+				console.log ("denyChecker gives final answer");
+				console.log (answer);
             }
-
-            if (permission.allowed_for) {
-                _.each(permission.allowed_for, function(el) {                   
-                        if (el !== this.is_tl) {
-                            answer = false;
-                        }
-                    }
-                , this)
-            }
-
-            if (permission.denied_for) {
-                _.each(permission.denied_for, function(el) {
-                        if (el === this.is_pm) {
-                            answer = false;
-                        }
-                    }
-                , this)
-            }
-
-            if (permission.denied_for) {
-                _.each(permission.denied_for, function(el) {
-                        if (el === this.current_page) {
-                            answer = false;
-                        }
-                    }
-                , this)
-            }
+			
+			function allowChecker(right) {
+				if (right !== this.is_pm) {
+                    answer = false;
+                } 
+				if (right !== this.current_page) {
+					answer = false;
+				} 
+				if (right !== this.user_role) {
+					answer = false;
+				}
+			}
+			
+			function denyChecker(right) {
+				if (right === this.is_pm) {
+                    answer = false;
+                } 
+				if (right === this.current_page) {
+					answer = false;
+				} 
+				if (right === this.user_role) {
+					answer = false;
+				}
+			}
 
             return answer;
         }
