@@ -1,28 +1,47 @@
 /* User */
 
-(function(module) {
+app.User = (function(sstt, user_content) {
+
+    var view,
+        model,
+        Model,
+        ModelView;
+
+    Model = Backbone.Model.extend({       
+
+        url: "/roles/for-user",
         
-    module.ModelView = Backbone.View.extend({            
+        defaults: {
+            "first_name": "",
+            "last_name": "",
+            "roles": {} 
+        },
+
+        getRole: function() {            
+            return this.get("roles")[sstt.current_project];
+        }
+        
+    });
+        
+    ModelView = Backbone.View.extend({            
   
-        template: JST['app/scripts/User/UserTpl.ejs'],
-         
-        initialize: function(init_user) {
-            this.model = new module.Model(init_user.user_content);             
-            this.model.fetch();         
-            this.render();           
+        template: JST['app/scripts/User/UserTpl.ejs'], 
+
+        initialize: function() {
+            model = new Model(user_content);   
+            model.fetch();           
         },
 
         subscriptions: {
             "TeamMembers:ChangeRole": "updateRoles"
         },
 
-        render: function() {                       
-            this.$el.html(this.template(this.model.toJSON()));            
-            return this;
+        render: function() {                
+            this.$el.html(this.template(model.toJSON())); 
         },
 
         updateRoles: function() {
-            this.model.once("change", this.updateRoleProject, this)
+            model.once("change", this.updateRoleProject, this)
                 .fetch();
         },
 
@@ -30,29 +49,47 @@
             mediator.pub("User:ChangeRole");
         },
 
+        _getId: function() {
+            return model.id;
+        },
+
+        _getRoleInProject: function() {
+            return model.getRole();
+        },
+
+        _checkRole: function(roles_access) {
+            var role = this._getRoleInProject();
+
+            return (_.indexOf(roles_access, role) !== -1);
+        },
+
+        _setElement: function(element) {
+            this.$el = element;
+            this.render(); 
+        }        
+
+    });
+
+    view = new ModelView();
+
+    return {
+
         getId: function() {
-            return this.model.id;
+            return view._getId();
         },
 
         getRoleInProject: function() {
-            return this.model.getRole();
-        },
-
-        setCurrentProject: function(project_id) {
-            this.model.set("current_project", project_id);
-        },
-
-        getCurrentProject: function() {
-            return this.model.get("current_project");
+            return view._getRoleInProject();
         },
 
         checkRole: function(roles_access) {
-            var role = this.getRoleInProject();
+            return view._checkRole(roles_access);
+        },
 
-            return (_.indexOf(roles_access, role) !== -1);
+        setElem: function(element) {
+            view._setElement(element);
         }
-             
-    });
 
-})(app.User);
+    };
 
+})(sstt, current_user_content);
