@@ -1,6 +1,6 @@
 /* PlanningBoard */
 
-(function(module) {
+(function(module, sstt) {
     module.ModelView = Backbone.View.extend({
         
         template: JST["app/scripts/PlanningBoard/PlanningBoardTpl.ejs"],
@@ -26,7 +26,7 @@
         },
 
         render: function() {
-            this.$el.append(this.template());
+            this.$el.append(this.template({"role": sstt.user.getRoleInProject()}));
             this.$start_sprint = this.$(".start-sprint");
 
             return this;
@@ -55,4 +55,4 @@
 
     });
 
-})(app.PlanningBoard);
+})(app.PlanningBoard, sstt);

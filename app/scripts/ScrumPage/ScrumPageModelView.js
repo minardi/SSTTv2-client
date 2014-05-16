@@ -33,7 +33,7 @@
         },
 
         renderDefaultTab: function(project_id) {
-            sstt.user.setCurrentProject(project_id);
+            sstt.current_project = project_id;
             this.model.set('project_id', project_id);
             this.render();
             this.element = this.$el.find("#ScrumPage");
@@ -49,7 +49,7 @@
         },
         
         removeScrumPage: function() {
-            sstt.user.setCurrentProject(0);
+            sstt.current_project = 0;
             this.$el.find(".scrum-page").remove();
         }
         

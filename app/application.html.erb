@@ -17,6 +17,7 @@
                 first_name: "<%= current_user.first_name %>",
                 last_name: "<%= current_user.last_name%>"
             };
+            <%= $current_roles.to_s %>
         <% end %>
     </script>
     
@@ -47,7 +48,6 @@
         <script src="scripts/templates.js"></script>
 
         <!-- module User -->
-        <script src="scripts/User/UserModel.js"></script>
         <script src="scripts/User/UserModelView.js"></script>
 
         <!-- module Projects-->

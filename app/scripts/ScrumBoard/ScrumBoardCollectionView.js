@@ -99,7 +99,9 @@
         },
 
         render: function () {
-            this.$el.html(this.template({"sprint_status": this.sprint.get("status")}));
+            this.$el.html(this.template({"sprint_status": this.sprint.get("status"),
+                                         "role": sstt.user.getRoleInProject()   
+                                        }));
 
             this.status = {
                 "todo": this.$(".todo"),
