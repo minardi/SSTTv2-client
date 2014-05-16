@@ -86,8 +86,8 @@ app.User = (function(sstt, user_content) {
             return view._checkRole(roles_access);
         },
 
-        setElement: function(element) {
-            view._setElem(element);
+        setElem: function(element) {
+            view._setElement(element);
         }
 
     };
