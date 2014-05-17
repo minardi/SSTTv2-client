@@ -39,7 +39,7 @@ $(function() {
     });
 
     sstt.project_info = new app.Projectinfo.ModelView({
-        el: $(".b-sidebar")
+        el: $(".main")
     });
 
     sstt.product_backlog = new app.ProductBacklog.CollectionView();

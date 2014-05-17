@@ -2,22 +2,24 @@
 
 (function(module) {
         
-    module.ModelView = Backbone.View.extend({        
+    module.ModelView = Backbone.View.extend({    
+
+        _modelBinder: undefined,    
         
-        template: JST['app/scripts/Projectinfo/ProjectinfoTpl.ejs'],        
+        template: {
+            "backlog_item": JST['app/scripts/Projectinfo/BacklogItemInfoTpl.ejs'],
+            "project": JST['app/scripts/Projectinfo/ProjectinfoTpl.ejs']
+        },       
         
         subscriptions: {
-            "ProjectPage:ProjectChecked": "showProjectInfo"
-           // "module:UnitSelected" : "showProjectInfo"
+            "ProjectPage:ProjectChecked": "render",
+            "module:UnitSelected" : "render"
         },
 
-        showProjectInfo: function(project_model) {
-            this.model = project_model; 
-            this.render();
-        },
+        render: function(model, type) {
+            var template = this.template[type];
 
-        render: function() {
-            this.$el.html(this.template(this.model.toJSON()));
+            this.$el.html(template(model.toJSON()));
             return this;
         }
   });

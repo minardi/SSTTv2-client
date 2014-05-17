@@ -23,7 +23,7 @@
 			sstt.current_project = this.model.id;
 			this.$el.siblings().removeClass("active-tab"); 
             this.$el.addClass("active-tab");
-			mediator.pub("ProjectPage:ProjectChecked", this.model);
+			mediator.pub("ProjectPage:ProjectChecked", this.model, "project");
         },
 
         render: function() {
