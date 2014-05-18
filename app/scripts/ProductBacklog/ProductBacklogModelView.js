@@ -21,7 +21,7 @@
 
         subscriptions: {
 		   "DashBoard:Configure": "edit",
-		   "DashBoard:Delete": "removeStory",
+		   "DashBoard:Delete": "showConfirm",
            "DashBoard:Back": "deselectAll",
 		   "DashBoard:Team": "deselectAll",
 		   "module:UnitSelected": "deselectAll"
@@ -54,7 +54,7 @@
 
         storySelected: function() {
 			mediator.pub("ProductBacklog:SelectedStory");
-			mediator.pub("module:UnitSelected");
+			mediator.pub("module:UnitSelected", this.model, "backlog_item");
 
 			this.selected = true;
             this.$el.addClass('selected');
@@ -71,7 +71,16 @@
 		deselectAll: function() {
 			this.selected = false;
             this.$el.removeClass('selected');
-		}
+		},
+
+        showConfirm: function() {
+            sstt.confirmation.render({
+                    type: "confirm",
+                    title: "Delete Story?",
+                    message: "Are You sure You want to delete Story??",
+                    accessCallback: _.bind(this.removeStory, this)
+                });
+        }
 
     });
 

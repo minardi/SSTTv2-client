@@ -13,7 +13,7 @@
         },
 		 
         action: function() {
-			mediator.pub("DashBoard:" + this.model.get("btn_content"));
+			mediator.pub("DashBoard:" + this.model.get("btn_content"), sstt.current_project);
         },
 
         render: function () {

@@ -9,8 +9,7 @@
         template: {
             "task" : JST['app/scripts/BacklogItemEdit/BacklogItemEditTaskTpl.ejs'],
             "story" : JST['app/scripts/BacklogItemEdit/BacklogItemEditStoryTpl.ejs'],
-            "sprint" : JST['app/scripts/BacklogItemEdit/BacklogItemEditSprintTpl.ejs'],
-            "confirm": JST['app/scripts/BacklogItemEdit/BacklogItemEditDialogTpl.ejs']
+            "sprint" : JST['app/scripts/BacklogItemEdit/BacklogItemEditSprintTpl.ejs']
         },     
 
         subscriptions: {
@@ -23,9 +22,7 @@
 
         events: {
             "click .save_button" : "saveChanges",
-            "click .cancel_button" : "cancelChanges",
-            "click .ok_button" : "stopSprint",
-            "click .no_button" : "showHideView"
+            "click .cancel_button" : "cancelChanges"
         },
 
         findActiveSprints: function(attributes) {
@@ -69,16 +66,16 @@
         },
         
         showConfirm: function() {
-            this.$el.html(this.template["confirm"]);
-            this.$el.toggleClass("hidden");
-            $(".cover").toggleClass("hidden");
-        },
 
-        stopSprint: function() {
-            mediator.pub("BacklogItemEdit:StopSprintConfirmed", true);
-            mediator.pub("BacklogItemEdit:NeedToRerenderView");
-
-            this.showHideView();
+            sstt.confirmation.render({
+                    type: "confirm",
+                    title: "Stop Sprint?",
+                    message: "Another active sprint was found. Would You like to stop it??",
+                    accessCallback: function() {
+                        mediator.pub("BacklogItemEdit:StopSprintConfirmed", true);
+                        mediator.pub("BacklogItemEdit:NeedToRerenderView");
+                    }
+                });
         },
 
         cancelChanges: function() {
