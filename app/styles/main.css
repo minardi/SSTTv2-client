@@ -802,3 +802,8 @@ p {
   opacity: 0.3;
   filter: alpha(opacity=30);
 }
+
+.burndown-chart {
+  width: 850px;
+  height: 450px;
+}
