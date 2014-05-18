@@ -15,9 +15,9 @@
             var current_user_content = {
                 id: <%= current_user.id %>,
                 first_name: "<%= current_user.first_name %>",
-                last_name: "<%= current_user.last_name%>"
-            };
-            <%= $current_roles.to_s %>
+                last_name: "<%= current_user.last_name%>",
+                roles: <%= @roles.to_s.html_safe %>
+            };          
         <% end %>
     </script>
     

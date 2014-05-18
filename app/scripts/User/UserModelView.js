@@ -29,7 +29,6 @@ app.User = (function(sstt, user_content) {
 
         initialize: function() {
             model = new Model(user_content);   
-            model.fetch();           
         },
 
         subscriptions: {
@@ -64,7 +63,7 @@ app.User = (function(sstt, user_content) {
         },
 
         _setElement: function(element) {
-            this.$el = element;
+            this.setElement(element);
             this.render(); 
         }        
 

@@ -33,7 +33,6 @@
         },
 
         renderDefaultTab: function(project_id) {
-            sstt.current_project = project_id;
             this.model.set('project_id', project_id);
             this.render();
             this.element = this.$el.find("#ScrumPage");
