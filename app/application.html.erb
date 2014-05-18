@@ -15,8 +15,9 @@
             var current_user_content = {
                 id: <%= current_user.id %>,
                 first_name: "<%= current_user.first_name %>",
-                last_name: "<%= current_user.last_name%>"
-            };
+                last_name: "<%= current_user.last_name%>",
+                roles: <%= @roles.to_s.html_safe %>
+            };          
         <% end %>
     </script>
     
@@ -49,7 +50,6 @@
         <script src="scripts/templates.js"></script>
 
         <!-- module User -->
-        <script src="scripts/User/UserModel.js"></script>
         <script src="scripts/User/UserModelView.js"></script>
 
         <!-- module Projects-->

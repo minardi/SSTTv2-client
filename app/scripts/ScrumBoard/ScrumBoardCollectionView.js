@@ -30,7 +30,7 @@
 
             this.sprint = new module.Model();
             this.sprint.urlRoot = "backlog_items/get_active_sprint/" + project_id;
-            this.sprint.on("change", this.sprintInit, this)
+            this.sprint.once("change", this.sprintInit, this)
                 .fetch();
             
             if (content_el) {
@@ -83,6 +83,7 @@
             if (task.get("status") === "done") {
                 this.done_count++;
                 this.autoStop();
+                
             }
 
             if (this.status) {
@@ -98,7 +99,9 @@
         },
 
         render: function () {
-            this.$el.html(this.template({"sprint_status": this.sprint.get("status")}));
+            this.$el.html(this.template({"sprint_status": this.sprint.get("status"),
+                                         "role": sstt.user.getRoleInProject()   
+                                        }));
 
             this.status = {
                 "todo": this.$(".todo"),
@@ -117,14 +120,21 @@
         autoStop: function() {
             if(this.done_count === this.collection.length) {
                 this.sprint.save({status: "done"});
-                this.render();
+
+                sstt.confirmation.render({
+                    type: "popup",
+                    title: "All tasks done",
+                    message: "Current sprint done!",
+                    callback: function() {
+                        mediator.pub("ProjectPage:ProjectSelected", sstt.project_info.model.get("id")); //Очень костыльный костыль
+                        }
+                });
             }
         },
 
         stopSprint: function() {
             this.sprint.save({status: "failed"})
             mediator.pub("ScrumBoard:SprintWasStoped");
-            this.render();
         },
 
     });

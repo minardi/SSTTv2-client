@@ -500,7 +500,7 @@ a:visited {
 /*======end dash board===========*/
 
 /*BacklogItemEdit*/
-.edit-backlog-item, .stop-sprint-confirm {
+.edit-backlog-item, .stop-sprint-confirm, .message-container {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -514,12 +514,14 @@ a:visited {
 
 }
 
-.edit-backlog-item .legend {
+.edit-backlog-item .legend,
+.message-container .legend {
   display: block;
   margin-top: 10px;
 }
 
-.edit-backlog-item .message {
+.edit-backlog-item .message,
+.message-container .message {
   display: block;
   margin-top: 25px;
 }

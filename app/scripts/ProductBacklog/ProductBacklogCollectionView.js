@@ -23,7 +23,7 @@
             this.setElement(elem);
             this.project_id = project_id;
 
-            this.$el.append(this.template());
+            this.$el.append(this.template({"role": sstt.user.getRoleInProject()}));
             this.$list = this.$(".backlogstory-list");
 
             this.initCollection();

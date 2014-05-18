@@ -21,7 +21,7 @@
         },
 
         setProject: function(project) {
-			sstt.user.setCurrentProject(project.get("id"));
+			this.current_page = "project_page";
 			this.user_role = sstt.user.getRoleInProject();
 			this.is_pm = (project.get("pm").user_id == sstt.user.getId())? "pm": false;
 			this.render();
@@ -71,42 +71,26 @@
         },
 
         canRender: function (permission) {
-            var answer = true;
+            var answer;
 
             if (permission.allowed_for) {
                 _.each(permission.allowed_for, allowChecker, this);
-				console.log ("allowChecker gives final answer");
-				console.log (answer);
             }
 			
 			if (permission.denied_for) {
                 _.each(permission.denied_for, denyChecker, this);
-				console.log ("denyChecker gives final answer");
-				console.log (answer);
             }
 			
 			function allowChecker(right) {
-				if (right !== this.is_pm) {
-                    answer = false;
+				if (right === this.is_pm || right === this.current_page || right === this.user_role) {
+                    answer = true;
                 } 
-				if (right !== this.current_page) {
-					answer = false;
-				} 
-				if (right !== this.user_role) {
-					answer = false;
-				}
 			}
 			
 			function denyChecker(right) {
-				if (right === this.is_pm) {
+				if (right === this.is_pm || right === this.current_page || right === this.user_role) {
                     answer = false;
                 } 
-				if (right === this.current_page) {
-					answer = false;
-				} 
-				if (right === this.user_role) {
-					answer = false;
-				}
 			}
 
             return answer;

@@ -1,4 +1,6 @@
-var sstt = {},
+var sstt = {
+        current_project: 0
+    },
     mediator = Backbone.Mediator,
     app = {
         User: {},
@@ -25,10 +27,8 @@ var sstt = {},
 $(function() {
     "use strict";
 
-    sstt.user = new app.User.ModelView({
-        el: $(".user"),
-        user_content: current_user_content
-    });
+    sstt.user = app.User;
+    sstt.user.setElem($(".user"));
 
     sstt.projects = new app.Projects.CollectionView({
         el: $(".b-main")
@@ -39,7 +39,7 @@ $(function() {
     });
 
     sstt.project_info = new app.Projectinfo.ModelView({
-        el: $(".b-sidebar")
+        el: $(".main")
     });
 
     sstt.product_backlog = new app.ProductBacklog.CollectionView();
@@ -77,6 +77,6 @@ $(function() {
     sstt.statistics = new app.Statistics.CollectionView();
 
     sstt.confirmation = new app.Confirmation.ModelView({
-        el: $('.alert-confirm-container')
+        el: $('.message-container')
     });
 });
