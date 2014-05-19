@@ -18,7 +18,7 @@
         selectProject: function() {
             mediator.pub("ProjectPage:ProjectSelected", this.model.id);
         },
-		
+
 		checkProject: function() {
 			sstt.current_project = this.model.id;
 			this.$el.siblings().removeClass("active-tab"); 
