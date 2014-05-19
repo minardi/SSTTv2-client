@@ -22,7 +22,7 @@
 
         showPlanning: function() {
             this.element.html("");
-            mediator.pub("ScrumPage:PlanningBoardSelected", this.element);
+            mediator.pub("ScrumPage:PlanningBoardSelected");
         },
 
         showScrum: function() {

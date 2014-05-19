@@ -15,9 +15,6 @@
             "click .deny" : "denyAction"
         },
 
-        subscriptions: {
-        },
-
         render: function(attributes) {
             this.params = attributes;
 
@@ -27,12 +24,16 @@
             $(".cover").toggleClass("hidden");
 
             if (this.params.type === "popup") {
-                setTimeout(_.bind(function() {
-                                        this.hideDialog();
-                                        if(this.params.callback) {
-                                            this.params.callback();
-                                        }
-                                }, this), 2000);
+                setTimeout(
+                    _.bind(function() {
+                            this.hideDialog();
+                            if(this.params.callback) {
+                                this.params.callback();
+                            }
+                        }, 
+                        this
+                    ), 
+                    2000);
             }
 
             return this;
@@ -44,9 +45,9 @@
         },
 
         denyAction: function() {
-            if (this.params.denyCallback) {
-                this.params.denyCallback();
-            }
+            var callback = this.params.denyCallback;
+            
+            callback && callback();
             
             this.hideDialog();
         },

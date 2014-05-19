@@ -125,8 +125,8 @@
                     title: "All tasks done",
                     message: "Current sprint closed!",
                     callback: function() {
-                        mediator.pub("ScrumPage:PlanningBoardSelected", $(".b-main #ScrumPage"));
-                        }
+                        mediator.pub("ScrumPage:PlanningBoardSelected");
+                    }
                 });
             }
         },

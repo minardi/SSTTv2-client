@@ -16,7 +16,9 @@
             "BacklogItemEdit:NeedToRerenderView": "addSprint"
         },
 
-        backlogsInit: function(elem) {
+        backlogsInit: function() {
+            var elem = sstt.scrum_page.element;
+            
             sstt.current_project = sstt.current_project;
             this.setElement(elem);
             this.render();

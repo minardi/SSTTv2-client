@@ -23,7 +23,6 @@
             this.setElement(elem);
             this.render();
             this.$sprint_list = this.$(".sprint-list");
-            //this.$burndown_chart = this.$(".burndown-chart");
             this.$tooltip = this.$(".burndown-chart-tooltip");
             
             this.sprints = new module.Collection([], {
