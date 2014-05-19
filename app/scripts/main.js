@@ -9,7 +9,7 @@ var sstt = {
         ProductBacklog: {},
         SprintBacklog: {},
         Projectinfo: {},
-        DashBoard: {},
+        ContextMenu: {},
         ScrumBoard: {},
         TeamEditPage: {},
         TeamCandidates: {},
@@ -52,7 +52,7 @@ $(function() {
         el: $(".b-main")
     });
 
-    sstt.dashboard = new app.DashBoard.CollectionView({
+    sstt.ContextMenu = new app.ContextMenu.CollectionView({
         el: $(".b-sidebar")
     });
 

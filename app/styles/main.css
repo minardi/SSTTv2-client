@@ -62,9 +62,9 @@ _______________________________________________________*/
     padding: 10px;
 }
 
-/*dashboard*/
+/*ContextMenu*/
 
-.app-wrapper .b-sidebar .dashboard {
+.app-wrapper .b-sidebar .ContextMenu {
     display: inline-block;
     margin: 20px 0 0 0;
     border-radius: 5px;
@@ -73,7 +73,7 @@ _______________________________________________________*/
     vertical-align: middle;
 }
 
-.app-wrapper .b-sidebar .dashboard button {
+.app-wrapper .b-sidebar .ContextMenu button {
     margin: 4px;
     padding: 10px 23px 10px 12px;
 }
@@ -476,7 +476,7 @@ a:visited {
     border-color: #122F5A;
 }
 
-.app-wrapper .b-sidebar .dashboard {
+.app-wrapper .b-sidebar .ContextMenu {
     background-color: rgba(180,220,180,.6);
     box-shadow: 0 0 10px rgba(0,0,0,.8);
 }

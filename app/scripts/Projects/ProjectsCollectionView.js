@@ -15,8 +15,8 @@
 
         subscriptions: {
             "ProjectPage:ProjectSelected": "hide",
-            "DashBoard:Team": "hide",
-            "DashBoard:Back": "show",
+            "ContextMenu:Team": "hide",
+            "ContextMenu:Back": "show",
             "User:ChangeRole": "updateRole"
         },
 

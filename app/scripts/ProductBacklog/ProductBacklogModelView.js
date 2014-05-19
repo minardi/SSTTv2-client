@@ -20,10 +20,10 @@
         },
 
         subscriptions: {
-		   "DashBoard:Configure": "edit",
-		   "DashBoard:Delete": "showConfirm",
-           "DashBoard:Back": "deselectAll",
-		   "DashBoard:Team": "deselectAll",
+		   "ContextMenu:Configure": "edit",
+		   "ContextMenu:Delete": "showConfirm",
+           "ContextMenu:Back": "deselectAll",
+		   "ContextMenu:Team": "deselectAll",
 		   "module:UnitSelected": "deselectAll"
         },
 

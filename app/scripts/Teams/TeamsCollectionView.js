@@ -7,10 +7,10 @@
         template: JST['app/scripts/Teams/TeamsCollectionTpl.ejs'],
 
         subscriptions: {
-            "DashBoard:Team": "initTeam",
+            "ContextMenu:Team": "initTeam",
             "TeamPage:TeamSelected": "hide",
-            "DashBoard:Back": "removeTeamPage",
-            "DashBoard:BackFromTeamEditPage": "show"
+            "ContextMenu:Back": "removeTeamPage",
+            "ContextMenu:BackFromTeamEditPage": "show"
         },
 
         initTeam: function(project_id) {

@@ -15,8 +15,8 @@
 
         subscriptions: {         
             "TeamPage:TeamSelected": "render",
-            "DashBoard:Back": "removeTeamPage",
-            "DashBoard:BackFromTeamEditPage": "removeTeamPage",
+            "ContextMenu:Back": "removeTeamPage",
+            "ContextMenu:BackFromTeamEditPage": "removeTeamPage",
             "TeamMembers:Saved": "showSaveMsg"
         }, 
 

@@ -7,7 +7,8 @@
         template: JST['app/scripts/Statistics/StatisticsCollectionTpl.ejs'],
 
         events: {
-            "change .sprint-list": "selectSprint"
+            "change .sprint-list": "selectSprint",
+            "plothover .burndown-chart": "showTooltip"
         },
 
         subscriptions: {
@@ -16,12 +17,14 @@
 
         collection: {},
 
-        current_sprint_id: NaN,
+        current_sprint_id: undefined,
 
         initStatistics: function(elem) {
             this.setElement(elem);
             this.render();
             this.$sprint_list = this.$(".sprint-list");
+            this.$burndown_chart = this.$(".burndown-chart");
+            this.$tooltip = this.$(".tooltip");
             
             this.sprints = new module.Collection([], {
                     item_type: "sprint",
@@ -73,19 +76,20 @@
             var plot,
                 story_data_for_chart = [],
                 chart_data = [],
-                maxY = 0,
-                start_date = Date.parse(this.sprints.get(this.current_sprint_id).get("start")),
+                max_y = 0,
                 end_date = Date.parse(this.sprints.get(this.current_sprint_id).get("end")),
                 current_x,
                 current_y;
 
+            this.start_date = Date.parse(this.sprints.get(this.current_sprint_id).get("start"));
+
             stories.forEach(function(story){
-                maxY += Number(story.get("estimation"));
+                max_y += Number(story.get("estimation"));
                 story_data_for_chart.push([Date.parse(story.get("end")), story.get("estimation")])
             }, this);
 
-            current_x = start_date;
-            current_y = maxY;
+            current_x = this.start_date;
+            current_y = max_y;
 
             chart_data.push([current_x, current_y]);
             
@@ -103,7 +107,7 @@
             plot = $.plot(".burndown-chart",
                     [
                         { data: chart_data, label: "real"},
-                        { data: [[start_date, maxY, 22],[end_date, 0, 32]], label: "ideal"}
+                        { data: [[this.start_date, max_y],[end_date, 0]], label: "ideal"}
                     ],
                     {
                         series: {
@@ -117,13 +121,13 @@
                         },
                         xaxis: {
                             mode: "time",
-                            min: start_date,
+                            min: this.start_date,
                             max: end_date,
                             timeformat: "%b %d"
                         },
                         yaxis: {
                             min: 0,
-                            max: maxY
+                            max: max_y
                         },
                         grid: {
                             borderWidth:{
@@ -132,7 +136,7 @@
                                 bottom: 2,
                                 left: 2
                             },
-                            //markings: [ { xaxis: { from: 0, to: 0 }, yaxis: { from: 0, to: maxY }, color: "#bb0000" }],
+                            //markings: [ { xaxis: { from: 0, to: 0 }, yaxis: { from: 0, to: max_y }, color: "#bb0000" }],
                             borderColor: "rgb(3,92,64)",
                             backgroundColor: "rgb(228,237,237)",
                             hoverable: true,
@@ -140,44 +144,36 @@
                         }
                     }
                 );
+        },
 
-            $("<div id='tooltip'></div>").css({
-                position: "absolute",
-                display: "none",
-                border: "1px solid #fdd",
-                padding: "2px",
-                "background-color": "#fee",
-                opacity: 0.80
-            }).appendTo("body");
 
-            $(".burndown-chart").bind("plothover", function (event, pos, item) {
-                var x,
-                    y,
-                    tooltip_text = "";
+        showTooltip: function (event, pos, item) {
+            var x,
+                y,
+                tooltip_text = "";
 
-                if (item) {
-                    x = item.datapoint[0];
-                    y = item.datapoint[1];
+            if (item) {
+                x = item.datapoint[0];
+                y = item.datapoint[1];
 
-                    if(item.series.label === "ideal") {
-                        if(x === start_date) {
-                            tooltip_text = "Sprint start"
-                        } else {
-                            tooltip_text = "Sprint end"
-                        }
+                if(item.series.label === "ideal") {
+                    if(x === this.start_date) {
+                        tooltip_text = "Sprint start";
                     } else {
-                        if(item.dataIndex % 2 === 0) {
-                            tooltip_text = "Issue completed<br>Story Points -" + item.series.data[item.dataIndex][2];
-                        }
+                        tooltip_text = "Sprint end";
                     }
-
-                    $("#tooltip").html(tooltip_text)
-                        .css({top: item.pageY+5, left: item.pageX+5})
-                        .fadeIn(200);
                 } else {
-                    $("#tooltip").hide();
+                    if(item.dataIndex % 2 === 0) {
+                        tooltip_text = "Issue completed<br>Story Points -" + item.series.data[item.dataIndex][2];
+                    }
                 }
-            });
+
+                this.$tooltip.html(tooltip_text)
+                    .css({top: item.pageY-50, left: item.pageX-50})
+                    .fadeIn(200);
+            } else {
+                this.$tooltip.hide();
+            }
         }
 
     });
