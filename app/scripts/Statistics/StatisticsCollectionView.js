@@ -62,6 +62,10 @@
         initStories: function() {
             this.collection[this.current_sprint_id] = new module.Collection();
             
+            this.collection[this.current_sprint_id].comparator = function(story) {
+                return Date.parse(story.get("end"));
+            };
+
             this.collection[this.current_sprint_id].url = "backlog_items/get_stories/" + this.current_sprint_id;
             this.collection[this.current_sprint_id].on("sync", this.addStoriesToCollection, this)
                 .fetch();
