@@ -16,13 +16,13 @@
             "BacklogItemEdit:NeedToRerenderView": "addSprint"
         },
 
-        backlogsInit: function(elem, project_id) {
-            this.project_id = project_id;
+        backlogsInit: function(elem) {
+            sstt.current_project = sstt.current_project;
             this.setElement(elem);
             this.render();
 
-            mediator.pub("PlanningBoard:InitProductBacklog", this.$(".product-backlog"), project_id);
-            mediator.pub("PlanningBoard:InitSprintBacklog", this.$(".sprint-backlog"), project_id);
+            mediator.pub("PlanningBoard:InitProductBacklog", this.$(".product-backlog"), sstt.current_project);
+            mediator.pub("PlanningBoard:InitSprintBacklog", this.$(".sprint-backlog"), sstt.current_project);
         },
 
         render: function() {
@@ -36,7 +36,7 @@
             var attributes = {
                 "item_type": "sprint",
                 "status": "active",
-                "parent_id": this.project_id,
+                "parent_id": sstt.current_project,
                 "start_date" : "dd/mm/yyyy",
                 "end_date" : "dd/mm/yyyy"
             };

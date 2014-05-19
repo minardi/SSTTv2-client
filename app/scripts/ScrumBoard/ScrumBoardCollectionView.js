@@ -126,7 +126,7 @@
                     title: "All tasks done",
                     message: "Current sprint done!",
                     callback: function() {
-                        mediator.pub("ProjectPage:ProjectSelected", sstt.project_info.model.get("id")); //Очень костыльный костыль
+                        mediator.pub("ProjectPage:ProjectSelected");
                         }
                 });
             }
