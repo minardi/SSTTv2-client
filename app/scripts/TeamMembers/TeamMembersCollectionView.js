@@ -1,6 +1,6 @@
 /* TeamMembers */
 
-(function(module) {
+(function(module, sstt) {
 
     module.CollectionView = Backbone.View.extend({
         
@@ -48,14 +48,19 @@
             this.collection.each(function(model) {
                 model.save();   
             });
+
+            sstt.confirmation.popup({
+                message: "Role has changed"
+            });
+
         },
 
         showConfirm: function() {
-            sstt.confirmation.render({
+            sstt.confirmation.dialog({
                 type: "confirm",
                 title: "Are You sure?",
                 message: "Do You really want to change role of this member?",
-                accessCallback: _.bind(this.saveCollection, this)
+                confirmCallback: _.bind(this.saveCollection, this)
             });
         },
 
@@ -81,5 +86,5 @@
 
     });
 
-})(app.TeamMembers);
+})(app.TeamMembers, sstt);
 

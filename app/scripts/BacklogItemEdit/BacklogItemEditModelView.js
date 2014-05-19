@@ -51,27 +51,28 @@
 
             this.$el.html(item_template(this.model.toJSON()));
 
+            this.$el.removeClass("hidden");
+            $(".cover").removeClass("hidden");
+
             this._modelBinder.bind(this.model, this.$el);
 
             sstt.date_picker.render();
 
-            this.showHideView();
-
             return this;
         },
 
-        showHideView: function() {
-            this.$el.toggleClass("hidden");
-            $(".cover").toggleClass("hidden");
+        hideView: function() {
+            this.$el.addClass("hidden");
+            $(".cover").addClass("hidden");
         },
         
         showConfirm: function() {
 
-            sstt.confirmation.render({
+            sstt.confirmation.dialog({
                     type: "confirm",
                     title: "Stop Sprint?",
                     message: "Another active sprint was found. Would You like to stop it??",
-                    accessCallback: function() {
+                    confirmCallback: function() {
                         mediator.pub("BacklogItemEdit:StopSprintConfirmed", true);
                         mediator.pub("BacklogItemEdit:NeedToRerenderView");
                     }
@@ -86,13 +87,13 @@
             }
 
             this.modelUnbind();
-            this.showHideView();
+            this.hideView();
         },
 
         saveChanges: function() {
             try {
                 this.dataValidation();
-                this.showHideView();
+                this.hideView();
                 this.modelUnbind();
 
                 mediator.pub("BacklogItemEdit:SavedChanges", this.model);

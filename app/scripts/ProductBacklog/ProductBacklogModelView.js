@@ -62,10 +62,14 @@
 
         removeStory: function() {		
 			if (this.selected) {
-            this.model.destroy();
-            this.remove();
-
+                this.model.destroy();
+                this.remove();
 			}
+
+            sstt.confirmation.popup({
+                message: "Story has been removed."
+            });
+
         },
 		
 		deselectAll: function() {
@@ -74,11 +78,11 @@
 		},
 
         showConfirm: function() {
-            sstt.confirmation.render({
+            sstt.confirmation.dialog({
                     type: "confirm",
                     title: "Delete Story?",
                     message: "Are You sure You want to delete Story??",
-                    accessCallback: _.bind(this.removeStory, this)
+                    confirmCallback: _.bind(this.removeStory, this)
                 });
         }
 

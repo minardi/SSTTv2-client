@@ -48,11 +48,11 @@
         },
 
         render: function() {
-            if(this.$cotext_menu) {
-                this.$cotext_menu.remove();
+            if(this.$context_menu) {
+                this.$context_menu.remove();
             }
             this.$el.append(this.template());
-            this.$cotext_menu = this.$(".ContextMenu");
+            this.$context_menu = this.$(".ContextMenu");
 
             this.collection.each(this.renderOne, this);
             return this;
@@ -65,35 +65,20 @@
                 btn = new module.ModelView({
                         model: btn_model
                 });
-                this.$cotext_menu.append(btn.render().el);
+                this.$context_menu.append(btn.render().el);
             }
 			
         },
 
         canRender: function (permission) {
-            var answer;
-
-            if (permission.allowed_for) {
-                _.each(permission.allowed_for, allowChecker, this);
+            function checker(right) {
+                return right === this.is_pm || 
+                    right === this.current_page || 
+                    right === this.user_role;
             }
-			
-			if (permission.denied_for) {
-                _.each(permission.denied_for, denyChecker, this);
-            }
-			
-			function allowChecker(right) {
-				if (right === this.is_pm || right === this.current_page || right === this.user_role) {
-                    answer = true;
-                } 
-			}
-			
-			function denyChecker(right) {
-				if (right === this.is_pm || right === this.current_page || right === this.user_role) {
-                    answer = false;
-                } 
-			}
 
-            return answer;
+            return _.any(permission.allowed_for, checker, this) && 
+                !_.any(permission.denied_for, checker, this);
         }
 
     });

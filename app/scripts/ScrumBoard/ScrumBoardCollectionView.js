@@ -120,7 +120,8 @@
             if(this.done_count === this.collection.length) {
                 this.sprint.save({status: "done"});
 
-                sstt.confirmation.alert({
+                sstt.confirmation.dialog({
+                    type: "alert",
                     title: "All tasks done",
                     message: "Current sprint closed!",
                     confirmCallback: function() {
