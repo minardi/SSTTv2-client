@@ -6,18 +6,18 @@
 		
         template: {
             "confirm": JST['app/scripts/Confirmation/ConfirmationConfirmTpl.ejs'],
-            "popup": JST['app/scripts/Confirmation/ConfirmationPopUpTpl.ejs']
+            "popup": JST['app/scripts/Confirmation/ConfirmationPopUpTpl.ejs'],
+            "alert": JST['app/scripts/Confirmation/ConfirmationAlertTpl.ejs']
 
         },
 
         events: {
-            "click .access" : "accessAction",
-            "click .deny" : "denyAction"
+            "click .confirm" : "confirmAction",
+            "click .decline" : "declineAction"
         },
 
-        subscriptions: {
-        },
-
+        confirm: false,
+/*
         render: function(attributes) {
             this.params = attributes;
 
@@ -36,24 +36,36 @@
             }
 
             return this;
+        },*/
+
+        render: function() {
+            this.$el.removeClass("hidden");
+            $(".cover").removeClass("hidden");
         },
 
-        accessAction: function() {
-            this.params.accessCallback();
+        alert: function(attributes) {
+            this.params = attributes;
+
+            this.$el.html(this.template["alert"](attributes));
+            this.render();
+        },
+
+        confirmAction: function() {
+            this.params.confirmCallback();
             this.hideDialog();
         },
 
-        denyAction: function() {
-            if (this.params.denyCallback) {
-                this.params.denyCallback();
+        declineAction: function() {
+            if(this.params.declineCallback) {
+                this.params.declineCallback();
             }
             
             this.hideDialog();
         },
 
         hideDialog: function() {
-            this.$el.toggleClass("hidden");
-            $(".cover").toggleClass("hidden");
+            this.$el.addClass("hidden");
+            $(".cover").addClass("hidden");
         }		
 
     });
