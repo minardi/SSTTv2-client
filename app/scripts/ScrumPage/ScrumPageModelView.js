@@ -15,8 +15,8 @@
 
         subscriptions: {
             "ProjectPage:ProjectSelected": "renderDefaultTab",
-            "DashBoard:Team": "removeScrumPage",
-            "DashBoard:Back": "removeScrumPage"
+            "ContextMenu:Team": "removeScrumPage",
+            "ContextMenu:Back": "removeScrumPage"
 			
         },
 
