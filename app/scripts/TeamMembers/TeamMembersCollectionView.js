@@ -13,7 +13,7 @@
         },
 
         events: {
-            "click #save": "saveCollection",
+            "click #save": "showConfirm",
         },
 
         initUsers: function(team_info) {
@@ -45,8 +45,17 @@
         },     
 
         saveCollection: function() {
-            this.collection.each(function(model) {                
+            this.collection.each(function(model) {
                 model.save();   
+            });
+        },
+
+        showConfirm: function() {
+            sstt.confirmation.render({
+                type: "confirm",
+                title: "Are You sure?",
+                message: "Do You really want to change role of this member?",
+                accessCallback: _.bind(this.saveCollection, this)
             });
         },
 

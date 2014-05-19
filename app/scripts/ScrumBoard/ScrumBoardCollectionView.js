@@ -67,7 +67,7 @@
             var out_of_date = false;
             
             endSprint = endSprint.split('/');
-            endSprint = new Date(endSprint[2], (endSprint[1] - 1), endSprint[0]);
+            endSprint = new Date(endSprint[0], (endSprint[1] - 1), endSprint[2]);
 
             if (today.valueOf() > endSprint.valueOf()) {
                 out_of_date = true;
@@ -123,7 +123,7 @@
                 sstt.confirmation.render({
                     type: "popup",
                     title: "All tasks done",
-                    message: "Current sprint done!",
+                    message: "Current sprint closed!",
                     callback: function() {
                         mediator.pub("ScrumPage:PlanningBoardSelected", $(".b-main #ScrumPage"));
                         }

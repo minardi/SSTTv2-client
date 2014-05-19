@@ -5,7 +5,6 @@
     module.ModelView = Backbone.View.extend({	     
 		
         template: {
-            "alert": JST['app/scripts/Confirmation/ConfirmationAlertTpl.ejs'],
             "confirm": JST['app/scripts/Confirmation/ConfirmationConfirmTpl.ejs'],
             "popup": JST['app/scripts/Confirmation/ConfirmationPopUpTpl.ejs']
 
@@ -30,8 +29,10 @@
             if (this.params.type === "popup") {
                 setTimeout(_.bind(function() {
                                         this.hideDialog();
-                                        this.params.callback();
-                                }, this), 2500);
+                                        if(this.params.callback) {
+                                            this.params.callback();
+                                        }
+                                }, this), 2000);
             }
 
             return this;

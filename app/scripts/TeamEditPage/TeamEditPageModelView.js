@@ -1,6 +1,6 @@
 /* TeamEditPage */
 
-(function(module) {
+(function(module, sstt) {
         
     module.ModelView = Backbone.View.extend({	     
  		
@@ -16,8 +16,7 @@
         subscriptions: {         
             "TeamPage:TeamSelected": "render",
             "ContextMenu:Back": "removeTeamPage",
-            "ContextMenu:BackFromTeamEditPage": "removeTeamPage",
-            "TeamMembers:Saved": "showSaveMsg"
+            "ContextMenu:BackFromTeamEditPage": "removeTeamPage"
         }, 
 
         render: function(team_id) {     
@@ -30,22 +29,18 @@
             return this;
         },       
 
-        showWatchers: function () {            
+        showWatchers: function() {            
             mediator.pub("TeamEditPage:RoleSetUp", "watcher");
         },
 
-        showDevelopers: function () {
+        showDevelopers: function() {
             mediator.pub("TeamEditPage:RoleSetUp", "developer");
         },
 
-        showTeachLeads: function () {
+        showTeachLeads: function() {
             mediator.pub("TeamEditPage:RoleSetUp", "techlead");
-        },         
-        
-        showSaveMsg: function() {
-            this.$el.find("#save_confirm").removeClass();
-        },     
-                
+        },
+
         hideConfirm: function() {
             this.$el.find("#save_confirm").addClass("hidden");
         },
@@ -57,4 +52,4 @@
         
     });
 
-})(app.TeamEditPage);
+})(app.TeamEditPage, sstt);

@@ -6,7 +6,7 @@
 
         render: function() {
             $(".input-daterange").datepicker({
-            	format: "dd/mm/yyyy",
+            	format: "yyyy/mm/dd",
             	daysOfWeekDisabled: "0,6",
             	todayHighlight: true,
             	autoclose: true
