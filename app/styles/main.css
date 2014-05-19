@@ -809,3 +809,12 @@ p {
   width: 850px;
   height: 450px;
 }
+
+.burndown-chart-tooltip {
+  position: absolute;
+  display: none;
+  border: 1px solid #fdd;
+  padding: 2px;
+  background-color": #fefefe;
+  opacity: 0.80;
+}
