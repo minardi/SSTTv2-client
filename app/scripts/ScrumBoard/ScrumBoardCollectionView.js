@@ -22,14 +22,13 @@
             this.sprint = new module.Model();
         },
 
-        initCollection: function (content_el, project_id) {
+        initCollection: function (content_el) {
             this.access_moving = sstt.user.checkRole(this.roles);        
 
-            this.project_id = project_id;
             this.content_el = content_el;
 
             this.sprint = new module.Model();
-            this.sprint.urlRoot = "backlog_items/get_active_sprint/" + project_id;
+            this.sprint.urlRoot = "backlog_items/get_active_sprint/" + sstt.current_project;
             this.sprint.once("change", this.sprintInit, this)
                 .fetch();
             
@@ -58,10 +57,10 @@
         },
 
         checkEndOfSprint: function () {
-            /*var today = new Date();
+            var today = new Date();
             if (this.compareDates(today, this.sprint.get("end"))) {
                 this.stopSprint();
-            }*/
+            }
         },
 
         compareDates: function (today, endSprint) {
@@ -126,7 +125,7 @@
                     title: "All tasks done",
                     message: "Current sprint done!",
                     callback: function() {
-                        mediator.pub("ProjectPage:ProjectSelected");
+                        mediator.pub("ScrumPage:PlanningBoardSelected", $(".b-main #ScrumPage"));
                         }
                 });
             }

@@ -22,15 +22,15 @@
 
         showPlanning: function() {
             this.element.html("");
-            mediator.pub("ScrumPage:PlanningBoardSelected", this.element, this.model.get('project_id'));
+            mediator.pub("ScrumPage:PlanningBoardSelected", this.element);
         },
 
         showScrum: function() {
-            mediator.pub("ScrumPage:ScrumBoardSelected", this.element, this.model.get('project_id'));
+            mediator.pub("ScrumPage:ScrumBoardSelected", this.element);
         },
 
         showStat: function() {
-            mediator.pub("ScrumPage:StatBoardSelected", this.element, this.model.get('project_id'));
+            mediator.pub("ScrumPage:StatBoardSelected", this.element);
         },
 
         renderDefaultTab: function(project_id) {

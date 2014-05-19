@@ -26,7 +26,7 @@
         },
 
         render: function() {
-            this.$el.append(this.template({"role": sstt.user.getRoleInProject()}));
+            this.$el.html(this.template({"role": sstt.user.getRoleInProject()}));
             this.$start_sprint = this.$(".start-sprint");
 
             return this;

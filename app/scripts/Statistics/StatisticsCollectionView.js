@@ -18,7 +18,7 @@
 
         current_sprint_id: NaN,
 
-        initStatistics: function(elem, project_id) {
+        initStatistics: function(elem) {
             this.setElement(elem);
             this.render();
             this.$sprint_list = this.$(".sprint-list");
@@ -26,7 +26,7 @@
             this.sprints = new module.Collection([], {
                     item_type: "sprint",
                     status: "done",
-                    parent_id: project_id
+                    parent_id: sstt.current_project
                 });
 
             this.sprints.on("add", this.renderSprint, this)
