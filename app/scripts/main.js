@@ -21,6 +21,7 @@ var sstt = {
         DatePicker: {},
         Statistics: {},
         Confirmation: {},
+        Chart: {},
         empty: {}
     };
 
@@ -73,6 +74,8 @@ $(function() {
     sstt.planning_board = new app.PlanningBoard.ModelView();
 
     sstt.date_picker = new app.DatePicker.ModelView();
+
+    sstt.chart = new app.Chart.ModelView();
     
     sstt.statistics = new app.Statistics.CollectionView();
 
