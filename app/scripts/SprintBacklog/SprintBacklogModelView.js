@@ -6,19 +6,36 @@
 
         className: "story-box",
 
-        template: JST['app/scripts/SprintBacklog/SprintBacklogTpl.ejs'],
+        template: {
+			"story": JST['app/scripts/SprintBacklog/SprintBacklogStoryTpl.ejs'],
+			"task":  JST['app/scripts/SprintBacklog/SprintBacklogTaskTpl.ejs']
+		},
 
         events: {
-        	"dblclick": "restoreToProduct"
+        	"dblclick": "restoreToProduct",
+			"click .add-new-task": "openEditor"
         },
+		
+		subscriptions: {
+			"BacklogItemEdit:TaskCreated": "renderTask"
+		},
 
-        restoreToProduct: function () {
+        restoreToProduct: function() {
         	this.remove();
         	mediator.pub("SprintBacklog:RestoreStory", this.model);
         },
+		
+		openEditor: function() {
+			mediator.pub ("SprintBacklog:CreateTask", {item_type: "task", status: "todo", parent_id: this.model.get("id")});
+		},
+		
+		renderTask: function(task_model) {
+			console.log(task_model);
+			this.$el.append(this.template["task"](task_model.toJSON()));
+		},
 
-        render: function () {
-            this.$el.html(this.template(this.model.toJSON()));
+        render: function() {
+            this.$el.html(this.template["story"](this.model.toJSON()));
             
             return this;
         }

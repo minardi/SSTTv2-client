@@ -1,6 +1,12 @@
 body {
     font-family: Arial, Georgia, Helvetica, sans-serif;
     background: url(../images/bg.png);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 html, body {
@@ -215,6 +221,23 @@ ________________________________________________*/
 }
 
 .btn-new-story:hover {
+    color: #fff;
+    background-color: #39b3d7;
+    border-color: #269abc;
+}
+
+.btn-new-task{
+    height: 25px;
+    /*background-color: #39b3d7;
+    border-color: #269abc;*/
+    border-radius: 3px 0 0 3px;
+    background-color: #0063E2;
+    border: 1px solid #122F5A;
+    color: #FFF;
+	float: right;
+}
+
+.btn-new-task:hover {
     color: #fff;
     background-color: #39b3d7;
     border-color: #269abc;
