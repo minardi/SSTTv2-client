@@ -56,8 +56,7 @@
         },
 
         showConfirm: function() {
-            sstt.confirmation.dialog({
-                type: "confirm",
+            sstt.confirmation.confirm({
                 title: "Are You sure?",
                 message: "Do You really want to change role of this member?",
                 confirmCallback: _.bind(this.saveCollection, this)

@@ -68,8 +68,7 @@
         
         showConfirm: function() {
 
-            sstt.confirmation.dialog({
-                    type: "confirm",
+            sstt.confirmation.confirm({
                     title: "Stop Sprint?",
                     message: "Another active sprint was found. Would You like to stop it??",
                     confirmCallback: function() {

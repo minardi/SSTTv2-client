@@ -78,8 +78,7 @@
 		},
 
         showConfirm: function() {
-            sstt.confirmation.dialog({
-                    type: "confirm",
+            sstt.confirmation.confirm({
                     title: "Delete Story?",
                     message: "Are You sure You want to delete Story??",
                     confirmCallback: _.bind(this.removeStory, this)
