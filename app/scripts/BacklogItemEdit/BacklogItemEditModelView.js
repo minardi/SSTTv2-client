@@ -17,7 +17,8 @@
             "ProductBacklog:EditStory" : "fillingFields",
             "ProductBacklog:CreateNewItem" : "initItem",
             "SprintBacklog:NoActiveSprints": "initItem",
-            "SprintBacklog:ActiveSprintWasFound": "showConfirm"
+            "SprintBacklog:ActiveSprintWasFound": "showConfirm",
+			"SprintBacklog:CreateTask": "initItem"
         },  
 
         events: {
@@ -97,6 +98,7 @@
                 this.modelUnbind();
 
                 mediator.pub("BacklogItemEdit:SavedChanges", this.model);
+				mediator.pub("BacklogItemEdit:TaskCreated", this.model);
             } catch(e) {
                 this.$(".error-box").html(e.message);
             }
