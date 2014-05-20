@@ -20,10 +20,23 @@
             $(".cover").removeClass("hidden");
         },
 
-        dialog: function(attributes) {
+        confirm: function(attributes) {
             this.params = attributes;
+            this.params.type = "confirm";
 
-            this.$el.html(this.template[attributes.type](attributes));
+            this._dialog();
+        },
+
+        alert: function(attributes) {
+            this.params = attributes;
+            this.params.type = "alert";
+
+
+            this._dialog();
+        },
+
+        _dialog: function() {
+            this.$el.html(this.template[this.params.type](this.params));
             this.render();
         },
 
