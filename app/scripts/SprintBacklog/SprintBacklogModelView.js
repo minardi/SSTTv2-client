@@ -14,53 +14,50 @@
 		},
 		
 		subscriptions: {
-		   //"ContextMenu:Configure": "edit",
-		   //"ContextMenu:Delete": "showConfirm",
-           //"ContextMenu:Back": "deselectAll",
-		   //"ContextMenu:Team": "deselectAll",
-		   "module:UnitSelected": "deselectAll",
+           "ContextMenu:Back": "deselect",
+		   "ContextMenu:Team": "deselect",
+		   "module:UnitSelected": "deselect",
 		   "BacklogItemEdit:TaskCreated": "renderTask",			
         },
-
-        events: {
+		
+		events: {
         	"dblclick": "restoreToProduct",
-			"click .add-new-task": "openEditor",
+			"click .add-new-task": "createTask",
 			"click": "storySelected"
         },
-
+		
         restoreToProduct: function() {
         	this.remove();
         	mediator.pub("SprintBacklog:RestoreStory", this.model);
         },
 		
-		openEditor: function() {		    
+		createTask: function() {		    
 			mediator.pub ("SprintBacklog:CreateTask", {item_type: "task", status: "todo", parent_id: this.model.get("id")});
 		},
 		
 		 storySelected: function() {
-			//mediator.pub("SprintBacklog:SelectedStory");
 			mediator.pub("module:UnitSelected", this.model, "backlog_item");
 
 			this.selected = true;
             this.$el.addClass('selected');
         },
 		
-		deselectAll: function() {
+		deselect: function() {
 			this.selected = false;
             this.$el.removeClass('selected');
 		},
 
         render: function() {
 		
-				this.$el.append(this.template["story"](this.model.toJSON())); 
+				this.$el.append(this.template["story"](this.model.toJSON()));
 		
             return this;
         },
 		
-		renderTask: function() {
+		renderTask: function(task_model) {
 			
 			if (this.selected) {
-				this.$el.append(this.template["task"](this.model.toJSON()));
+				this.$el.append(this.template["task"](task_model.toJSON()));
 			}
 		}
 

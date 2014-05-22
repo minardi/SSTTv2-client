@@ -13,6 +13,7 @@
             "BacklogItemEdit:TryToCreateSprint": "findActiveSprint",
             "BacklogItemEdit:StopSprintConfirmed": "stopSprint",
             "BacklogItemEdit:SavedChanges": "saveSprint",
+			"BacklogItemEdit:TaskCreated": "addBacklogItem",	
             "ScrumBoard:SprintWasStoped" : "stopSprint"
         },
 
@@ -63,16 +64,16 @@
             
             this.sprint.off("change");
 			
-
             this.collection.each(function (model) {
 			
-				if (model.item_type === "story") {
+				if (model.get("item_type") === "story") {
 					model.set("parent_id", story_parent_id);
 					model.set("status", "sprint");
-					model.save(null,{
-						success: _.bind(this.restoreStory, this)
-					});
 				}
+				
+				model.save(null,{
+					success: _.bind(this.restoreStory, this)
+				});
             }, this);
 
             this.$list.empty();
@@ -81,7 +82,10 @@
         addBacklogItem: function (item) {
 		
             this.collection.add(item);
-			this.renderOne(item);
+			console.log(this.collection);
+			if (item.get("item_type") === "story") {
+				this.renderOne(item);
+			}
         },
 		
         renderOne: function (item) {
