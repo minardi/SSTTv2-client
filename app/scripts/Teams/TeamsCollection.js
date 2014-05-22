@@ -1,16 +1,16 @@
 /* Teams */
 
-(function(module) {
+(function(module, sstt) {
 
     module.Collection = Backbone.Collection.extend({
 
         model: module.Model,
 
-        initialize: function(project_id) {
-            this.url = "/teams/for-project/" + project_id;
+        initialize: function() {
+            this.url = "/teams/for-project/" + sstt.current_project;
         }
 
     });
     
-})(app.Teams);
+})(app.Teams, sstt);
 

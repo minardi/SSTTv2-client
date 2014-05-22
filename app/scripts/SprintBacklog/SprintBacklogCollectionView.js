@@ -1,6 +1,6 @@
 /* SprintBacklog */
 
-(function(module) {
+(function(module, sstt) {
         
     module.CollectionView = Backbone.View.extend({
 
@@ -21,7 +21,7 @@
             this.sprint = new module.Model();
         },
 
-        initSprintBacklog: function (el, project_id) {
+        initSprintBacklog: function (el) {
             this.setElement(el);
             this.$el.append(this.template());
             this.$list = this.$(".sprintstory-list");
@@ -33,7 +33,7 @@
             this.collection.on("add remove", this.checkFilling, this);
 
             this.sprint = new module.Model({}, {
-                urlRoot: "backlog_items/get_active_sprint/" + project_id
+                urlRoot: "backlog_items/get_active_sprint/" +  sstt.current_project
             });
             this.sprint.fetch();
 
@@ -119,4 +119,4 @@
 
     });
 
-})(app.SprintBacklog);
+})(app.SprintBacklog, sstt);
