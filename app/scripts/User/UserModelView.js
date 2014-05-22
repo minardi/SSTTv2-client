@@ -1,9 +1,8 @@
 /* User */
 
-app.User = (function(sstt, user_content) {
+app.User = (function(sstt, content) {
 
     var view,
-        model,
         Model,
         ModelView;
 
@@ -28,7 +27,7 @@ app.User = (function(sstt, user_content) {
         template: JST['app/scripts/User/UserTpl.ejs'], 
 
         initialize: function() {
-            model = new Model(user_content);   
+            this.model = new Model(content);   
         },
 
         subscriptions: {
@@ -36,24 +35,24 @@ app.User = (function(sstt, user_content) {
         },
 
         render: function() {                
-            this.$el.html(this.template(model.toJSON())); 
+            this.$el.html(this.template(this.model.toJSON())); 
         },
 
         updateRoles: function() {
-            model.once("change", this.updateRoleProject, this)
+            this.model.once("change", this.updateRoleInProject, this)
                 .fetch();
         },
 
-        updateRoleProject: function() {
+        updateRoleInProject: function() {
             mediator.pub("User:ChangeRole");
         },
 
         _getId: function() {
-            return model.id;
+            return this.model.id;
         },
 
         _getRoleInProject: function() {
-            return model.getRole();
+            return this.model.getRole();
         },
 
         _checkRole: function(roles_access) {
@@ -85,7 +84,7 @@ app.User = (function(sstt, user_content) {
             return view._checkRole(roles_access);
         },
 
-        setElem: function(element) {
+        setElement: function(element) {
             view._setElement(element);
         }
 

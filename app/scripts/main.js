@@ -28,7 +28,7 @@ $(function() {
     "use strict";
 
     sstt.user = app.User;
-    sstt.user.setElem($(".user"));
+    sstt.user.setElement($(".user"));
 
     sstt.projects = new app.Projects.CollectionView({
         el: $(".b-main")

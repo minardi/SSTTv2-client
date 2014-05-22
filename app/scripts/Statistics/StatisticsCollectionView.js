@@ -15,9 +15,7 @@
             "ScrumPage:StatBoardSelected": "initStatistics"
         },
 
-        collection: {},
-
-        current_sprint_id: undefined,
+        collection: [],
 
         initStatistics: function(elem) {
             this.setElement(elem);
@@ -110,7 +108,7 @@
             plot = $.plot(".burndown-chart",
                     [
                         { data: chart_data, label: "real"},
-                        { data: [[this.start_date, max_y],[end_date, 0]], label: "ideal"}
+                        { data: [[this.start_date, max_y],[end_date, 0]], label: "perfect"}
                     ],
                     {
                         series: {
@@ -158,7 +156,7 @@
                 x = item.datapoint[0];
                 y = item.datapoint[1];
 
-                if(item.series.label === "ideal") {
+                if(item.series.label === "perfect") {
                     if(x === this.start_date) {
                         tooltip_text = "Sprint start";
                     } else {
