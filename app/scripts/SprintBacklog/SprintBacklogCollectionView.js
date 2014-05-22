@@ -6,6 +6,8 @@
 
         template: JST['app/scripts/SprintBacklog/SprintBacklogCollectionTpl.ejs'],  
 
+        stories_with_tasks: [],
+
         subscriptions: {
             "ProductBacklog:MovedStory": "addBacklogItem",
             "PlanningBoard:InitSprintBacklog": "initSprintBacklog",
@@ -68,7 +70,12 @@
 			
 				if (model.get("item_type") === "story") {
 					model.set("parent_id", story_parent_id);
-					model.set("status", "sprint");
+
+                    if(this.stories_with_tasks[model.id]){
+					   model.set("status", "sprint");
+                    } else {
+                        model.set("status", "todo");
+                    }
 				}
 				
 				model.save(null,{
@@ -85,7 +92,11 @@
 			
 			if (item.get("item_type") === "story") {
 				this.renderOne(item);
-			}
+			} else {
+                if(item.get("item_type") === "task" && !this.stories_with_tasks[item.get("parent_id")]) {
+                    this.stories_with_tasks[item.get("parent_id")] = true;
+                }
+            }
         },
 		
         renderOne: function (item) {
