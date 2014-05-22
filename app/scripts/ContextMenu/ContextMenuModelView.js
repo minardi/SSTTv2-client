@@ -19,6 +19,7 @@
 		 
         action: function() {
 			mediator.pub("ContextMenu:" + this.model.get("btn_content"), sstt.current_project);
+			mediator.pub("module:deselectAllUnits");
         },
 		
 		hideBtn: function() {
