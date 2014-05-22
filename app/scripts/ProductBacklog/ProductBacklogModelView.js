@@ -43,6 +43,7 @@
         moveToSprint: function() {
             if (this.permission) {
                 mediator.pub("ProductBacklog:MovedStory", this.model);
+				mediator.pub("module:deselectAllUnits");
                 this.remove();
             }
         },

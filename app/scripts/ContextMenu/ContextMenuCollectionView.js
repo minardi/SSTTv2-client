@@ -17,7 +17,7 @@
             "ProjectPage:ProjectSelected": "toScrumPage",
             "ContextMenu:Team": "toTeamPage",
             "TeamPage:TeamSelected": "toTeamEditPage",
-            "ContextMenu:BackFromTeamEditPage": "toTeamPage",
+            "ContextMenu:BackFromTeamEditPage": "toTeamPage"
         },
 
         setProject: function(project) {

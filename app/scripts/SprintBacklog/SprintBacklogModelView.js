@@ -30,6 +30,7 @@
         restoreToProduct: function() {
         	this.remove();
         	mediator.pub("SprintBacklog:RestoreStory", this.model);
+			mediator.pub("module:deselectAllUnits");
         },
 		
 		createTask: function() {		    
