@@ -58,16 +58,60 @@
 
     module.ModelView = Backbone.View.extend({
         
+        events: {
+            "plothover": "showBurndownTooltip"
+        },
+
         burndownChart: function(elem, raw_data, additional_data) {
             this.setElement(elem);
+
+            chart_data = [];
             initBurndownChartData(raw_data, additional_data);
+
+            this.start_sprint = [chart_data[0][0], chart_data[0][1]];
+            this.end_sprint = [_.last(chart_data)[0], _.last(chart_data)[1]];
+
             this.$el.plot(
                     [
-                        { data: chart_data, label: "real"},
-                        { data: [[additional_data.start_date, additional_data.max_y],[additional_data.end_date, 0]], label: "ideal"}
+                        { data: [[additional_data.start_date, additional_data.max_y],[additional_data.end_date, 0]], label: "ideal", color: "rgb(175,216,248)"},
+                        { data: chart_data, label: "real", color: "rgb(237,194,64)"}
                     ],
                     burndownChartOptions(additional_data)
                 );
+
+            this.$el.append("<div class='burndown-chart-tooltip'></div>");
+            this.$tooltip = this.$(".burndown-chart-tooltip");
+        },
+
+        showBurndownTooltip: function (event, pos, item) {
+            var x,
+                y,
+                tooltip_text = "";
+
+            if (item) {
+                x = item.datapoint[0];
+                y = item.datapoint[1];
+
+                if(x === this.start_sprint[0] && y === this.start_sprint[1]) {
+                    tooltip_text = "Sprint start<br>Story Points " + y;
+                } else {
+                    if(x === this.end_sprint[0] && y === this.end_sprint[1]) {
+                        tooltip_text = "Sprint end";
+                    } else {
+                        if(item.dataIndex % 2 === 0) {
+                            tooltip_text = "Issue completed<br>Story Points -" + item.series.data[item.dataIndex][2];
+                        }
+                    }
+                }
+
+                if(tooltip_text){
+                    this.$tooltip.html(tooltip_text)
+                        .css({top: item.pageY-225, left: item.pageX-335})
+                        .fadeIn(200);
+                }
+            } else {
+                this.$tooltip.hide();
+            }
         }
     });
 
