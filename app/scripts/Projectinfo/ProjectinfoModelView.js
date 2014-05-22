@@ -25,7 +25,7 @@
         },
 		
 		clearInfo: function() {
-		    this.remove();
+		    this.$el.html("");
 		}
   });
     
