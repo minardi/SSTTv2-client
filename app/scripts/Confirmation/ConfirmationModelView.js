@@ -44,7 +44,7 @@
             this.$el.html(this.template["popup"](attributes));
             this.$el.removeClass("hidden");
 
-            _.delay(_.bind(this.hideDialog, this), 3000);
+            _.delay(_.bind(this.hideDialog, this), 1500);
         },
 
         confirmAction: function() {

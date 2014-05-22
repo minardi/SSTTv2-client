@@ -17,6 +17,7 @@
            "ContextMenu:Back": "deselect",
 		   "ContextMenu:Team": "deselect",
 		   "module:UnitSelected": "deselect",
+		   "module:deselectAllUnits": "deselect",
 		   "BacklogItemEdit:TaskCreated": "renderTask",			
         },
 		
@@ -35,16 +36,20 @@
 			mediator.pub ("SprintBacklog:CreateTask", {item_type: "task", status: "todo", parent_id: this.model.get("id")});
 		},
 		
-		 storySelected: function() {
+		 storySelected: function(e) {
 			mediator.pub("module:UnitSelected", this.model, "backlog_item");
 
 			this.selected = true;
             this.$el.addClass('selected');
+			this.$(".add-new-task").removeClass('hidden');
+			
+			e.stopPropagation();
         },
 		
 		deselect: function() {
 			this.selected = false;
             this.$el.removeClass('selected');
+			this.$(".add-new-task").addClass('hidden');
 		},
 
         render: function() {
