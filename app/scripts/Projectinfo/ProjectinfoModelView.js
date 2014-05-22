@@ -14,18 +14,19 @@
         subscriptions: {
             "ProjectPage:ProjectChecked": "render",
             "module:UnitSelected" : "render",
-			"module:deselectAllUnits" : "clearInfo"
+			"module:deselectAllUnits" : "changeInfo"
         },
 
         render: function(model, type) {
             var template = this.template[type];
 
             this.$el.html(template(model.toJSON()));
+			
             return this;
         },
 		
-		clearInfo: function() {
-		    this.$el.html("");
+		changeInfo: function() {
+		    this.$el.html("Please select item");
 		}
   });
     
