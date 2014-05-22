@@ -10,7 +10,8 @@
         events: {
             "click #planning": "showPlanning",
             "click #scrumboard": "showScrum",
-            "click #stat": "showStat"
+            "click #stat": "showStat",
+			"click #ScrumPage" : "deselectAll"
         },
 
         subscriptions: {
@@ -32,6 +33,10 @@
         showStat: function() {
             mediator.pub("ScrumPage:StatBoardSelected", this.element);
         },
+		
+		deselectAll: function() {
+			mediator.pub("module:deselectAllUnits");
+		},
 
         renderDefaultTab: function() {
             this.model.set('project_id', sstt.current_project);

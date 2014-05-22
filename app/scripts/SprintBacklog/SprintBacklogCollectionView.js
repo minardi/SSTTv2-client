@@ -82,7 +82,7 @@
         addBacklogItem: function (item) {
 		
             this.collection.add(item);
-			console.log(this.collection);
+			
 			if (item.get("item_type") === "story") {
 				this.renderOne(item);
 			}
