@@ -39,8 +39,8 @@
                 "item_type": "sprint",
                 "status": "active",
                 "parent_id": sstt.current_project,
-                "start_date" : "dd/mm/yyyy",
-                "end_date" : "dd/mm/yyyy"
+                "start_date" : "yyyy/mm/dd",
+                "end_date" : "yyyy/mm/dd"
             };
             
             mediator.pub("PlanningBoard:CreateNewItem", attributes);
