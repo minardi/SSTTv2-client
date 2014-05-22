@@ -13,7 +13,8 @@
         
         subscriptions: {
             "ProjectPage:ProjectChecked": "render",
-            "module:UnitSelected" : "render"
+            "module:UnitSelected" : "render",
+			"module:deselectAllUnits" : "clearInfo"
         },
 
         render: function(model, type) {
@@ -21,7 +22,11 @@
 
             this.$el.html(template(model.toJSON()));
             return this;
-        }
+        },
+		
+		clearInfo: function() {
+		    this.remove();
+		}
   });
     
 })(app.Projectinfo);
