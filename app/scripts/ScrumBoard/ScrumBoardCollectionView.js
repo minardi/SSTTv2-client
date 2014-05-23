@@ -50,8 +50,9 @@
             this.collection.url = "backlog_items/get_tasks/" + this.sprint.id;
 
             this.done_count = 0;
+            this.completed_story_tasks = [];
+
             this.collection.once("add", this.checkEndOfSprint, this)
-                .on("add", this.increaseCompletedTasksNumber, this)
                 .on("add", this.renderOne, this)
                 .fetch();
         },
