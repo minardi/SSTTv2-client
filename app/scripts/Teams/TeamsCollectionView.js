@@ -1,6 +1,6 @@
 /* Teams */
 
-(function(module) {
+(function(module, sstt) {
 
     module.CollectionView = Backbone.View.extend({
 
@@ -13,9 +13,8 @@
             "ContextMenu:BackFromTeamEditPage": "show"
         },
 
-        initTeam: function(project_id) {
-            sstt.current_project = project_id;
-            this.teamsCollection = new module.Collection(project_id);
+        initTeam: function() {
+            this.teamsCollection = new module.Collection(sstt.current_project);
             this.listenTo(this.teamsCollection, "sync", this.render);
             this.teamsCollection.fetch(); 
         },
@@ -48,5 +47,5 @@
 
     });
 
-})(app.Teams);
+})(app.Teams, sstt);
 

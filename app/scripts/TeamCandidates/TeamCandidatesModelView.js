@@ -8,16 +8,16 @@
 
         className: "user-box",
         
-        role: "watcher", /*we can normalize roles in db as 0 - watcher, 1 - developer etc.*/
+        role: "watcher", 
 
         template: JST['app/scripts/TeamCandidates/TeamCandidatesTpl.ejs'],   
 		
 		subscriptions: {
-            "TeamEditPage:RoleSetUp": "setRole" /*change channel name from "TeamEditPage:TabSelected"*/
+            "TeamEditPage:RoleSetUp": "setRole" 
         },
 		
 		 events: {
-            "click": "setTeamMember" /*changed from addToProject*/
+            "click": "setTeamMember" 
         },
 
         initialize: function() {
@@ -31,8 +31,8 @@
 
         setTeamMember: function() {
             this.model.set("role", this.role);
-            mediator.pub("TeamCandidates:SetTeamMember", this.model.formTeamMember()); /* changed channel name from "UserCandidate:addToProject" */
-        },
+            mediator.pub("TeamCandidates:SetTeamMember", this.model.formTeamMember()); 
+			},
 
         setRole: function(current_role) { 
             this.role = current_role;

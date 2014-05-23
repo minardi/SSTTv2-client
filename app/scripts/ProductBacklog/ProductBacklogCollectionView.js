@@ -18,10 +18,9 @@
 
         roles: ["techlead"],
 
-        initProductBacklog: function(elem, project_id) {
+        initProductBacklog: function(elem) {
             this.access_crud = sstt.user.checkRole(this.roles); 
             this.setElement(elem);
-            this.project_id = project_id;
 
             this.$el.append(this.template({"role": sstt.user.getRoleInProject()}));
             this.$list = this.$(".backlogstory-list");
@@ -33,7 +32,7 @@
             this.collection = new module.Collection([], {
                     item_type: "story",
                     status: "product",
-                    parent_id: this.project_id
+                    parent_id: sstt.current_project
                 });
             
             this.collection.on("add", this.renderOne, this);
@@ -55,7 +54,7 @@
             var attributes = {
                                 "status": "product",
                                 "item_type": "story",
-                                "parent_id": this.project_id
+                                "parent_id": sstt.current_project
                             };
 
             mediator.pub("ProductBacklog:CreateNewItem", attributes);

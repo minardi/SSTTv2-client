@@ -131,7 +131,12 @@
         },
 
         stopSprint: function() {
-            this.sprint.save({status: "failed"})
+            this.sprint.save({status: "failed"});
+			this.collection.each(function(model) {
+				if (model.get("item_type") === "task") {
+					model.destroy();
+				}
+			});
             mediator.pub("ScrumBoard:SprintWasStoped");
         },
 

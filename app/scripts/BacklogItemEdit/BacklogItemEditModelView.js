@@ -97,7 +97,11 @@
                 this.modelUnbind();
 
                 mediator.pub("BacklogItemEdit:SavedChanges", this.model);
-				mediator.pub("BacklogItemEdit:TaskCreated", this.model);
+
+				if (this.model.get("item_type") === "task") {
+					mediator.pub("BacklogItemEdit:TaskCreated", this.model);
+				}
+                
             } catch(e) {
                 this.$(".error-box").html(e.message);
             }

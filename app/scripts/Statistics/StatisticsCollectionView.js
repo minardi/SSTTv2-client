@@ -7,8 +7,7 @@
         template: JST['app/scripts/Statistics/StatisticsCollectionTpl.ejs'],
 
         events: {
-            "change .sprint-list": "selectSprint",
-            "plothover .burndown-chart": "showTooltip"
+            "change .sprint-list": "selectSprint"
         },
 
         subscriptions: {
@@ -16,12 +15,13 @@
         },
 
         collection: [],
+        total_estimation: [],
 
         initStatistics: function(elem) {
             this.setElement(elem);
             this.render();
             this.$sprint_list = this.$(".sprint-list");
-            this.$tooltip = this.$(".burndown-chart-tooltip");
+            this.$burndown_chart = this.$(".burndown-chart");
             
             this.sprints = new module.Collection([], {
                     item_type: "sprint",
@@ -49,131 +49,48 @@
 
         selectSprint: function() {
             this.current_sprint_id = this.$sprint_list.val();
-                
+            
             if(this.collection[this.current_sprint_id]){
-                this.drawBurnDownChart(this.collection[this.current_sprint_id]);
+                this.drawBurnDownChart(this.collection[this.current_sprint_id], this.total_estimation[this.current_sprint_id]);
             } else {
                 this.initStories();
             }
         },
 
         initStories: function() {
-            this.collection[this.current_sprint_id] = new module.Collection();
+            var stories = new module.Collection();
             
-            this.collection[this.current_sprint_id].comparator = function(story) {
+            stories.comparator = function(story) {
                 return Date.parse(story.get("end"));
             };
 
-            this.collection[this.current_sprint_id].url = "backlog_items/get_stories/" + this.current_sprint_id;
-            this.collection[this.current_sprint_id].on("sync", this.addStoriesToCollection, this)
+            stories.url = "backlog_items/get_stories/" + this.current_sprint_id;
+            stories.once("sync", this.initDataForChart, this)
                 .fetch();
         },
 
-        addStoriesToCollection: function() {
-            this.drawBurnDownChart(this.collection[this.current_sprint_id]);
-        },
-
-        drawBurnDownChart: function(stories) {
-            var plot,
-                story_data_for_chart = [],
-                chart_data = [],
-                max_y = 0,
-                end_date = Date.parse(this.sprints.get(this.current_sprint_id).get("end")),
-                current_x,
-                current_y;
-
-            this.start_date = Date.parse(this.sprints.get(this.current_sprint_id).get("start"));
+        initDataForChart: function(stories) {
+            this.total_estimation[this.current_sprint_id] = 0;
+            this.collection[this.current_sprint_id] = [];
 
             stories.forEach(function(story){
-                max_y += Number(story.get("estimation"));
-                story_data_for_chart.push([Date.parse(story.get("end")), story.get("estimation")])
+                this.total_estimation[this.current_sprint_id] += Number(story.get("estimation"));
+                this.collection[this.current_sprint_id].push([Date.parse(story.get("end")), story.get("estimation")]);
             }, this);
 
-            current_x = this.start_date;
-            current_y = max_y;
-
-            chart_data.push([current_x, current_y]);
-            
-            _.each(story_data_for_chart, function(val) {
-                current_x = val[0];
-                chart_data.push([current_x, current_y, val[1]]);
-                current_y -= val[1];
-                chart_data.push([current_x, current_y, val[1]]);
-            }, this);
-            
-            if(current_y === 0) {
-                chart_data.push([end_date, 0]);
-            }
-
-            plot = $.plot(".burndown-chart",
-                    [
-                        { data: chart_data, label: "real"},
-                        { data: [[this.start_date, max_y],[end_date, 0]], label: "perfect"}
-                    ],
-                    {
-                        series: {
-                            lines: {
-                                show: true
-                            },
-                            points: {
-                                show: true
-                            },  
-                            shadowSize: 5
-                        },
-                        xaxis: {
-                            mode: "time",
-                            min: this.start_date,
-                            max: end_date,
-                            timeformat: "%b %d"
-                        },
-                        yaxis: {
-                            min: 0,
-                            max: max_y
-                        },
-                        grid: {
-                            borderWidth:{
-                                top: 1,
-                                right: 1,
-                                bottom: 2,
-                                left: 2
-                            },
-                            //markings: [ { xaxis: { from: 0, to: 0 }, yaxis: { from: 0, to: max_y }, color: "#bb0000" }],
-                            borderColor: "rgb(3,92,64)",
-                            backgroundColor: "rgb(228,237,237)",
-                            hoverable: true,
-                            clickable: true
-                        }
-                    }
-                );
+            this.drawBurnDownChart(this.collection[this.current_sprint_id], this.total_estimation[this.current_sprint_id]);
         },
 
-        showTooltip: function (event, pos, item) {
-            var x,
-                y,
-                tooltip_text = "";
+        drawBurnDownChart: function(raw_data, total_estimation) {
+            sstt.chart.burndownChart(this.$burndown_chart, raw_data, this.additionalData(total_estimation));
+        },
 
-            if (item) {
-                x = item.datapoint[0];
-                y = item.datapoint[1];
-
-                if(item.series.label === "perfect") {
-                    if(x === this.start_date) {
-                        tooltip_text = "Sprint start";
-                    } else {
-                        tooltip_text = "Sprint end";
-                    }
-                } else {
-                    if(item.dataIndex % 2 === 0) {
-                        tooltip_text = "Issue completed<br>Story Points -" + item.series.data[item.dataIndex][2];
-                    }
-                }
-
-                this.$tooltip.html(tooltip_text)
-                    .css({top: item.pageY-50, left: item.pageX-50})
-                    .fadeIn(200);
-            } else {
-                this.$tooltip.hide();
-            }
+        additionalData: function(total_estimation) {
+            return {
+                start_date: Date.parse(this.sprints.get(this.current_sprint_id).get("start")),
+                end_date: Date.parse(this.sprints.get(this.current_sprint_id).get("end")),
+                max_y: total_estimation
+            };
         }
 
     });

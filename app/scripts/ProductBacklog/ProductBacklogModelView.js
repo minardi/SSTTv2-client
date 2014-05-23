@@ -16,7 +16,7 @@
 
         events: {
            "dblclick": "moveToSprint",
-           "click": "storySelected",
+           "click": "storySelected"
         },
 
         subscriptions: {
@@ -24,7 +24,8 @@
 		   "ContextMenu:Delete": "showConfirm",
            "ContextMenu:Back": "deselectAll",
 		   "ContextMenu:Team": "deselectAll",
-		   "module:UnitSelected": "deselectAll"
+		   "module:UnitSelected": "deselectAll",
+		   "module:deselectAllUnits": "deselectAll"
         },
 
         initialize: function(init_data) {
@@ -42,6 +43,7 @@
         moveToSprint: function() {
             if (this.permission) {
                 mediator.pub("ProductBacklog:MovedStory", this.model);
+				mediator.pub("module:deselectAllUnits");
                 this.remove();
             }
         },
@@ -52,23 +54,26 @@
 			}			
         },
 
-        storySelected: function() {
-			mediator.pub("ProductBacklog:SelectedStory");
+        storySelected: function(e) {
 			mediator.pub("module:UnitSelected", this.model, "backlog_item");
+			mediator.pub("ProductBacklog:SelectedStory");
 
 			this.selected = true;
             this.$el.addClass('selected');
+			
+			e.stopPropagation();
         },
 
-        removeStory: function() {		
+        removeStory: function() {	
+		
 			if (this.selected) {
                 this.model.destroy();
                 this.remove();
 			}
-
-            sstt.confirmation.popup({
-                message: "Story has been removed."
-            });
+			
+			sstt.confirmation.popup({
+					message: "Story has been removed."
+				});
 
         },
 		
@@ -78,11 +83,18 @@
 		},
 
         showConfirm: function() {
-            sstt.confirmation.confirm({
-                    title: "Delete Story?",
-                    message: "Are You sure You want to delete Story??",
-                    confirmCallback: _.bind(this.removeStory, this)
-                });
+		
+			if (this.selected) {
+				sstt.confirmation.confirm({
+						title: "Delete Story?",
+						message: "Are You sure You want to delete Story??",
+						confirmCallback: (function(obj) {
+							return function() {
+								obj.removeStory();
+							};
+						})(this)
+					});
+			}
         }
 
     });
