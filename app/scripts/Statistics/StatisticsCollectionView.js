@@ -4,7 +4,11 @@
         
      module.CollectionView = Backbone.View.extend({
         
-        template: JST['app/scripts/Statistics/StatisticsCollectionTpl.ejs'],
+        template: {
+            main: JST['app/scripts/Statistics/StatisticsCollectionTpl.ejs'],
+            statisticsTable: JST['app/scripts/Statistics/StatisticsTableTpl.ejs'],
+            statisticsTableRow: JST['app/scripts/Statistics/StatisticsTableRowTpl.ejs']
+        },
 
         events: {
             "change .sprint-list": "selectSprint"
@@ -14,6 +18,7 @@
             "ScrumPage:StatBoardSelected": "initStatistics"
         },
 
+        stories: [],
         collection: [],
         total_estimation: [],
 
@@ -22,6 +27,7 @@
             this.render();
             this.$sprint_list = this.$(".sprint-list");
             this.$burndown_chart = this.$(".burndown-chart");
+            this.$sprint_statistics = this.$(".sprint-statistics");
             
             this.sprints = new module.Collection([], {
                     item_type: "sprint",
@@ -34,7 +40,7 @@
         },
 
         render: function() {
-            this.$el.html(this.template());
+            this.$el.html(this.template["main"]());
 
             return this;
         },
@@ -48,10 +54,14 @@
         },
 
         selectSprint: function() {
+            this.$sprint_statistics.html(this.template["statisticsTable"]());
+            this.$sprint_statistics_table = this.$(".sprint-statistics .table");
+
             this.current_sprint_id = this.$sprint_list.val();
             
             if(this.collection[this.current_sprint_id]){
                 this.drawBurnDownChart(this.collection[this.current_sprint_id], this.total_estimation[this.current_sprint_id]);
+                this.printSprintStatistics(this.stories[this.current_sprint_id]);
             } else {
                 this.initStories();
             }
@@ -70,6 +80,7 @@
         },
 
         initDataForChart: function(stories) {
+            this.stories[this.current_sprint_id] = stories;
             this.total_estimation[this.current_sprint_id] = 0;
             this.collection[this.current_sprint_id] = [];
 
@@ -79,6 +90,8 @@
             }, this);
 
             this.drawBurnDownChart(this.collection[this.current_sprint_id], this.total_estimation[this.current_sprint_id]);
+
+            this.printSprintStatistics(stories);
         },
 
         drawBurnDownChart: function(raw_data, total_estimation) {
@@ -91,6 +104,36 @@
                 end_date: Date.parse(this.sprints.get(this.current_sprint_id).get("end")),
                 max_y: total_estimation
             };
+        },
+
+        printSprintStatistics: function(stories) {
+            var table_data = {},
+                sprint;
+            sprint = this.sprints.get(this.current_sprint_id)
+            
+            table_data = {
+                date: sprint.get("start"),
+                title: sprint.get("title"),
+                type: "sprint",
+                status: sprint.get("status"),
+                estimation: this.total_estimation[this.current_sprint_id],
+                css_class: "warning"
+            };
+
+            this.$sprint_statistics_table.append(this.template["statisticsTableRow"](table_data));
+
+            stories.forEach(function(story) {
+                table_data = {
+                    date: story.get("end"),
+                    title: story.get("title"),
+                    type: "story",
+                    status: story.get("status"),
+                    estimation: -(story.get("estimation")),
+                    css_class: "success"
+                };
+
+                this.$sprint_statistics_table.append(this.template["statisticsTableRow"](table_data));
+            }, this);
         }
 
     });

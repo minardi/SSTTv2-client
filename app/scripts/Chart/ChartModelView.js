@@ -1,7 +1,8 @@
 /* Chart */
 
 (function(module) {
-    var chart_data = [];
+    var chart_data = [],
+        plot;
 
     function initBurndownChartData(raw_data, additional_data) {
         var current_x,
@@ -39,7 +40,7 @@
                 },
                 yaxis: {
                     min: 0,
-                    max: additional_data.max_y
+                    max: additional_data.max_y + 1
                 },
                 grid: {
                     borderWidth:{
@@ -57,9 +58,14 @@
     }
 
     module.ModelView = Backbone.View.extend({
-        
+        template: JST["app/scripts/Chart/BurndownTooltipTpl.ejs"],
+
         events: {
-            "plothover": "showBurndownTooltip"
+            "change .sprint-list": "selectSprint"
+        },
+
+        events: {
+            "plothover": "showBurndownTooltip",
         },
 
         burndownChart: function(elem, raw_data, additional_data) {
@@ -71,15 +77,17 @@
             this.start_sprint = [chart_data[0][0], chart_data[0][1]];
             this.end_sprint = [_.last(chart_data)[0], _.last(chart_data)[1]];
 
-            this.$el.plot(
+            plot = this.$el.plot(
                     [
                         { data: [[additional_data.start_date, additional_data.max_y],[additional_data.end_date, 0]], label: "ideal", color: "rgb(175,216,248)"},
                         { data: chart_data, label: "real", color: "rgb(237,194,64)"}
                     ],
                     burndownChartOptions(additional_data)
-                );
+                ).data("plot");
 
-            this.$el.append("<div class='burndown-chart-tooltip'></div>");
+            data = plot.pointOffset({x:chart_data[0][0],y:chart_data[0][1]})
+
+            this.$el.append(this.template());
             this.$tooltip = this.$(".burndown-chart-tooltip");
         },
 
@@ -114,5 +122,4 @@
             }
         }
     });
-
 })(app.Chart);

@@ -96,7 +96,7 @@ _______________________________________________________*/
 _________________________________________________________*/
 
 .app-wrapper .b-main {
-    height: 600px;
+    min-height: 600px;
     margin-left: 240px;
 }
 
@@ -151,7 +151,7 @@ ________________________________________________*/
 /*Planing&Sprint block
 ________________________________________________*/
 .app-wrapper .b-main .content .backlog-box {
-    min-height: 50%;
+    min-height: 300px;
     width: 40%;
     border: 2px solid rgba(0,0,0,0.6);
     border-radius: 5px;
