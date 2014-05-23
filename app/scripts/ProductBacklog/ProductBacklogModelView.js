@@ -91,8 +91,8 @@
 						confirmCallback: (function(obj) {
 							return function() {
 								obj.removeStory();
-							};	 
-						})(this) 
+							};
+						})(this)
 					});
 			}
         }

@@ -17,27 +17,7 @@
 
         render: function() {
             this.$el.removeClass("hidden");
-            $(".cover").removeClass("hidden");
-        },
-
-        confirm: function(attributes) {
-            this.params = attributes;
-            this.params.type = "confirm";
-
-            this._dialog();
-        },
-
-        alert: function(attributes) {
-            this.params = attributes;
-            this.params.type = "alert";
-
-
-            this._dialog();
-        },
-
-        _dialog: function() {
-            this.$el.html(this.template[this.params.type](this.params));
-            this.render();
+            this.$(".cover").removeClass("hidden");
         },
 
         popup: function(attributes) {
@@ -47,10 +27,29 @@
             _.delay(_.bind(this.hideDialog, this), 1500);
         },
 
+        confirm: function(attributes) {
+            this.params = attributes;
+
+            this._dialog("confirm");
+        },
+
+        alert: function(attributes) {
+            this.params = attributes;
+
+            this._dialog("alert");
+        },
+
+        _dialog: function(type) {
+            this.$el.html(this.template[type](this.params));
+            this.render();
+        },
+
         confirmAction: function() {
             this.hideDialog();
 
-            this.params.confirmCallback();
+            if(this.params.confirmCallback) {
+                this.params.confirmCallback();  
+            }
         },
 
         declineAction: function() {
@@ -63,7 +62,7 @@
 
         hideDialog: function() {
             this.$el.addClass("hidden");
-            $(".cover").addClass("hidden");
+            this.$(".cover").addClass("hidden");
         }		
 
     });
