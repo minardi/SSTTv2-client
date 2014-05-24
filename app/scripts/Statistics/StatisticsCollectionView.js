@@ -61,7 +61,7 @@
             
             if(this.collection[this.current_sprint_id]){
                 this.drawBurnDownChart(this.collection[this.current_sprint_id], this.total_estimation[this.current_sprint_id]);
-                this.printSprintStatistics(this.stories[this.current_sprint_id]);
+                this.fillStatisticsTable(this.stories[this.current_sprint_id]);
             } else {
                 this.initStories();
             }
@@ -91,7 +91,7 @@
 
             this.drawBurnDownChart(this.collection[this.current_sprint_id], this.total_estimation[this.current_sprint_id]);
 
-            this.printSprintStatistics(stories);
+            this.fillStatisticsTable(stories);
         },
 
         drawBurnDownChart: function(raw_data, total_estimation) {
@@ -106,14 +106,14 @@
             };
         },
 
-        printSprintStatistics: function(stories) {
+        fillStatisticsTable: function(stories) {
             var table_data = {},
                 sprint;
             sprint = this.sprints.get(this.current_sprint_id)
             
             table_data = {
                 date: sprint.get("start"),
-                title: sprint.get("title"),
+                title: "Sprint `<i>" + sprint.get("title") + "`</i> start",
                 type: "sprint",
                 status: sprint.get("status"),
                 estimation: this.total_estimation[this.current_sprint_id],
@@ -134,6 +134,17 @@
 
                 this.$sprint_statistics_table.append(this.template["statisticsTableRow"](table_data));
             }, this);
+
+            table_data = {
+                date: sprint.get("end"),
+                title: "Sprint `<i>" + sprint.get("title") + "`</i> end",
+                type: "sprint",
+                status: sprint.get("status"),
+                estimation: 0,
+                css_class: "warning"
+            };
+
+            this.$sprint_statistics_table.append(this.template["statisticsTableRow"](table_data));
         }
 
     });
