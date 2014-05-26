@@ -5,7 +5,7 @@
      module.CollectionView = Backbone.View.extend({
         
         template: {
-            main: JST['app/scripts/Statistics/StatisticsCollectionTpl.ejs'],
+            statisticsLayout: JST['app/scripts/Statistics/StatisticsCollectionTpl.ejs'],
             statisticsTable: JST['app/scripts/Statistics/StatisticsTableTpl.ejs'],
             statisticsTableRow: JST['app/scripts/Statistics/StatisticsTableRowTpl.ejs']
         },
@@ -19,7 +19,7 @@
         },
 
         stories: [],
-        collection: [],
+        data_for_chart: [],
         total_estimation: [],
 
         initStatistics: function(elem) {
@@ -40,7 +40,7 @@
         },
 
         render: function() {
-            this.$el.html(this.template["main"]());
+            this.$el.html(this.template["statisticsLayout"]());
 
             return this;
         },
@@ -59,8 +59,8 @@
 
             this.current_sprint_id = this.$sprint_list.val();
             
-            if(this.collection[this.current_sprint_id]){
-                this.drawBurnDownChart(this.collection[this.current_sprint_id], this.total_estimation[this.current_sprint_id]);
+            if(this.data_for_chart[this.current_sprint_id]){
+                this.drawBurnDownChart(this.data_for_chart[this.current_sprint_id], this.total_estimation[this.current_sprint_id]);
                 this.fillStatisticsTable(this.stories[this.current_sprint_id]);
             } else {
                 this.initStories();
@@ -82,14 +82,14 @@
         initDataForChart: function(stories) {
             this.stories[this.current_sprint_id] = stories;
             this.total_estimation[this.current_sprint_id] = 0;
-            this.collection[this.current_sprint_id] = [];
+            this.data_for_chart[this.current_sprint_id] = [];
 
             stories.forEach(function(story){
                 this.total_estimation[this.current_sprint_id] += Number(story.get("estimation"));
-                this.collection[this.current_sprint_id].push([Date.parse(story.get("end")), story.get("estimation")]);
+                this.data_for_chart[this.current_sprint_id].push([Date.parse(story.get("end")), story.get("estimation")]);
             }, this);
 
-            this.drawBurnDownChart(this.collection[this.current_sprint_id], this.total_estimation[this.current_sprint_id]);
+            this.drawBurnDownChart(this.data_for_chart[this.current_sprint_id], this.total_estimation[this.current_sprint_id]);
 
             this.fillStatisticsTable(stories);
         },
