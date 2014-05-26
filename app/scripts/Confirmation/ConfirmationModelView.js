@@ -16,8 +16,8 @@
         },
 
         render: function() {
+			$(".cover").removeClass("hidden");
             this.$el.removeClass("hidden");
-            this.$(".cover").removeClass("hidden");
         },
 
         popup: function(attributes) {
@@ -62,7 +62,7 @@
 
         hideDialog: function() {
             this.$el.addClass("hidden");
-            this.$(".cover").addClass("hidden");
+            $(".cover").addClass("hidden");
         }		
 
     });

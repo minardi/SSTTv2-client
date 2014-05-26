@@ -85,8 +85,6 @@
                     burndownChartOptions(additional_data)
                 ).data("plot");
 
-            data = plot.pointOffset({x:chart_data[0][0],y:chart_data[0][1]})
-
             this.$el.append(this.template());
             this.$tooltip = this.$(".burndown-chart-tooltip");
         },
